@@ -13,4 +13,4 @@ jobs:
       with:
         server: ftp.quentinleclerc.fr
         username: u692451191.u692451191_flexou
-        password: Patinage1m
+        password: ${{ secrets.FTP_PASSWORD }}
