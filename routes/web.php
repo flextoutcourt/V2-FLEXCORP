@@ -5,6 +5,7 @@ use App\Http\Controllers\Home;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RealisationController;
+use App\Http\Controllers\TchatController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -30,14 +31,14 @@ Route::get('/', function () {
 });
 
 Route::prefix('auth', 'verified')->group(function () {
-    Route::get('/discuss', [])->name('tchat');
+    Route::get('/discuss', [TchatController::class, 'index'])->name('tchat');
 });
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/', [HomeController::class, "index"])->name('home');
+Route::get('/', [HomeController::class, "home"])->name('home');
 
 Route::get('/projects', [ProjectController::class, "list"])->name('projects');
 Route::post('/projects/add', [ProjectController::class, 'store'])->name('projects.store');
@@ -46,9 +47,9 @@ Route::get('/actus', [ActuController::class, 'list'])->name('actus');
 Route::post('/actu/add', [ActuController::class, "store"])->name('actus.post');
 
 
-Route::get('/contact', [])->name('contact');
-Route::get('/mentions-legales', [])->name('mts');
-Route::get('/partenaires', [])->name('partenaires');
+Route::get('/contact', [HomeController::class, "contact"])->name('contact');
+Route::get('/mentions-legales', [HomeController::class, "mts"])->name('mts');
+Route::get('/partenaires', [HomeController::class, "partenaires"])->name('partenaires');
 
 Route::get('/realisations', [RealisationController::class, "list"])->name('realisations');
 
