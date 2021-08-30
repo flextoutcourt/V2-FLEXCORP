@@ -30,27 +30,59 @@ Route::get('/', function () {
     ]);
 });
 
-Route::prefix('auth', 'verified')->group(function () {
-    Route::get('/discuss', [TchatController::class, 'index'])->name('tchat');
+Route::prefix('auth')->group(function () {
+    Route::get('/parlez-moi', [TchatController::class, 'index'])->name('tchat');
+    //trouver une librairie de tchat laravel
 });
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+/** HOME RELATED CONTENT */
+
 Route::get('/', [HomeController::class, "home"])->name('home');
-
-Route::get('/projects', [ProjectController::class, "list"])->name('projects');
-Route::post('/projects/add', [ProjectController::class, 'store'])->name('projects.store');
-
-Route::get('/actus', [ActuController::class, 'list'])->name('actus');
-Route::post('/actu/add', [ActuController::class, "store"])->name('actus.post');
-
-
-Route::get('/contact', [HomeController::class, "contact"])->name('contact');
+Route::get('/nous-contacter', [HomeController::class, "contact"])->name('contact');
 Route::get('/mentions-legales', [HomeController::class, "mts"])->name('mts');
-Route::get('/partenaires', [HomeController::class, "partenaires"])->name('partenaires');
+Route::get('/mes-partenaires', [HomeController::class, "partenaires"])->name('partenaires');
 
-Route::get('/realisations', [RealisationController::class, "list"])->name('realisations');
+/** //HOME RELATED CONTENT */
+
+/** PROJECTS */
+
+Route::get('/mes-projets', [ProjectController::class, "index"])->name('projects');
+Route::get('/mes-projets/ascenseur-301', [ProjectController::class, 'asc301'])->name('projects.asc301');
+Route::get('/mes-projets/projets-personnels', [ProjectController::class, 'perso'])->name('projects.perso');
+Route::get('/mes-projets/projets-professionels', [ProjectController::class, "pro"])->name('projects.pro');
+
+Route::get('/mes-projets/{project}', [ProjectController::class, 'show'])->name('project.show');
+
+Route::post('/mes-projets/add', [ProjectController::class, 'store'])->name('projects.store');
+Route::get('/mes-projets/edit', [ProjectController::class, 'store'])->name('projects.edit');
+Route::post('/mes-projects/update/{actu}', [ActuController::class, "udpate"])->name('actu.update');
+/** FIN PROJECTS */
+
+/** REALISATIONS */
+
+Route::get('/mes-realisations', [RealisationController::class, "index"])->name('realisations');
+Route::get('/mes-realisations/{realisation}-{slug}', [RealisationController::class, 'show'])->name('realisation.show');
+
+Route::post('/mes-realisations/add', [RealisationsController::class, 'store'])->name('realisations.store');
+Route::get('/mes-realisations/edit/{realisation}', [RealisationsController::class, 'edit'])->name('realisation.edit');
+Route::post('/mes-realisations/update', [RealisationsController::class, 'update'])->name('realisation.udpate');
+
+/** FIN REALISATIONS */
+
+/** ACTUS */
+Route::get('/les-actus-de-flex', [ActuController::class, 'index'])->name('actus');
+
+Route::get('/les-actus-de-flex/{actu}-{slug}', [ActuController::class, "show"])->name('actu.show');
+
+Route::post('/les-actus-de-flex/add', [ActuController::class, "store"])->name('actus.post');
+Route::get('/les-actus-de-flex/edit/{actu}', [ActuController::class, "edit"])->name('actu.edit');
+Route::post('/les-actus-de-flex/update', [ActuController::class, "udpate"])->name('actu.update');
+/** FIN ACTUS */
+
+
 
 require __DIR__.'/auth.php';

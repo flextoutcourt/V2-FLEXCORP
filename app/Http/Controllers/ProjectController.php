@@ -82,4 +82,19 @@ class ProjectController extends Controller
     {
         //
     }
+
+    public function asc301()
+    {
+        //
+    }
+
+    public function perso()
+    {
+        //
+    }
+
+    public function pro()
+    {
+        //
+    }
 }
