@@ -30,8 +30,10 @@ Route::get('/', function () {
     ]);
 });
 
-Route::prefix('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/parlez-moi', [TchatController::class, 'index'])->name('tchat');
+    Route::get('/parlez-moi/messages', [TchatController::class, "fetchMessages"])->name('tchat.fetch');
+    Route::post('/parlez-moi/messages', [TchatController::class, "message"])->name('tchat.send');
     //trouver une librairie de tchat laravel
 });
 
@@ -84,5 +86,5 @@ Route::post('/les-actus-de-flex/update', [ActuController::class, "udpate"])->nam
 /** FIN ACTUS */
 
 
-
+include('messenger.php');
 require __DIR__.'/auth.php';

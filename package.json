@@ -36,6 +36,8 @@
         "tailwindcss": "^2.1.2"
     },
     "dependencies": {
-        "@heroicons/react": "^1.0.1"
+        "@heroicons/react": "^1.0.1",
+        "laravel-echo": "^1.11.2",
+        "pusher-js": "^7.0.3"
     }
 }

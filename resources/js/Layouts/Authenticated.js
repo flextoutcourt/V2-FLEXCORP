@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import ResponsiveNavLink from '../Components/ResponsiveNavLink';
 import { InertiaLink } from '@inertiajs/inertia-react';
 
-export default function Authenticated({ auth, header, children }) {
+export default function Authenticated({ auth, header, children, title }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
     return (
@@ -15,13 +15,13 @@ export default function Authenticated({ auth, header, children }) {
                     <div className="flex justify-between h-16">
                         <div className="flex">
                             <div className="flex-shrink-0 flex items-center">
-                                <InertiaLink href="/">
+                                <InertiaLink href={route('home')} as="button">
                                     <ApplicationLogo className="block h-9 w-auto text-gray-500" />
                                 </InertiaLink>
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink href={route('dashboard')} active={route().current('dashboard')}>
+                                <NavLink href={route('dashboard')} active={route().current('dashboard')} as="button">
                                     Dashboard
                                 </NavLink>
                             </div>
@@ -96,7 +96,7 @@ export default function Authenticated({ auth, header, children }) {
                             href={route('dashboard')}
                             active={route().current('dashboard')}
                         >
-                            Dashboard
+                            {title}
                         </ResponsiveNavLink>
                     </div>
 

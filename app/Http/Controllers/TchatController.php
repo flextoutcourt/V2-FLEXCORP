@@ -2,84 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\Tchat as EventsTchat;
+use App\Models\Message;
 use App\Models\Tchat;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class TchatController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    public function __construct(){
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        //
+        return Inertia::render('Tchat/Main');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function message(Request $request)
     {
-        //
+        event(new EventsTchat(Auth::user()->name, $request->input('message')));
+        $message = new Message();
+        $message->message = $request->input('message');
+        $message->user_id = Auth::user()->id;
+        $message->save();
+
+        return [];
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Tchat  $tchat
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Tchat $tchat)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Tchat  $tchat
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Tchat $tchat)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Tchat  $tchat
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Tchat $tchat)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Tchat  $tchat
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Tchat $tchat)
-    {
-        //
-    }
 }
