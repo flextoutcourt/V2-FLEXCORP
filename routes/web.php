@@ -32,7 +32,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/parlez-moi', [TchatController::class, 'index'])->name('tchat');
-    Route::get('/parlez-moi/messages', [TchatController::class, "fetchMessages"])->name('tchat.fetch');
+    Route::get('/parlez-moi/messages', [TchatController::class, "list"])->name('tchat.list');
     Route::post('/parlez-moi/messages', [TchatController::class, "message"])->name('tchat.send');
     //trouver une librairie de tchat laravel
 });

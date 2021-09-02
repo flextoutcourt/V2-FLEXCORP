@@ -1,76 +1,73 @@
-import { useEffect, useState } from "react";
-import Pusher from 'pusher-js';
-import Message from "./Message";
+import {useEffect, useState} from "react";
+import Pusher from "pusher-js";
+import axios from "axios";
+import Authenticated from "@/Layouts/Authenticated";
+import Message from '../Tchat/Message';
 
-const { default: Authenticated } = require("@/Layouts/Authenticated");
-const { default: axios } = require("axios");
-
-
-
-export default function Main({auth, errors}){
+function App({auth, errors}) {
+    const [oldMessages, setoldMessages] = useState([]);
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState('');
-    const [submitting, setSubmitting] = useState(false);
-    let AllMessages = [];
+    
+    useEffect(() => {
+        _get_messages().then(val => setoldMessages(val));
+      }, []);
+    
+    async function _get_messages(){
+        const promise = axios.get(route("tchat.list"));
+        const responseData = promise.then((data) => data.data);
+        return responseData;
+    }
 
     useEffect(() => {
-
         Pusher.logToConsole = true;
 
-        var pusher = new Pusher("4c81c662885079cc5c1e", {
+        const pusher = new Pusher('4c81c662885079cc5c1e', {
             cluster: 'eu'
         });
 
         const channel = pusher.subscribe('chat');
-        channel.bind('message', (data) => {
-            console.log(data);
-            AllMessages.push(data);
-            setMessages(AllMessages);
-        })
+        channel.bind('message', function (data) {
+            messages.push(data);
+            setMessages(messages);
+        });
     }, []);
 
-    let handleChange = (e) => {
-        setMessage(e.target.value);
-    }
-    
-    const handleSubmit = async e => {
+    const submit = async e => {
         e.preventDefault();
-    
-        await axios.post(route('tchat.send', {message: message}))
-        .then(() => {
-            setMessage('');
-        })
+
+        await axios.post(route('tchat.send', {message}))
+
+        setMessage('');
     }
 
-
-    return(
+    return (
         <Authenticated
             auth={auth}
             errors={errors}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Parlez avec nous</h2>}
+            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}
         >
-            <div className="container mx-auto pt-4">
-                <div className="message-container mb-4 flex flex-col">
+            <div className="container mx-auto">
+                <div className="flex flex-col w-full">
+                    {oldMessages.map((message, key) => {
+                        return (
+                            <Message message={message} key={key} auth={auth} />
+                        )
+                    })}
                     {messages.map((message, key) => {
-                        return(
-                            <Message message={message} key={key}/>
+                        return (
+                            <Message message={message} key={key} auth={auth} />
                         )
                     })}
                 </div>
-                <form onSubmit={handleSubmit} className="bottom-0">
-                    <textarea name="message" id="message" cols="30" rows="10" value={message} onChange={handleChange} className="w-full h-12 rounded-md shadow-md">
-
-                    </textarea>
-                    <i className="fas fa-plane"></i>
-                    {submitting
-                        ?
-                            <input type="submit" name="submit" disabled />
-                        :
-                            <input type="submit" name="submit" />
-
-                    }
+                <form onSubmit={e => submit(e)} className="sticky bottom-0 left-0 right-0">
+                    <input className="rounded-md w-full p-4" placeholder="Write a message" value={message}
+                        onChange={e => setMessage(e.target.value)}
+                    />
                 </form>
             </div>
         </Authenticated>
-    )
+    );
 }
+
+export default App;
