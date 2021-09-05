@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\ActuController;
-use App\Http\Controllers\Home;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RealisationController;
@@ -85,6 +84,4 @@ Route::get('/les-actus-de-flex/edit/{actu}', [ActuController::class, "edit"])->n
 Route::post('/les-actus-de-flex/update', [ActuController::class, "udpate"])->name('actu.update');
 /** FIN ACTUS */
 
-
-include('messenger.php');
 require __DIR__.'/auth.php';
