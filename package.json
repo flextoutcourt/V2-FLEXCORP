@@ -23,11 +23,13 @@
         "browser-sync": "^2.26.14",
         "browser-sync-webpack-plugin": "^2.3.0",
         "jquery": "^3.6",
+        "laravel-echo": "^1.11.2",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
         "popper.js": "^1.16.1",
         "postcss": "^8.2.13",
         "postcss-import": "^14.0.1",
+        "pusher-js": "^7.0.3",
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
         "resolve-url-loader": "^4.0.0",
@@ -36,8 +38,6 @@
         "tailwindcss": "^2.1.2"
     },
     "dependencies": {
-        "@heroicons/react": "^1.0.1",
-        "laravel-echo": "^1.11.2",
-        "pusher-js": "^7.0.3"
+        "@heroicons/react": "^1.0.1"
     }
 }
