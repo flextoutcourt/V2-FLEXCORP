@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Events\Tchat as EventsTchat;
 use App\Models\Message;
-use App\Models\Tchat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;

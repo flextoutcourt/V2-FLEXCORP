@@ -3,6 +3,7 @@ import Pusher from "pusher-js";
 import axios from "axios";
 import Authenticated from "@/Layouts/Authenticated";
 import Message from '../Tchat/Message';
+import Echo from "laravel-echo";
 
 function App({auth, errors}) {
     const [oldMessages, setoldMessages] = useState([]);
@@ -13,7 +14,7 @@ function App({auth, errors}) {
         _get_messages().then(val => setoldMessages(val));
       }, []);
     
-    async function _get_messages(){
+    async function _get_messages(){ 
         const promise = axios.get(route("tchat.list"));
         const responseData = promise.then((data) => data.data);
         return responseData;
@@ -27,18 +28,16 @@ function App({auth, errors}) {
         });
 
         const channel = pusher.subscribe('chat');
-        channel.bind('message', function (data) {
-            messages.push(data);
-            setMessages(messages);
+        channel.bind('message', (data) => {
+            setMessages(messages => ([...messages, data]));
         });
     }, []);
 
     const submit = async e => {
         e.preventDefault();
 
-        await axios.post(route('tchat.send', {message}))
+        await axios.post(route('tchat.send', {message})).then(() => {setMessage('');});
 
-        setMessage('');
     }
 
     return (
@@ -49,14 +48,14 @@ function App({auth, errors}) {
         >
             <div className="container mx-auto">
                 <div className="flex flex-col w-full">
-                    {oldMessages.map((message, key) => {
+                    {oldMessages.map((m, key) => {
                         return (
-                            <Message message={message} key={key} auth={auth} />
+                            <Message message={m} key={key} auth={auth} />
                         )
                     })}
-                    {messages.map((message, key) => {
+                    {messages.map((m, key) => {
                         return (
-                            <Message message={message} key={key} auth={auth} />
+                            <Message message={m} key={key} auth={auth} />
                         )
                     })}
                 </div>
