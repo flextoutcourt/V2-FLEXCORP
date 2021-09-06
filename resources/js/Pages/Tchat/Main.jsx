@@ -24,7 +24,7 @@ function App({auth, errors}) {
         Pusher.logToConsole = true;
 
         const pusher = new Pusher('4c81c662885079cc5c1e', {
-            cluster: 'eu'
+            cluster: 'eu' 
         });
 
         const channel = pusher.subscribe('chat');
