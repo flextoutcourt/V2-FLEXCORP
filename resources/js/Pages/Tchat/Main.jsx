@@ -46,7 +46,7 @@ function App({auth, errors}) {
             errors={errors}
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}
         >
-            <div className="container mx-auto">
+            <div className="container max-w-7xl mx-auto">
                 <div className="flex flex-col w-full">
                     {oldMessages.map((m, key) => {
                         return (
@@ -59,7 +59,7 @@ function App({auth, errors}) {
                         )
                     })}
                 </div>
-                <form onSubmit={e => submit(e)} className="sticky bottom-0 left-0 right-0">
+                <form onSubmit={e => submit(e)} className="sticky bottom-0 left-0 right-0 border-t-2 bg-white">
                     <input className="rounded-md w-full p-4" placeholder="Write a message" value={message}
                         onChange={e => setMessage(e.target.value)}
                     />

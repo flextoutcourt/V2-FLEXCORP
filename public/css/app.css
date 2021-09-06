@@ -32108,6 +32108,12 @@ body{
   font-family: 'Roboto', sans-serif;
 }
 
+.message-gradient {
+  background-image: linear-gradient(to top, #12c2e9, #c471ed, #f64f59);
+  background-attachment: fixed;
+  color: white;
+}
+
 @media (min-width: 640px){
   .sm\:container{
     width: 100%;

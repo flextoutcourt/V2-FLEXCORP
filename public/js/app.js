@@ -12462,7 +12462,7 @@ function Authenticated(_ref) {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
     className: "min-h-screen bg-gray-100",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("nav", {
-      className: "bg-white border-b border-gray-100",
+      className: "bg-white border-b border-gray-100 sticky top-0",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
         className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
@@ -13880,7 +13880,7 @@ function App(_ref) {
       children: "Dashboard"
     }),
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-      className: "container mx-auto",
+      className: "container max-w-7xl mx-auto",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
         className: "flex flex-col w-full",
         children: [oldMessages.map(function (m, key) {
@@ -13898,7 +13898,7 @@ function App(_ref) {
         onSubmit: function onSubmit(e) {
           return submit(e);
         },
-        className: "sticky bottom-0 left-0 right-0",
+        className: "sticky bottom-0 left-0 right-0 border-t-2 bg-white",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("input", {
           className: "rounded-md w-full p-4",
           placeholder: "Write a message",
@@ -13936,28 +13936,28 @@ function Message(_ref) {
   var message = _ref.message,
       auth = _ref.auth;
   return message.user ? auth.user.id === message.user_id ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-    className: "bg-gray-800 rounded-md rounded-br-none self-end max-w-3/4 text-gray-100 p-4 my-2",
+    className: "bg-gray-800 rounded-md rounded-br-none self-end max-w-3/4 text-gray-100 p-4 my-2 message-gradient",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
       children: auth.user.name
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
       children: message.message
     })]
   }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-    className: "bg-gray-800 rounded-md rounded-bl-none self-start max-w-3/4 text-gray-100 p-4 my-2",
+    className: "bg-gray-800 rounded-md rounded-bl-none self-start max-w-3/4 text-gray-100 p-4 my-2 message-gradient",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
       children: (_message$user$0$name = message.user[0].name) !== null && _message$user$0$name !== void 0 ? _message$user$0$name : message.user.name
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
       children: message.message
     })]
   }) : message.auth.id === auth.user.id ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-    className: "bg-gray-800 rounded-md rounded-bl-none self-end max-w-3/4 text-gray-100 p-4 my-2",
+    className: "bg-gray-800 rounded-md rounded-bl-none self-end max-w-3/4 text-gray-100 p-4 my-2 message-gradient",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
       children: message.auth.name
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
       children: message.message
     })]
   }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-    className: "bg-gray-800 rounded-md rounded-bl-none self-start max-w-3/4 text-gray-100 p-4 my-2",
+    className: "bg-gray-800 rounded-md rounded-bl-none self-start max-w-3/4 text-gray-100 p-4 my-2 message-gradient",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
       children: message.auth.name
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
