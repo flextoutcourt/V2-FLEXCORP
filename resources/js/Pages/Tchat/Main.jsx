@@ -36,7 +36,12 @@ function App({auth, errors}) {
     const submit = async e => {
         e.preventDefault();
 
-        await axios.post(route('tchat.send', {message})).then(() => {setMessage('');});
+        await axios.post(route('tchat.send', {message}))
+        .then(() => {
+            setMessage('');
+            window.scroll(0, document.body.scrollHeight);
+        });
+        await axios.post(route('notify.user', {type: message}));
 
     }
 

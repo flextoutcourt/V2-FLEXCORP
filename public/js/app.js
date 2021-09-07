@@ -13857,9 +13857,16 @@ function App(_ref) {
                 message: message
               })).then(function () {
                 setMessage('');
+                window.scroll(0, document.body.scrollHeight);
               });
 
             case 3:
+              _context.next = 5;
+              return axios__WEBPACK_IMPORTED_MODULE_3___default().post(route('notify.user', {
+                type: message
+              }));
+
+            case 5:
             case "end":
               return _context.stop();
           }

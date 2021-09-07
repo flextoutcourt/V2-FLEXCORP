@@ -5,7 +5,10 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RealisationController;
 use App\Http\Controllers\TchatController;
+use App\Models\User;
+use App\Notifications\MessageSent;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -33,6 +36,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/parlez-moi', [TchatController::class, 'index'])->name('tchat');
     Route::get('/parlez-moi/messages', [TchatController::class, "list"])->name('tchat.list');
     Route::post('/parlez-moi/messages', [TchatController::class, "message"])->name('tchat.send');
+
+    Route::post('/notify/users/{type}', function($type){
+        return Notification::sendNow(User::all(), new MessageSent($type));
+    })->name('notify.user');
     //trouver une librairie de tchat laravel
 });
 
