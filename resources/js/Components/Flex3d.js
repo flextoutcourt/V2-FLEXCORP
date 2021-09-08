@@ -20,7 +20,7 @@ export default function Flex3d(){
                 <Model />
             </Stage>
         </Suspense>
-        <OrbitControls ref={ref} minPolarAngle={(Math.PI)/2 - 0.27} maxPolarAngle={(Math.PI) / 2 + 0.27} minAzimuthAngle={-Math.PI/4 - 0.22} maxAzimuthAngle={Math.PI/4 + 0.22} />
+        <OrbitControls ref={ref} minPolarAngle={(Math.PI)/2 - 0.27} maxPolarAngle={(Math.PI) / 2 + 0.27} minAzimuthAngle={-Math.PI/4 - 0.10} maxAzimuthAngle={Math.PI/4 + 0.10} />
         </Canvas>
       )
 }
