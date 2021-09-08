@@ -10,8 +10,7 @@ export default function Home({auth, errors}){
             <div className="w-full">
                 <div className="flex gap-4">
                     <div className="w-1/3 p-4 bg-gray-800 rounded-xl shadow-lg">
-                        Importer le composant Three JS ici
-                        {/* https://d1a370nemizbjq.cloudfront.net/b96a3f18-d766-4d76-9b17-50203415509f.glb */}
+                        <h3 className="text-2xl text-white">PUTAIN CA MARCHE J'SUIS TROP CONTENT</h3>
                         <Flex3d />
                     </div>
                     <div className="w-2/3 p-4 bg-gray-800 rounded-xl shadow-lg">
