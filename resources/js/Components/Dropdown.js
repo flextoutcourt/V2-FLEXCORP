@@ -86,8 +86,15 @@ const Link = ({ href, method = 'post', as = 'a', children }) => {
     );
 };
 
+const Separator = () => {
+    return (
+        <div className="h-0.5 bg-gray-900 w-full"></div>
+    )
+}
+
 Dropdown.Trigger = Trigger;
 Dropdown.Content = Content;
 Dropdown.Link = Link;
+Dropdown.Separator = Separator;
 
 export default Dropdown;

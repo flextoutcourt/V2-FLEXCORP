@@ -17,7 +17,7 @@ class HomeController extends Controller
      */
     public function home()
     {
-        return Inertia::render('Home');
+        return Inertia::render('Home.jsx');
     }
 
     public function mts()

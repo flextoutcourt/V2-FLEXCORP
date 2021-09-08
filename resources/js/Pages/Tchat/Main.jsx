@@ -49,7 +49,7 @@ function App({auth, errors}) {
         <Authenticated
             auth={auth}
             errors={errors}
-            header={<h2 className="font-semibold text-xl text-gray-100 leading-tight">Dashboard</h2>}
+            header={<h2 className="font-semibold text-xl text-gray-100 leading-tight">Laissez votre avis sur le site</h2>}
         >
             <div className="container max-w-7xl mx-auto">
                 <div className="flex flex-col w-full">

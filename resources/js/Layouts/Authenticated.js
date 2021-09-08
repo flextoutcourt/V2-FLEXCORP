@@ -5,6 +5,21 @@ import React, { useState } from 'react';
 import ResponsiveNavLink from '../Components/ResponsiveNavLink';
 import { InertiaLink } from '@inertiajs/inertia-react';
 
+const navigation = [
+    {
+      'name': 'Mes projets',
+      'link': 'projects'
+    },
+    {
+      'name': 'Actualité',
+      'link': 'actus'
+    },
+    {
+      'name': 'Tchat',
+      'link': 'tchat'
+    }
+]
+
 export default function Authenticated({ auth, header, children, title }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
@@ -20,10 +35,12 @@ export default function Authenticated({ auth, header, children, title }) {
                                 </InertiaLink>
                             </div>
 
-                            <div className={"hidden bg-gray-800 space-x-8 sm:-my-px sm:ml-10 sm:flex"}>
-                                <NavLink href={route('dashboard')} active={route().current('dashboard')} as="button">
-                                    Dashboard
-                                </NavLink>
+                            <div className={"hidden bg-gray-800 sm:-my-px sm:flex"}>
+                                {navigation.map((item, key) => (
+                                    <NavLink href={route(item.link)} active={route().current(item.link)} as="button">
+                                        {item.name}
+                                    </NavLink>
+                                ))}
                             </div>
                         </div>
 
@@ -55,6 +72,10 @@ export default function Authenticated({ auth, header, children, title }) {
                                     </Dropdown.Trigger>
 
                                     <Dropdown.Content>
+                                        <Dropdown.Link href={route('dashboard')} method="get" as="button">
+                                            {auth.user.name}
+                                        </Dropdown.Link>
+                                        <Dropdown.Separator/>
                                         <Dropdown.Link href={route('logout')} method="post" as="button">
                                             Log Out
                                         </Dropdown.Link>
@@ -121,7 +142,7 @@ export default function Authenticated({ auth, header, children, title }) {
                 </header>
             )}
 
-            <main className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{children}</main>
+            <main className="max-w-7xl mx-auto py-6 pb-0 px-4 sm:px-6 lg:px-8">{children}</main>
         </div>
     );
 }

@@ -1,16 +1,32 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { InertiaLink } from '@inertiajs/inertia-react';
+import Authenticated from '@/Layouts/Authenticated';
 import Guest from '@/Layouts/Guest';
 
-export default class Pro extends Component{
+export default function Pro({auth, errors}){
 
-    constructor(props){
-        super(props);
+    function content() {
+        return (
+        <div>
+            Projets professionels
+        </div>
+        )
     }
 
-    render(){
-        return(
-            <Guest title="Projets professionels">
-                Projets professionels
+    if(auth.user){
+        return (
+            <Authenticated
+                auth={auth}
+                errors={errors}
+                header={<h2 className="font-semibold text-xl text-gray-100 leading-tight">Projets pro</h2>}
+            >
+                {content()}
+            </Authenticated>
+        )
+    }else{
+        return (
+            <Guest>
+                {content()}
             </Guest>
         )
     }
