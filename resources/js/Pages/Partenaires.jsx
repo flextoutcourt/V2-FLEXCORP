@@ -17,14 +17,17 @@ export default function Partenaires({auth, errors}){
             <Authenticated
                 auth={auth}
                 errors={errors}
-                header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}
+                header={<h2 className="font-semibold text-xl text-gray-100 leading-tight">Dashboard</h2>}
             >
                 {content()}
             </Authenticated>
         )
     }else{
         return (
-            <Guest>
+            <Guest
+                errors={errors}
+                header={<h2 className="font-semibold text-xl text-gray-100 leading-tight">Dashboard</h2>}
+            >
                 {content()}
             </Guest>
         )

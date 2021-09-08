@@ -31,7 +31,10 @@ export default function ResetPassword({ token, email }) {
     };
 
     return (
-        <Guest>
+        <Guest
+                errors={errors}
+                header={<h2 className="font-semibold text-xl text-gray-100 leading-tight">Dashboard</h2>}
+            >
             <ValidationErrors errors={errors} />
 
             <form onSubmit={submit}>

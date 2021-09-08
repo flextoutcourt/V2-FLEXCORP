@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Actu extends Model
 {
     use HasFactory;
+
+    protected $fillable = [];
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

@@ -39,6 +39,10 @@
         "tailwindcss": "^2.1.2"
     },
     "dependencies": {
-        "@heroicons/react": "^1.0.1"
+        "@heroicons/react": "^1.0.1",
+        "@react-three/drei": "^7.7.0",
+        "@react-three/fiber": "^7.0.6",
+        "react-spring": "^9.2.4",
+        "three": "^0.132.2"
     }
 }

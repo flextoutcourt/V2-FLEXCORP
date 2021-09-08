@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Realisation;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class RealisationController extends Controller
 {
@@ -14,7 +15,7 @@ class RealisationController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Realisations/Index');
     }
 
     /**
@@ -46,7 +47,7 @@ class RealisationController extends Controller
      */
     public function show(Realisation $realisation)
     {
-        //
+        return Inertia::render('Realisations/Show', ['realisation' => $realisation]);
     }
 
     /**

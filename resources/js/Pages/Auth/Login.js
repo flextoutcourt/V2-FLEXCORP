@@ -32,7 +32,10 @@ export default function Login({ status, canResetPassword }) {
     };
 
     return (
-        <Guest>
+        <Guest
+                errors={errors}
+                header={<h2 className="font-semibold text-xl text-gray-100 leading-tight">Dashboard</h2>}
+            >
             {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
 
             <ValidationErrors errors={errors} />

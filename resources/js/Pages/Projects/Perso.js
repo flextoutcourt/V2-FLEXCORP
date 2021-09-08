@@ -25,7 +25,10 @@ export default function Perso({auth, errors}){
         )
     }else{
         return (
-            <Guest>
+            <Guest
+                errors={errors}
+                header={<h2 className="font-semibold text-xl text-gray-100 leading-tight">Dashboard</h2>}
+            >
                 {content()}
             </Guest>
         )

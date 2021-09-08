@@ -28,7 +28,10 @@ export default function ConfirmPassword() {
     };
 
     return (
-        <Guest>
+        <Guest
+                errors={errors}
+                header={<h2 className="font-semibold text-xl text-gray-100 leading-tight">Dashboard</h2>}
+            >
             <div className="mb-4 text-sm text-gray-600">
                 This is a secure area of the application. Please confirm your password before continuing.
             </div>

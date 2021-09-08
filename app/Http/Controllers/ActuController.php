@@ -15,7 +15,12 @@ class ActuController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Actus/index');
+        return Inertia::render('Actus/Index');
+    }
+
+    public function new()
+    {
+        return Inertia::render('Actus/New');
     }
 
     /**

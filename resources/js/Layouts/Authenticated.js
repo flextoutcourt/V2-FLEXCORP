@@ -11,6 +11,10 @@ const navigation = [
       'link': 'projects'
     },
     {
+      'name': 'Mes réalisations',
+      'link': 'realisations',  
+    },
+    {
       'name': 'Actualité',
       'link': 'actus'
     },
@@ -37,7 +41,7 @@ export default function Authenticated({ auth, header, children, title }) {
 
                             <div className={"hidden bg-gray-800 sm:-my-px sm:flex"}>
                                 {navigation.map((item, key) => (
-                                    <NavLink href={route(item.link)} active={route().current(item.link)} as="button">
+                                    <NavLink href={route(item.link)} key={key} active={route().current(item.link)} as="button">
                                         {item.name}
                                     </NavLink>
                                 ))}
