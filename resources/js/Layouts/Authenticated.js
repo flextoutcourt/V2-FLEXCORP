@@ -9,8 +9,8 @@ export default function Authenticated({ auth, header, children, title }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
     return (
-        <div className="min-h-screen bg-gray-100">
-            <nav className="bg-white border-b border-gray-100 sticky top-0">
+        <div className="min-h-screen bg-gray-900">
+            <nav className="bg-gray-800 border-b border-indigo-500 sticky top-0 z-50">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
                         <div className="flex">
@@ -20,7 +20,7 @@ export default function Authenticated({ auth, header, children, title }) {
                                 </InertiaLink>
                             </div>
 
-                            <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <div className={"hidden bg-gray-800 space-x-8 sm:-my-px sm:ml-10 sm:flex"}>
                                 <NavLink href={route('dashboard')} active={route().current('dashboard')} as="button">
                                     Dashboard
                                 </NavLink>
@@ -34,7 +34,7 @@ export default function Authenticated({ auth, header, children, title }) {
                                         <span className="inline-flex rounded-md">
                                             <button
                                                 type="button"
-                                                className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
+                                                className="inline-flex bg-indigo-500 items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-100 hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
                                             >
                                                 {auth.user.name}
 
@@ -100,7 +100,7 @@ export default function Authenticated({ auth, header, children, title }) {
                         </ResponsiveNavLink>
                     </div>
 
-                    <div className="pt-4 pb-1 border-t border-gray-200">
+                    <div className="pt-4 pb-1 border-t bg-indigo-500 border-gray-200">
                         <div className="px-4">
                             <div className="font-medium text-base text-gray-800">{auth.user.name}</div>
                             <div className="font-medium text-sm text-gray-500">{auth.user.email}</div>
@@ -116,12 +116,12 @@ export default function Authenticated({ auth, header, children, title }) {
             </nav>
 
             {header && (
-                <header className="bg-white shadow">
+                <header className="bg-gray-800 shadow">
                     <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
                 </header>
             )}
 
-            <main>{children}</main>
+            <main className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{children}</main>
         </div>
     );
 }

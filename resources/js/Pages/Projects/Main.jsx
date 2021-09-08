@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Guest from '@/Layouts/Guest';
+import { InertiaLink } from '@inertiajs/inertia-react';
 
 const navigation = [
     {
@@ -27,9 +28,9 @@ export default class Project_main extends Component{
             <Guest title="Mes projets">
                 <div className="grid grid-cols-3 gap-4">
                     {navigation.map((item, itemIdx) => (
-                        <a href={route(item.link)} key={itemIdx} className="w-full bg-gray-100 rounded-md shadow-md p-4 transform-gpu hover:scale-105 duration-300">
+                        <InertiaLink method="get" as="button" href={route(item.link)} key={itemIdx} className="w-full bg-gray-100 rounded-md shadow-md p-4 transform-gpu hover:scale-105 duration-300">
                             {item.name}
-                        </a>
+                        </InertiaLink>
                     ))}
                 </div>
             </Guest>

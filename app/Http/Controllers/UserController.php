@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Actu;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class ActuController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +14,7 @@ class ActuController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Actus/index');
+        return Inertia::render('Dashboard');
     }
 
     /**
@@ -42,10 +41,10 @@ class ActuController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Actu  $actu
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Actu $actu)
+    public function show($id)
     {
         //
     }
@@ -53,10 +52,10 @@ class ActuController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Actu  $actu
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Actu $actu)
+    public function edit($id)
     {
         //
     }
@@ -65,10 +64,10 @@ class ActuController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Actu  $actu
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Actu $actu)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -76,10 +75,10 @@ class ActuController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Actu  $actu
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Actu $actu)
+    public function destroy($id)
     {
         //
     }

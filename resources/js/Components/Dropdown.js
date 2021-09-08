@@ -63,7 +63,7 @@ const Content = ({ align = 'right', width = '48', contentClasses = 'py-1 bg-whit
                         className={`absolute z-50 mt-2 rounded-md shadow-lg ${alignmentClasses} ${widthClasses}`}
                         onClick={() => setOpen(false)}
                     >
-                        <div className={`rounded-md ring-1 ring-black ring-opacity-5 ` + contentClasses}>
+                        <div className={`rounded-md bg-gray-800 ring-1 ring-black ring-opacity-5 ` + contentClasses}>
                             {children}
                         </div>
                     </div>
@@ -79,7 +79,7 @@ const Link = ({ href, method = 'post', as = 'a', children }) => {
             href={href}
             method={method}
             as={as}
-            className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
+            className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-100 hover:text-indigo-500 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out"
         >
             {children}
         </InertiaLink>

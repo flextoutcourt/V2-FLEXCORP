@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Contact;
 use App\Models\Home;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class HomeController extends Controller
 {
@@ -15,16 +17,18 @@ class HomeController extends Controller
      */
     public function home()
     {
-        return view('pages.home');
+        return Inertia::render('Home');
     }
 
     public function mts()
     {
-        return view('pages.mentions_legales');
+        return Inertia::render('Mentions');
+        // return view('pages.mentions_legales');
     }
 
     public function partenaires()
     {
+        return Inertia::render('Partenaires');
         return view('pages.partenaires');
     }
 

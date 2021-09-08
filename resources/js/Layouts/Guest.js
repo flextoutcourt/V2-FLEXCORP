@@ -1,7 +1,9 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Fragment } from 'react'
+import Dropdown from '../Components/Dropdown';
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
+import { InertiaLink } from '@inertiajs/inertia-react';
 
 const navigation = [
       {
@@ -11,9 +13,12 @@ const navigation = [
       {
         'name': 'Actualité',
         'link': 'actus'
+      },
+      {
+        'name': 'Tchat',
+        'link': 'tchat'
       }
   ]
-const rightMenu = ['Nous contacter'];
 const profile = ['Your Profile', 'Settings', 'Sign out']
 
 function classNames(...classes) {
@@ -42,27 +47,54 @@ export default function Example({children}) {
                         itemIdx === 0 ? (
                           <Fragment key={itemIdx}>
                             {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
-                            <a href={route(item.link)} className="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium">
+                            <InertiaLink as='button' href={route(item.link)} method="get" className="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium">
                               {item.name}
-                            </a>
+                            </InertiaLink>
                           </Fragment>
                         ) : (
-                          <a
-                            key={itemIdx}
-                            href={route(item.link)}
-                            className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                          >
+                          <InertiaLink as="button" key={itemIdx} href={route(item.link)} method="get" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                             {item.name}
-                          </a>
+                          </InertiaLink>
                         )
                       )}
                     </div>
                   </div>
                 </div>
                 <div className="hidden md:block">
-                    {rightMenu.map((item) => (
-                        <a className="px-4 py-2 bg-indigo-500 text-white rounded-sm">{item}</a>
-                    ))}
+                  <Dropdown>
+                    <Dropdown.Trigger>
+                        <span className="inline-flex rounded-md">
+                            <button
+                                type="button"
+                                className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-100 bg-indigo-500 hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
+                            >
+                                Utilisateur
+
+                                <svg
+                                    className="ml-2 -mr-0.5 h-4 w-4"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        fillRule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clipRule="evenodd"
+                                    />
+                                </svg>
+                            </button>
+                        </span>
+                    </Dropdown.Trigger>
+
+                    <Dropdown.Content>
+                        <Dropdown.Link href={route('login')} method="get" as="button">
+                            Connexion
+                        </Dropdown.Link>
+                        <Dropdown.Link href={route('register')} method="get" as="button">
+                            Inscription
+                        </Dropdown.Link>
+                    </Dropdown.Content>
+                </Dropdown>
                 </div>
                 <div className="-mr-2 flex md:hidden">
                   {/* Mobile menu button */}
@@ -84,18 +116,19 @@ export default function Example({children}) {
                   itemIdx === 0 ? (
                     <Fragment key={itemIdx}>
                       {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
-                      <a href={route(item.link)} className="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium">
+                      <InertiaLink href={route(item.link)} className="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium" as="button">
                         {item.name}
-                      </a>
+                      </InertiaLink>
                     </Fragment>
                   ) : (
-                    <a
+                    <InertiaLink
                       key={itemIdx}
                       href={route(item.link)}
                       className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                      as="button"
                     >
                       {item.name}
-                    </a>
+                    </InertiaLink>
                   )
                 )}
               </div>
