@@ -82,10 +82,10 @@ export default function Guest({children, header, errors}) {
                                 </Dropdown.Trigger>
 
                                 <Dropdown.Content>
-                                    <Dropdown.Link href={route('login')} method="post" as="button">
+                                    <Dropdown.Link href={route('login')} method="get" as="a">
                                         Connexion
                                     </Dropdown.Link>
-                                    <Dropdown.Link href={route('register')} method="post" as="button">
+                                    <Dropdown.Link href={route('register')} method="get" as="a">
                                         Inscription
                                     </Dropdown.Link>
                                 </Dropdown.Content>
@@ -132,10 +132,10 @@ export default function Guest({children, header, errors}) {
 
                 <div className="pt-4 pb-1 border-t bg-indigo-500 border-gray-200">
                     <div className="mt-3 space-y-1">
-                        <ResponsiveNavLink method="post" href={route('login')} as="button">
+                        <ResponsiveNavLink method="get" href={route('login')}>
                             Connexion
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink method="post" href={route('register')} as="button">
+                        <ResponsiveNavLink method="get" href={route('register')}>
                             Inscription
                         </ResponsiveNavLink>
                     </div>

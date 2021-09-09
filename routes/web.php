@@ -35,6 +35,8 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [UserController::class, 'index'])->name('dashboard');
+    Route::get('/user/edit/{user}', [UserController::class, 'edit'])->name('user.edit');
+    Route::post('/user/update', [UserController::class, 'update'])->name('user.update');
 
     Route::get('/parlez-moi', [TchatController::class, 'index'])->name('tchat');
     Route::get('/parlez-moi/messages', [TchatController::class, "list"])->name('tchat.list');

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\User\Update;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
 
 class UserController extends Controller
@@ -57,19 +60,31 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        return Inertia::render('Auth/Edit');
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\User $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Update $request,User $user)
     {
-        //
+        if(!Hash::check($request->input('password'), $request->user()->password)){
+            return back()->withErrors([
+                'password' => 'Votre mot de passe ne correspond pas',
+            ]);
+        }
+
+        $user = User::find($request->user()->id);
+        $user->name = $request->validated()['name'];
+        $user->email = $request->validated()['email'];
+
+        $user->update();
+
+        return redirect()->intended();
     }
 
     /**

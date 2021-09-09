@@ -22,7 +22,7 @@ export default function Dashboard(props) {
                                 <h4 className=" text-center sm:text-left"><a className="hover:text-indigo-500 duration-300 whitespace-pre-wrap" href={"mailto:"+props.auth.user.email}>{props.auth.user.email}</a></h4>
                             </div>
                         </div>
-                        <InertiaLink href="#modify" className="my-3 block w-full bg-indigo-500 py-1 px-3 rounded-md text-white hover:bg-indigo-600 cursor-pointer duration-200">
+                        <InertiaLink href={route('user.edit', {user: props.auth.user})} className="my-3 block w-full bg-indigo-500 py-1 px-3 rounded-md text-white hover:bg-indigo-600 cursor-pointer duration-200">
                            Modifier mes informations 
                         </InertiaLink>
                         <InertiaLink href="#modify" className="my-3 block w-full bg-red-500 py-1 px-3 rounded-md text-white hover:bg-red-600 cursor-pointer duration-200">

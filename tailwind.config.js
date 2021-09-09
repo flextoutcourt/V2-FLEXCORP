@@ -20,6 +20,7 @@ module.exports = {
         extend: {
             opacity: ['disabled'],
         },
+        animation: ['responsive', 'motion-reduce', 'motion-safe']
     },
 
     plugins: [require('@tailwindcss/forms'), require('tailwind-scrollbar')],

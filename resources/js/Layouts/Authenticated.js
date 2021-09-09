@@ -1,9 +1,10 @@
 import ApplicationLogo from '../Components/ApplicationLogo';
 import Dropdown from '../Components/Dropdown';
 import NavLink from '../Components/NavLink';
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import ResponsiveNavLink from '../Components/ResponsiveNavLink';
 import { InertiaLink } from '@inertiajs/inertia-react';
+import Spinner from '@/Components/Spinner';
 
 const navigation = [
     {
@@ -146,7 +147,11 @@ export default function Authenticated({ auth, header, children, title }) {
                 </header>
             )}
 
-            <main className="max-w-7xl mx-auto py-6 pb-0 px-4 sm:px-6 lg:px-8">{children}</main>
+            <main className="max-w-7xl mx-auto py-6 pb-0 px-4 sm:px-6 lg:px-8">
+                <Suspense fallback={<Spinner/>}>
+                    {children}
+                </Suspense>
+            </main>
         </div>
     );
 }
