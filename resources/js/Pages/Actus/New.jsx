@@ -2,34 +2,84 @@ import React, { Component } from 'react';
 import Authenticated from '@/Layouts/Authenticated';
 import Guest from '@/Layouts/Guest';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import ClassicEditor from 'ckeditor5';
 
 export default function New({auth, errors}){
 
     function content(){
         return(
             <div>
-                <h2>Using CKEditor 5 build in React</h2>
                 <CKEditor
                     editor={ ClassicEditor }
-                    autosave={true}
-                    onReady={ editor => {
-                        // You can store the "editor" and use when it is needed.
-                        console.log( 'Editor is ready to use!', editor );
-                    } }
-                    onChange={ ( event, editor ) => {
-                        const data = editor.getData();
-                        console.log( { event, editor, data } );
-                    } }
-                    onBlur={ ( event, editor ) => {
-                        console.log( 'Blur.', editor );
-                    } }
-                    onFocus={ ( event, editor ) => {
-                        console.log( 'Focus.', editor );
-                    } }
                     config={{
                         ckfinder: {
                             uploadUrl: route('api.ckupload'),
+                        },
+                        autosave: {
+                            save(editor) {
+                                console.log('here');
+                            },
+                            waitingTime: 10000,
+                        },
+                        toolbar: {
+                            items: [
+                                'heading',
+                                '|',
+                                'bold',
+                                'italic',
+                                'link',
+                                'bulletedList',
+                                'numberedList',
+                                'horizontalLine',
+                                '|',
+                                'fontSize',
+                                'fontColor',
+                                'fontFamily',
+                                'outdent',
+                                'indent',
+                                '|',
+                                'uploadImage',
+                                'imageResize',
+                                'blockQuote',
+                                'codeBlock',
+                                'insertTable',
+                                'mediaEmbed',
+                                'undo',
+                                'redo',
+                                'todoList',
+                            ]
+                        },
+                        // mention: {
+                        //     feeds: [
+                        //         {
+                        //             marker: '@',
+                        //             feed: ['Flex', 'Flexouille', 'FlexLaD'],
+                        //             minimumCharacter: 1
+                        //         }
+                        //     ]
+                        // },
+                        image: {
+                            toolbar: [
+                                'imageStyle:inline',
+                                'imageStyle:block',
+                                'imageStyle:side',
+                                'imageResize',
+                                '|',
+                                'toggleImageCaption',
+                                'imageTextAlternative',
+                            ]
+                        },
+                        table: {
+                            contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells']
+                        },
+                        language: 'fr',
+                        codeBlock: {
+                            languages: [
+                                {language: 'css', label: "CSS", class:"css"},
+                                {language: 'javascript', label: "JavaScript", class: "js javascript js-code"},
+                                {language: 'html', label: "HTML", class:"html"},
+                                {language: 'php', label: "PHP", class:'php'},
+                            ]
                         }
                     }}
                 />

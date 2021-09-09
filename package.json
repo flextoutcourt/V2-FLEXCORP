@@ -41,6 +41,7 @@
     "dependencies": {
         "@ckeditor/ckeditor5-autosave": "^29.2.0",
         "@ckeditor/ckeditor5-build-classic": "^29.2.0",
+        "@ckeditor/ckeditor5-code-block": "^29.2.0",
         "@ckeditor/ckeditor5-react": "^3.0.2",
         "@heroicons/react": "^1.0.1",
         "@react-three/drei": "^7.7.0",
