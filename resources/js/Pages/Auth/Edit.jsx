@@ -41,7 +41,7 @@ export default function Edit({auth, status, canResetPassword}){
         <Authenticated
             auth={auth}
             errors={errors}
-            header={<h2 className="font-semibold text-xl text-gray-100 leading-tight">Dashboard</h2>}
+            header={<h2 className="font-semibold text-xl text-gray-100 leading-tight">Modification : {auth.user.name}</h2>}
         >
             <ValidationErrors errors={errors} visible={true} />
             <form onSubmit={submit}>

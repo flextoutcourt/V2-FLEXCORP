@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CKEditorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -22,3 +23,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('get_user_status', function(){
     echo (Auth::check() ? true : false);
 })->name('api.get_user_status');
+
+Route::post('/ck_upload', [CKEditorController::class, 'upload_file'])->name('api.ckupload');

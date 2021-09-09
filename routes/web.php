@@ -42,9 +42,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/parlez-moi/messages', [TchatController::class, "list"])->name('tchat.list');
     Route::post('/parlez-moi/messages', [TchatController::class, "message"])->name('tchat.send');
 
+    Route::get('/les-actus-de-flex/new', [ActuController::class, "new"])->name('actus.new');
+
     Route::post('/notify/users/{type}', function($type){
         return Notification::sendNow(User::all(), new MessageSent($type));
     })->name('notify.user');
+    
     //trouver une librairie de tchat laravel
 });
 

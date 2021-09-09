@@ -10,7 +10,7 @@ export default function Dashboard(props) {
         <Authenticated
             auth={props.auth}
             errors={props.errors}
-            header={<h2 className="font-semibold text-xl text-gray-100 leading-tight">Dashboard</h2>}
+            header={<h2 className="font-semibold text-xl text-gray-100 leading-tight">Tableau de bord</h2>}
         >
             <div className="md:flex justify-start gap-4">
                 <div className="md:w-1/3 w-full md:mb-0 mb-4 bg-gray-800 text-white shadow-lg px-2 py-4 rounded-lg relative overflow-hidden scrollbar-none">

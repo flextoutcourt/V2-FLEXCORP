@@ -84,7 +84,7 @@ class UserController extends Controller
 
         $user->update();
 
-        return redirect()->intended();
+        return redirect()->route('dashboard')->with('success', 'Vos informations ont bien été modifiées');
     }
 
     /**
