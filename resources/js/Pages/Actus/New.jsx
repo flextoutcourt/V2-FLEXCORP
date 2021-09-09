@@ -12,6 +12,7 @@ export default function New({auth, errors}){
                 <h2>Using CKEditor 5 build in React</h2>
                 <CKEditor
                     editor={ ClassicEditor }
+                    autosave={true}
                     onReady={ editor => {
                         // You can store the "editor" and use when it is needed.
                         console.log( 'Editor is ready to use!', editor );

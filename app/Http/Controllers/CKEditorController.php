@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Illustrations;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CKEditorController extends Controller
 {
@@ -17,8 +18,9 @@ class CKEditorController extends Controller
 
             $fileNameToStore = $fileName.'_'.time().'.'.$extension;
 
-            $request->file('upload')->storeAs('/storage/images/actus', $fileNameToStore);
-            $url = asset('images/actus/'.$fileNameToStore); 
+            $request->file('upload')->storeAs('/public/actus/', $fileNameToStore);
+            // $url = asset('storage/actus/'.$fileNameToStore); 
+            $url = asset('storage/actus/'.$fileNameToStore);
             return response()->json(['fileName' => $fileNameToStore, 'uploaded'=> 1, 'url' => $url]);
         }
     }
