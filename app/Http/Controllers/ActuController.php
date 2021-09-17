@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Actu;
+use App\Models\Category;
+use App\Models\Drafts;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -18,9 +20,24 @@ class ActuController extends Controller
         return Inertia::render('Actus/Index');
     }
 
+    public function get()
+    {
+        $data = [];
+        $data['actus'] = Actu::all();
+        $data['categories'] = Category::all();
+        return $data;
+    }
+
     public function new()
     {
         return Inertia::render('Actus/New');
+    }
+
+    public function draft(int $draft)
+    {
+        // dd($draft);
+        $draft = Drafts::find($draft);
+        return Inertia::render('Actus/Draft', ['draft' => $draft]);
     }
 
     /**

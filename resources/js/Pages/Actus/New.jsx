@@ -3,8 +3,17 @@ import Authenticated from '@/Layouts/Authenticated';
 import Guest from '@/Layouts/Guest';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from 'ckeditor5';
+import axios from 'axios';
 
 export default function New({auth, errors}){
+
+    let autosave = (editor) => {
+        console.log(editor.getData());
+        axios.post(route('api.ckautosave'), {editor: editor.getData(), id: editor.id, user_id: auth.user.id})
+        .then((data) => {
+            console.log(data);
+        })
+    }
 
     function content(){
         return(
@@ -17,9 +26,9 @@ export default function New({auth, errors}){
                         },
                         autosave: {
                             save(editor) {
-                                console.log('here');
+                                autosave(editor);
                             },
-                            waitingTime: 10000,
+                            waitingTime: 3000,
                         },
                         toolbar: {
                             items: [
@@ -72,7 +81,6 @@ export default function New({auth, errors}){
                         table: {
                             contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells']
                         },
-                        language: 'fr',
                         codeBlock: {
                             languages: [
                                 {language: 'css', label: "CSS", class:"css"},

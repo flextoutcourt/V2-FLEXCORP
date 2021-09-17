@@ -1,13 +1,29 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import Authenticated from '@/Layouts/Authenticated';
 import Guest from '@/Layouts/Guest';
 
 export default function Actus   ({auth, errors}){
 
+    const [data, setData] = useState([]);
+    
+    useEffect(() => {
+        _get_actus().then(data => setData(data));
+    }, []);
+    
+    async function _get_actus(){
+        const promise = axios.get(route('api.get_actus'));
+        const responseData = promise.then((data) => data.data);
+        return responseData;
+    }
+
     function content(){
         return(
-            <div>
-                Actualités
+            <div class="grid grid-cols-3 gap-4">
+                {data.actus.map((item, key) => (
+                    <div className="bg-gray-800" key={key}>
+                        {item.title}
+                    </div>
+                ))}
             </div>
         )
     }

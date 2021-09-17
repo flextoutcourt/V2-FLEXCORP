@@ -43,6 +43,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/parlez-moi/messages', [TchatController::class, "message"])->name('tchat.send');
 
     Route::get('/les-actus-de-flex/new', [ActuController::class, "new"])->name('actus.new');
+    Route::get('/les-actus-de-flex/draft/{id}/edit', [ActuController::class, "draft"])->name('actus.draft.edit');
+    Route::get('/user/mes-brouillons', [UserController::class, "drafts"])->name('user.draft');
 
     Route::post('/notify/users/{type}', function($type){
         return Notification::sendNow(User::all(), new MessageSent($type));
@@ -89,10 +91,6 @@ Route::post('/mes-realisations/update', [RealisationsController::class, 'update'
 Route::get('/les-actus-de-flex', [ActuController::class, 'index'])->name('actus');
 
 Route::get('/les-actus-de-flex/{actu}-{slug}', [ActuController::class, "show"])->name('actu.show');
-
-Route::post('/les-actus-de-flex/add', [ActuController::class, "store"])->name('actus.post');
-Route::get('/les-actus-de-flex/edit/{actu}', [ActuController::class, "edit"])->name('actu.edit');
-Route::post('/les-actus-de-flex/update', [ActuController::class, "udpate"])->name('actu.update');
 /** FIN ACTUS */
 
 require __DIR__.'/auth.php';

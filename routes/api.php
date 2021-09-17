@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\ActuController;
 use App\Http\Controllers\CKEditorController;
+use App\Http\Controllers\DraftsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -25,3 +27,8 @@ Route::get('get_user_status', function(){
 })->name('api.get_user_status');
 
 Route::post('/ck_upload', [CKEditorController::class, 'upload_file'])->name('api.ckupload');
+Route::post('/autosave', [CKEditorController::class, 'autosave'])->name('api.ckautosave');
+
+Route::get('/user/get_drafts/{user_id}', [DraftsController::class, 'get'])->name('api.get_drafts');
+
+Route::get('/user/get_actus', [ActuController::class, 'get'])->name('api.get_actus');

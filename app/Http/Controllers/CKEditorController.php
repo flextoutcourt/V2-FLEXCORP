@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Illustrations;
+use App\Http\Requests\CKEditorRequest;
+use App\Models\Drafts;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class CKEditorController extends Controller
 {
@@ -23,5 +24,24 @@ class CKEditorController extends Controller
             $url = asset('storage/actus/'.$fileNameToStore);
             return response()->json(['fileName' => $fileNameToStore, 'uploaded'=> 1, 'url' => $url]);
         }
+    }
+
+    public function autosave(Request $request)
+    {
+        $draft = Drafts::find($request->id);
+        if($draft){
+            $draft->content = $request->editor;
+        }else{
+            $d = new Drafts();
+            $d->draft_id = $request->id;
+            $d->user_id = $request->user_id;
+            $d->content = $request->editor;
+            $d->save();
+        }
+    }
+        
+
+    public function save(CKEditorRequest $request){
+        dd($request->validated());
     }
 }
