@@ -1,10 +1,35 @@
 import Authenticated from '@/Layouts/Authenticated';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+
+import Input from '@/Components/Input';
+import Label from '@/Components/Label';
 
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from 'ckeditor5'
 
+import { useForm } from '@inertiajs/inertia-react';
+import axios from 'axios';
+import CategoryModal from '@/Components/CategoryModal';
+
 const Drafts = ({auth, errors, draft}) => {
+
+    const { data, setData, post, processing, reset } = useForm({
+        subTitle: '',
+        illustration: ''
+    });
+
+    const [categories, setCategories] = useState([]);
+    const [modalOpened, setModalOpened] = useState(false);
+    
+    useEffect(() => {
+        _get_categories().then(data => setCategories(data));
+    }, []);
+    
+    async function _get_categories(){
+        const promise = axios.get(route('api.get_categories'));
+        const responseData = promise.then((data) => data.data);
+        return responseData;
+    }
 
     let autosave = (editor) => {
         console.log(editor.getData());
@@ -14,9 +39,29 @@ const Drafts = ({auth, errors, draft}) => {
         })
     }
 
+    const onHandleChange = (event) => {
+        setData(event.target.name, event.target.type === 'checkbox' ? event.target.checked : event.target.value);
+    }
+
     let content = () => {
         return (
-            <CKEditor
+            <>
+                <div className="mb-4">
+                    <Label forInput="subtitle" value="sous-titre" />
+                    <Input
+                        type="text"
+                        name="subtitle"
+                        value={data.subTitle}
+                        className="mt-1 block w-full"
+                        autoComplete="subtitle"
+                        isFocused={true}
+                        handleChange={onHandleChange}
+                    />
+                </div>
+                <div className="mb-4">
+                    <CategoryModal label="Ajouter une catégorie" categories={categories} />
+                </div>
+                <CKEditor
                     editor={ ClassicEditor }
                     data={draft.content}
                     config={{
@@ -90,6 +135,7 @@ const Drafts = ({auth, errors, draft}) => {
                         },
                     }}
                 />
+            </>
         )
     }
 

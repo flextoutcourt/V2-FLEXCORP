@@ -43,7 +43,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/parlez-moi/messages', [TchatController::class, "message"])->name('tchat.send');
 
     Route::get('/les-actus-de-flex/new', [ActuController::class, "new"])->name('actus.new');
-    Route::get('/les-actus-de-flex/draft/{id}/edit', [ActuController::class, "draft"])->name('actus.draft.edit');
+    Route::get('/les-actus-de-flex/draft/{draft_id}/edit', [ActuController::class, "draft"])->name('actus.draft.edit');
     Route::get('/user/mes-brouillons', [UserController::class, "drafts"])->name('user.draft');
 
     Route::post('/notify/users/{type}', function($type){

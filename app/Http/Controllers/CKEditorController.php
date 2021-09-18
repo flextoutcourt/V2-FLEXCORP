@@ -28,14 +28,18 @@ class CKEditorController extends Controller
 
     public function autosave(Request $request)
     {
+        // dd($request->id);
         $draft = Drafts::find($request->id);
+        // dd($draft);
         if($draft){
             $draft->content = $request->editor;
+            $draft->update();
         }else{
             $d = new Drafts();
             $d->draft_id = $request->id;
             $d->user_id = $request->user_id;
             $d->content = $request->editor;
+            // dd($d);
             $d->save();
         }
     }

@@ -14,8 +14,7 @@ class CreateDraftsTable extends Migration
     public function up()
     {
         Schema::create('drafts', function (Blueprint $table) {
-            $table->id();
-            $table->longText('draft_id');
+            $table->string('draft_id', 100);
             $table->unsignedInteger('user_id');
             $table->text('title')->nullable();
             $table->longText('illustration')->nullable();

@@ -11,6 +11,10 @@ class Drafts extends Model
 
     protected $fillable = ['draft_id', 'title', 'illustration', 'content'];
 
+    protected $primaryKey = 'draft_id';
+
+    public $incrementing = false;
+
     public function user()
     {
         return $this->belongsTo(User::class);

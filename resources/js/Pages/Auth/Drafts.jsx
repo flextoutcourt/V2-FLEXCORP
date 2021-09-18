@@ -19,11 +19,24 @@ const Drafts = ({auth, errors}) => {
     }
 
     let content = () => {
+        console.log(drafts);
         return (
             <div className="flex gap-4">
-                {drafts.map((item, key) => (
-                    <Draft item={item} key={key}/>
-                ))}
+                {
+                    (drafts 
+                    ? 
+                        (drafts.length > 0 
+                        ?
+                            drafts.map((item, key) => (
+                                <Draft item={item} key={key}/>
+                            ))
+                        :
+                                <p>Aucun brouillon a afficher</p>
+                        )
+                    :
+                            <p>Aucun brouillon a afficher</p>
+                    )
+                }
             </div>
         )
     }

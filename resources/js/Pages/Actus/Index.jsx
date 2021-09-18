@@ -18,12 +18,24 @@ export default function Actus   ({auth, errors}){
 
     function content(){
         return(
-            <div class="grid grid-cols-3 gap-4">
-                {data.actus.map((item, key) => (
-                    <div className="bg-gray-800" key={key}>
-                        {item.title}
-                    </div>
-                ))}
+            <div className="grid grid-cols-3 gap-4">
+                {
+                    (data.actus
+                    ?
+                        (data.actus.length > 0 
+                        ?
+                            data.actus.map((item, key) => (
+                                <div className="bg-gray-800" key={key}>
+                                    {item.title}
+                                </div>
+                            ))
+                        :
+                            <p>Aucune actualité a afficher</p>
+                        )
+                    :
+                        <p>Aucune actualité a afficher</p>
+                    )
+                }
             </div>
         )
     }

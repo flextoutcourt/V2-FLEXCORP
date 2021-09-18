@@ -11,6 +11,7 @@ class DraftsController extends Controller
     public function get(int $user_id)
     {
         $drafts = Drafts::where('user_id', $user_id)->get();
+        // dd($drafts);
         return $drafts;
     }
 

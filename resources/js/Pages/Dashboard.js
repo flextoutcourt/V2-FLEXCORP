@@ -28,7 +28,7 @@ export default function Dashboard(props) {
                         <InertiaLink href="#modify" className="my-3 block w-full bg-red-500 py-1 px-3 rounded-md text-white hover:bg-red-600 cursor-pointer duration-200">
                            Supprimer mon compte 
                         </InertiaLink>
-                        <InertiaLink href={route('user.drafts')} className="my-3 block w-full bg-indigo-500 py-1 px-3 rounded-md text-white hover:bg-indigo-600 cursor-pointer duration-200">
+                        <InertiaLink href={route('user.draft')} className="my-3 block w-full bg-indigo-500 py-1 px-3 rounded-md text-white hover:bg-indigo-600 cursor-pointer duration-200">
                            Mes brouillons
                         </InertiaLink>
                     </div>

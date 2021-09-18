@@ -33,7 +33,7 @@ class ActuController extends Controller
         return Inertia::render('Actus/New');
     }
 
-    public function draft(int $draft)
+    public function draft(string $draft)
     {
         // dd($draft);
         $draft = Drafts::find($draft);

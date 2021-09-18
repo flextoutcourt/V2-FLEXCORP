@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActuController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CKEditorController;
 use App\Http\Controllers\DraftsController;
 use Illuminate\Http\Request;
@@ -32,3 +33,6 @@ Route::post('/autosave', [CKEditorController::class, 'autosave'])->name('api.cka
 Route::get('/user/get_drafts/{user_id}', [DraftsController::class, 'get'])->name('api.get_drafts');
 
 Route::get('/user/get_actus', [ActuController::class, 'get'])->name('api.get_actus');
+
+Route::get('/category/get', [CategoryController::class, "get"])->name('api.get_categories');
+Route::post('/category/add', [CategoryController::class, "store"])->name('api.set_category');
