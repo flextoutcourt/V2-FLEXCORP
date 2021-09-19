@@ -5,6 +5,9 @@ import React, { Suspense, useState } from 'react';
 import ResponsiveNavLink from '../Components/ResponsiveNavLink';
 import { InertiaLink } from '@inertiajs/inertia-react';
 import Spinner from '@/Components/Spinner';
+import { ToastContainer } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const navigation = [
     {
@@ -149,6 +152,15 @@ export default function Authenticated({ auth, header, children, title }) {
 
             <main className="max-w-7xl mx-auto py-6 pb-0 px-4 sm:px-6 lg:px-8">
                 <Suspense fallback={<Spinner/>}>
+                    <ToastContainer
+                        position='top-right'
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        closeOnClick
+                        draggable
+                        pauseOnHover
+                        theme='dark'
+                    />
                     {children}
                 </Suspense>
             </main>
