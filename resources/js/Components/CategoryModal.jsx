@@ -9,9 +9,6 @@ import axios from 'axios';
 import Alert from './Alert';
 import { toast } from 'react-toastify';
 
-import ValidationErrors from '@/Components/ValidationErrors';
-import { Inertia } from '@inertiajs/inertia';
-
 export default function CategoryModal({label}) {
 
     const [categories, setCategories] = useState([]);
@@ -32,8 +29,10 @@ export default function CategoryModal({label}) {
         return responseData;
     }
 
-    async function _set_category(fd ){
-        
+    async function _set_category(){
+        const promise = axios.post(route('api.set_category'), fd);
+        const responseData = promise.then((data) => data.data);
+        return responseData;
     }
 
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -46,17 +45,22 @@ export default function CategoryModal({label}) {
 
     const submit = async (event) => {
         event.preventDefault();
-        // alert('test');
-        console.log("event fired");
         let fd = new FormData();
-        await post(route('api.set_category'));
+        fd.append('title', data.title);
+        fd.append('description', data.description);
+        fd.append('illustration', data.illustration ?? null);
+        post(route('api.set_category'), {
+            preserveScroll: true,
+            onSuccess: (data) => {
+                console.log(data);
+            },
+            onError: (errors) => {
+                console.log(errors);
+            }
+        });
+        console.log(errors);
     }
 
-    const _display_alert = (data) => {
-        if(data.status == 200){
-            toast.success(data.data.message)
-        }
-    }
 
     const onHandleChange = (event) => {
             setData(event.target.name, event.target.type === 'checkbox' ? event.target.checked : event.target.value);
@@ -77,49 +81,46 @@ export default function CategoryModal({label}) {
 
     let content = () => {
         return (
-            <>
-                <ValidationErrors errors={errors} />
-                <form onSubmit={submit}>
-                    <div>
-                        <Label forInput="Title" value="Title" />
-                        <Input
-                        type="text"
-                        name="title"
-                        value={data.title}
-                        className="mt-1 block w-full"
-                        autoComplete="title"
-                        isFocused={true}
-                        handleChange={onHandleChange}
-                    />
+            <form onSubmit={submit} encType='multipart/formdata'>
+                <div>
+                    <Label forInput="Title" value="Title" />
+                    <Input
+                    type="text"
+                    name="title"
+                    value={data.title}
+                    className="mt-1 block w-full"
+                    autoComplete="title"
+                    isFocused={true}
+                    handleChange={onHandleChange}
+                />
+                </div>
+                <div className="mb-3">
+                    <Label forInput="description" value="description" />
+                    <Input
+                    type="text"
+                    name="description"
+                    value={data.description}
+                    className="mt-1 block w-full"
+                    autoComplete="description"
+                    isFocused={false}
+                    handleChange={onHandleChange}
+                />
+                </div>
+                <div className="mb-3">
+                    <div className="flex w-full items-center justify-center bg-grey-lighter">
+                        <label className="w-64 flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-indigo-500 hover:text-white duration-200">
+                            <i className="fas fa-plus"/>
+                            <span className="mt-2 text-base leading-normal text-center">Choisissez une illustration</span>
+                            <input type="file" name="illustration" id="illustration" placeholder="illustration" onChange={onHandleFileUpload} className="hidden" />
+                        </label>
                     </div>
-                    <div className="mb-3">
-                        <Label forInput="description" value="description" />
-                        <Input
-                        type="text"
-                        name="description"
-                        value={data.description}
-                        className="mt-1 block w-full"
-                        autoComplete="description"
-                        isFocused={false}
-                        handleChange={onHandleChange}
-                    />
-                    </div>
-                    <div className="mb-3">
-                        <div className="flex w-full items-center justify-center bg-grey-lighter">
-                            <label className="w-64 flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-indigo-500 hover:text-white duration-200">
-                                <i className="fas fa-plus"/>
-                                <span className="mt-2 text-base leading-normal text-center">Choisissez une illustration</span>
-                                <input type="file" name="illustration" id="illustration" placeholder="illustration" onChange={onHandleFileUpload} className="hidden" />
-                            </label>
-                        </div>
-                    </div>
-                    <div className="mt-4">
-                        <Button disabled={processing}>
-                            Modifier ces informations
-                        </Button>
-                    </div>
-                </form>
-            </>
+                </div>
+                <div className="mt-4">
+                    <Button processing={processing}>
+                        Modifier ces informations
+                    </Button>
+                </div>
+            </form>
         )
     }
 

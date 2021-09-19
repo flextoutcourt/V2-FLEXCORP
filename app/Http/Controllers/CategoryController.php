@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
+use Inertia\Inertia;
 
 class CategoryController extends Controller
 {
@@ -40,22 +43,42 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CategoryRequest $request)
+    public function store(Request $request)
     {
-        // dd($request->file('illustration'));
-        $validated = $request->validated();
-        $path = '';
-        if($request->hasFile('illustration')){
-            if($request->file('illustration')[0]->isValid()){
-                $path = $request->illustration[0]->store('illustration');
+
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|min:2',
+            'description' => 'required|min:4',
+            'illustration' => 'required|file|mimes:jpeg,gif,png,svg'
+        ], [
+            'title.required' => ':attribute est requis',
+            'title.min' => ':attribute doit faire au minimum :min caractères',
+            'description.required' => ':attribute est requise',
+            'description.min' => ':attribute doit fait au minimum :min caractères',
+            'illustration.required' => ':attribute est requise',
+            'illustration.file' => ':attribute doit être une image valide',
+            'illustration.mimes' => "L'extension de :attribute doit être valide",
+        ]);
+
+        if($validator->fails()){
+            return back()->with('errors', $validator->errors());
+        }else{
+            $path = '';
+            if($request->hasFile('illustration')){
+                if($request->file('illustration')[0]->isValid()){
+                    $path = $request->illustration[0]->store('illustration');
+                }
+            }
+            if($request->title){
+                $category = new Category($request->all());
+                $category->illustration = $path;
+                $category->save();
             }
         }
-        if($request->title){
-            $category = new Category($validated);
-            $category->illustration = $path;
-            $category->save();
-        }
-        return back();
+
+        // dd($request->file('illustration'));
+        $validated = $request->validated();
+        dd($validated);
     }
 
     /**
