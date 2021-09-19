@@ -14,7 +14,6 @@ import CategoryModal from '@/Components/CategoryModal';
 const Drafts = ({auth, errors, draft}) => {
 
     const { data, setData, post, processing, reset } = useForm({
-        subTitle: '',
         illustration: ''
     });
 
@@ -46,7 +45,7 @@ const Drafts = ({auth, errors, draft}) => {
     let content = () => {
         return (
             <>
-                <div className="mb-4">
+                {/* <div className="mb-4">
                     <Label forInput="subtitle" value="sous-titre" />
                     <Input
                         type="text"
@@ -57,7 +56,7 @@ const Drafts = ({auth, errors, draft}) => {
                         isFocused={true}
                         handleChange={onHandleChange}
                     />
-                </div>
+                </div> */}
                 <div className="mb-4">
                     <CategoryModal label="Ajouter une catégorie" categories={categories} />
                 </div>

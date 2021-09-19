@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Auth;
 
 class CKEditorController extends Controller
 {
+
+    private $title_regex = '/<h1( class="(.*?)")?>(.*?)<\/h1>/';
+
     public function upload_file(Request $request)
     {
         if($request->hasFile('upload')){
@@ -28,18 +31,18 @@ class CKEditorController extends Controller
 
     public function autosave(Request $request)
     {
-        // dd($request->id);
+        $title = $this->create_title($request->editor);
         $draft = Drafts::find($request->id);
-        // dd($draft);
         if($draft){
+            $draft->title = $title;
             $draft->content = $request->editor;
             $draft->update();
         }else{
             $d = new Drafts();
             $d->draft_id = $request->id;
             $d->user_id = $request->user_id;
+            $d->title = $title;
             $d->content = $request->editor;
-            // dd($d);
             $d->save();
         }
     }
@@ -47,5 +50,11 @@ class CKEditorController extends Controller
 
     public function save(CKEditorRequest $request){
         dd($request->validated());
+    }
+
+    private function create_title(string $content)
+    {
+        preg_match($this->title_regex, $content, $matches);
+        return $matches[3];
     }
 }

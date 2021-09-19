@@ -18,25 +18,30 @@ export default function Actus   ({auth, errors}){
 
     function content(){
         return(
-            <div className="grid grid-cols-3 gap-4">
-                {
-                    (data.actus
-                    ?
-                        (data.actus.length > 0 
+            <>
+                <div className="grid grid-cols-3 gap-4">
+                    {
+                        (data.actus
                         ?
-                            data.actus.map((item, key) => (
-                                <div className="bg-gray-800" key={key}>
-                                    {item.title}
-                                </div>
-                            ))
+                            (data.actus.length > 0 
+                            ?
+                                data.actus.map((item, key) => (
+                                    <div className="bg-gray-800" key={key}>
+                                        {item.title}
+                                    </div>
+                                ))
+                            :
+                                <p>Aucune actualité a afficher</p>
+                            )
                         :
                             <p>Aucune actualité a afficher</p>
                         )
-                    :
-                        <p>Aucune actualité a afficher</p>
-                    )
-                }
-            </div>
+                    }
+                </div>
+                <a href={route('actus.new')} className="fixed bottom-4 right-4 bg-indigo-500 flex justify-center align-middle rounded-full text-white h-12 w-12 text-xl shadow-lg transform duration-200 hover:scale-110 ring-white ring-2">
+                    <i className="fas fa-plus mx-auto my-auto"></i>
+                </a>
+            </>
         )
     }
 

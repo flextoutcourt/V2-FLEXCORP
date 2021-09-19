@@ -16,6 +16,7 @@
         <!-- Scripts -->
         @routes
         <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+        <script src="https://kit.fontawesome.com/efe2083cb7.js" crossorigin="anonymous"></script>
         <script src="{{ mix('js/app.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased">

@@ -57,7 +57,7 @@ export default function CategoryModal({label, categories}) {
 
   return (
     <>
-        <button onClick={() => setOpen(true)}>{label}</button>
+        <button onClick={() => setOpen(true)} class="bg-indigo-500 py-2 px-4 rounded-md text-white">{label}</button>
         <Transition.Root show={open} as={Fragment}>
             <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" initialFocus={cancelButtonRef} onClose={setOpen}>
                 <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
