@@ -36,3 +36,4 @@ Route::get('/user/get_actus', [ActuController::class, 'get'])->name('api.get_act
 
 Route::get('/category/get', [CategoryController::class, "get"])->name('api.get_categories');
 Route::post('/category/add', [CategoryController::class, "store"])->name('api.set_category');
+Route::post('/category/add/{category_id}/{actu}', [CategoryController::class, 'set_category_id'])->name('api.set_category_id');

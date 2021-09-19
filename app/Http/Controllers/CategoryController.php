@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
+use App\Models\Drafts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
@@ -79,6 +80,14 @@ class CategoryController extends Controller
         // dd($request->file('illustration'));
         $validated = $request->validated();
         dd($validated);
+    }
+
+    public function set_category_id(int $category_id, string $draft)
+    {
+        $draft = Drafts::find($draft);
+        $draft->category_id = $category_id != 0 ? $category_id : null;
+        $draft->save();
+        return true;
     }
 
     /**

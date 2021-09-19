@@ -9,15 +9,11 @@ import axios from 'axios';
 import Alert from './Alert';
 import { toast } from 'react-toastify';
 
-export default function CategoryModal({label}) {
+export default function CategoryModal({label, draft}) {
 
     const [categories, setCategories] = useState([]);
     const [open, setOpen] = useState(false)
     const [newCategory, setNewCategory] = useState(true);
-    const [alerts, setAlerts] = useState({
-        message: '',
-        status: ''
-    });
 
     useEffect(() => {
         _get_categories().then(data => setCategories(data));
@@ -43,22 +39,11 @@ export default function CategoryModal({label}) {
 
     const cancelButtonRef = useRef(null);
 
-    const submit = async (event) => {
+    const onHandleSubmit = (event) => {
         event.preventDefault();
-        let fd = new FormData();
-        fd.append('title', data.title);
-        fd.append('description', data.description);
-        fd.append('illustration', data.illustration ?? null);
-        post(route('api.set_category'), {
-            preserveScroll: true,
-            onSuccess: (data) => {
-                console.log(data);
-            },
-            onError: (errors) => {
-                console.log(errors);
-            }
-        });
-        console.log(errors);
+        setData(processing, true);
+        console.log(event);
+        toast.success("la catégorie a bien été ajoutée a la liste, vous pouvez désormais la selectionner");
     }
 
 
@@ -71,17 +56,25 @@ export default function CategoryModal({label}) {
     }
 
     const onSelectChange = (event) => {
-        console.log(event.target.value);
         if(event.target.value == 0){
             setNewCategory(true);
         }else{
             setNewCategory(false);
         }
+        axios.post(route('api.set_category_id', {
+            category_id: event.target.value,
+            actu: route().params.draft_id
+        }))
+        .then((data) => {
+            if(data.status == 200){
+                toast.success('La catégorie de l\'article a été modifiée');
+            }
+        })
     }
 
     let content = () => {
         return (
-            <form onSubmit={submit} encType='multipart/formdata'>
+            <form onSubmit={onHandleSubmit}>
                 <div>
                     <Label forInput="Title" value="Title" />
                     <Input
@@ -127,22 +120,6 @@ export default function CategoryModal({label}) {
     return (
         <>
             <button onClick={() => setOpen(true)} className="bg-indigo-500 py-2 px-4 rounded-md text-white">{label}</button>
-            {
-                (alerts
-                ?
-                    (alerts.length > 0
-                    ?
-                        alerts.map((item, key) => {
-                            <Alert key={key} color={item.status == 200 ? 'green' : 'red'}>{item.message}</Alert>
-                        })
-                    :
-                        null
-                    )
-                    
-                :
-                    null
-                )
-            }
             <Transition.Root show={open} as={Fragment}>
                 <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" initialFocus={cancelButtonRef} onClose={setOpen}>
                     <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -190,9 +167,9 @@ export default function CategoryModal({label}) {
                                                 ?
                                                     <>
                                                         <select onChange={onSelectChange} className="w-full rounded-sm border border-indigo-500 focus:outline-none">
-                                                            <option value={0} selected>Nouvelle catégorie</option>
+                                                            <option value={0} defaultValue={draft.category_id == null ? true : false}>Nouvelle catégorie</option>
                                                             {categories.map((item, key) => (   
-                                                                <option value={item.id} key={key}>{item.title}</option>
+                                                                <option value={item.id} selected={draft.category_id === item.id ? true : false} key={key}>{item.title}</option>
                                                             ))}
                                                         </select>
                                                         {

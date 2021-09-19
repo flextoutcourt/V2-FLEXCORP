@@ -17,6 +17,8 @@ const Drafts = ({auth, errors, draft}) => {
         illustration: ''
     });
 
+    console.log(draft.category_id);
+
     const [modalOpened, setModalOpened] = useState(false);
     
     
@@ -49,7 +51,7 @@ const Drafts = ({auth, errors, draft}) => {
                     />
                 </div> */}
                 <div className="mb-4">
-                    <CategoryModal label="Ajouter une catégorie" />
+                    <CategoryModal label="Ajouter une catégorie" draft={draft} />
                 </div>
                 <CKEditor
                     editor={ ClassicEditor }
