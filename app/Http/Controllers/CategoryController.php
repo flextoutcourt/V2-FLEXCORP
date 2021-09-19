@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -39,9 +40,22 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        //
+        // dd($request->file('illustration'));
+        $validated = $request->validated();
+        $path = '';
+        if($request->hasFile('illustration')){
+            if($request->file('illustration')[0]->isValid()){
+                $path = $request->illustration[0]->store('illustration');
+            }
+        }
+        if($request->title){
+            $category = new Category($validated);
+            $category->illustration = $path;
+            $category->save();
+        }
+        return back();
     }
 
     /**

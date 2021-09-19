@@ -19,7 +19,7 @@ class CreateDraftsTable extends Migration
             $table->text('title')->nullable();
             $table->longText('illustration')->nullable();
             $table->longText('content')->nullable();
-            $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('category_id')->nullable();
             $table->timestamps();
         });
     }

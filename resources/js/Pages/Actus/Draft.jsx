@@ -17,18 +17,9 @@ const Drafts = ({auth, errors, draft}) => {
         illustration: ''
     });
 
-    const [categories, setCategories] = useState([]);
     const [modalOpened, setModalOpened] = useState(false);
     
-    useEffect(() => {
-        _get_categories().then(data => setCategories(data));
-    }, []);
     
-    async function _get_categories(){
-        const promise = axios.get(route('api.get_categories'));
-        const responseData = promise.then((data) => data.data);
-        return responseData;
-    }
 
     let autosave = (editor) => {
         console.log(editor.getData());
@@ -58,7 +49,7 @@ const Drafts = ({auth, errors, draft}) => {
                     />
                 </div> */}
                 <div className="mb-4">
-                    <CategoryModal label="Ajouter une catégorie" categories={categories} />
+                    <CategoryModal label="Ajouter une catégorie" />
                 </div>
                 <CKEditor
                     editor={ ClassicEditor }
