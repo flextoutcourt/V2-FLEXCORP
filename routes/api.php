@@ -4,6 +4,7 @@ use App\Http\Controllers\ActuController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CKEditorController;
 use App\Http\Controllers\DraftsController;
+use App\Http\Controllers\ProjectController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -37,3 +38,6 @@ Route::get('/user/get_actus', [ActuController::class, 'get'])->name('api.get_act
 Route::get('/category/get', [CategoryController::class, "get"])->name('api.get_categories');
 Route::post('/category/add', [CategoryController::class, "store"])->name('api.set_category');
 Route::post('/category/add/{category_id}/{actu}', [CategoryController::class, 'set_category_id'])->name('api.set_category_id');
+
+Route::post('/projects/add', [ProjectController::class, 'store'])->name('api.project.add');
+Route::get('/projects/all/{id}', [ProjectController::class, 'get'])->name('api.get_projects');

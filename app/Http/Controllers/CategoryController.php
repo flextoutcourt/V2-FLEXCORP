@@ -46,28 +46,27 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'title' => 'required|min:2',
             'description' => 'required|min:4',
-            'illustration' => 'required|file|mimes:jpeg,gif,png,svg'
+            'illustration' => 'required|image'
         ], [
             'title.required' => ':attribute est requis',
             'title.min' => ':attribute doit faire au minimum :min caractères',
             'description.required' => ':attribute est requise',
             'description.min' => ':attribute doit fait au minimum :min caractères',
             'illustration.required' => ':attribute est requise',
-            'illustration.file' => ':attribute doit être une image valide',
-            'illustration.mimes' => "L'extension de :attribute doit être valide",
+            'illustration.image' => ':attribute doit être une image valide',
         ]);
 
         if($validator->fails()){
+            dd($validator->errors());
             return back()->with('errors', $validator->errors());
         }else{
             $path = '';
             if($request->hasFile('illustration')){
-                if($request->file('illustration')[0]->isValid()){
-                    $path = $request->illustration[0]->store('illustration');
+                if($request->file('illustration')->isValid()){
+                    $path = $request->illustration->store('illustration');
                 }
             }
             if($request->title){
@@ -77,9 +76,13 @@ class CategoryController extends Controller
             }
         }
 
+        // return $category;
+
         // dd($request->file('illustration'));
-        $validated = $request->validated();
-        dd($validated);
+        // $validated = $request->validated();
+        // dd($validated);
+        // return true;
+        echo json_encode($category);
     }
 
     public function set_category_id(int $category_id, string $draft)

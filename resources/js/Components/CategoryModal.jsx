@@ -25,24 +25,25 @@ export default function CategoryModal({label, draft}) {
         return responseData;
     }
 
-    async function _set_category(){
-        const promise = axios.post(route('api.set_category'), fd);
-        const responseData = promise.then((data) => data.data);
-        return responseData;
-    }
-
     const { data, setData, post, processing, errors, reset } = useForm({
             title: '',
             description: '',
-            illustration: [],
+            illustration: null,
         });
 
     const cancelButtonRef = useRef(null);
 
     const onHandleSubmit = (event) => {
         event.preventDefault();
-        setData(processing, true);
         console.log(event);
+        let fd = new FormData();
+        fd.append('illustration', data.illustration);
+        fd.append('title', data.title);
+        fd.append('description', data.description);
+        axios.post(route('api.set_category'), fd)
+        .then((data) => {
+            setCategories(categories => [...categories, data.data]);
+        })
         toast.success("la catégorie a bien été ajoutée a la liste, vous pouvez désormais la selectionner");
     }
 
@@ -52,7 +53,7 @@ export default function CategoryModal({label, draft}) {
     }
 
     const onHandleFileUpload = (event) => {
-            setData('illustration', event.target.files);
+            setData('illustration', event.target.files[0]);
     }
 
     const onSelectChange = (event) => {
@@ -74,7 +75,7 @@ export default function CategoryModal({label, draft}) {
 
     let content = () => {
         return (
-            <form onSubmit={onHandleSubmit}>
+            <form onSubmitCapture={onHandleSubmit}>
                 <div>
                     <Label forInput="Title" value="Title" />
                     <Input

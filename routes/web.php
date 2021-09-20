@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActuController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RealisationController;
@@ -92,5 +93,13 @@ Route::get('/les-actus-de-flex', [ActuController::class, 'index'])->name('actus'
 
 Route::get('/les-actus-de-flex/{actu}-{slug}', [ActuController::class, "show"])->name('actu.show');
 /** FIN ACTUS */
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin');
+    Route::get('/admin/realisation/add', [AdminController::class, 'realisations_add'])->name('admin.realisations.add');
+    Route::post('/admin/realisation/add', [AdminController::class, 'realisations_store'])->name('admin.realisations.store');
+    Route::get('/admin/projects/add', [AdminController::class, 'projects_add'])->name('admin.projects.add');
+    Route::post('/admin/projects/add', [AdminController::class, 'projects_store'])->name('admin.projects.store');
+});
 
 require __DIR__.'/auth.php';
