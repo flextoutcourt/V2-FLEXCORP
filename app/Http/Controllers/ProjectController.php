@@ -6,6 +6,7 @@ use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
+use Intervention\Image\Facades\Image;
 
 class ProjectController extends Controller
 {
@@ -70,7 +71,12 @@ class ProjectController extends Controller
             $path = '';
             if($request->hasFile('illustration')){
                 if($request->file('illustration')->isValid()){
-                    $path = $request->illustration->store('illustration');
+                    $filePath = time().'.'.$request->file('illustration')->extension();
+                    $img = Image::make($request->file('illustration')->path());
+                    $img->resize(1920, 1080, function($const){
+                        $const->aspectRatio();
+                    })->save('illustration/'.$filePath);
+                    $path = $request->file('illustration')->move('illustration', $filePath);
                 }
             }
             if($request->title){
@@ -90,7 +96,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        //
+        return Inertia::render('Projects/Show', ['project' => $project]);
     }
 
     /**
