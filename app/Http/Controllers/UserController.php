@@ -11,6 +11,12 @@ use Inertia\Inertia;
 
 class UserController extends Controller
 {
+
+    public function get()
+    {
+        return User::all();
+    }
+
     /**
      * Display a listing of the resource.
      *

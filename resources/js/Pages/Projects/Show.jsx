@@ -1,10 +1,9 @@
 import React, { Component, useState, useEffect, useRef } from 'react'
-import clamp from 'lodash-es/clamp'
-import { InertiaLink } from '@inertiajs/inertia-react';
 import Authenticated from '@/Layouts/Authenticated';
 import Guest from '@/Layouts/Guest';
-import {Parallax} from 'react-parallax'
-import './styles.css'
+import {Parallax} from 'react-parallax';
+import parse from 'html-react-parser';
+import './styles.css';
 
 export default function Show({auth, errors, project}){
     
@@ -14,9 +13,9 @@ export default function Show({auth, errors, project}){
                 <Parallax blur={0} bgImage={"/"+project.illustration} bgImageAlt={'illustration de '+project.title} className="relative" strength={200} style={{height: "500px"}}>
                     <button className="absolute bottom-0 right-0">gdfjhglkfjjhgskfhglksjfdghlkj s</button>
                 </Parallax>
-                <p className="text-lg">
-                    {project.description}
-                </p>
+                <div className="ck-blurred ck ck-content ck-rounded-corners">
+                    {parse(project.description)}
+                </div>
             </div>
         )
     }

@@ -6,6 +6,9 @@ import Label from '@/Components/Label';
 import TextArea from '@/Components/TextArea';
 import Button from '@/Components/Button';
 
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from 'ckeditor5';
+
 import { useForm } from '@inertiajs/inertia-react';
 import axios from 'axios';
 
@@ -26,10 +29,23 @@ const Index = ({auth, errors}) => {
         },
     ]
 
+    const [users, setUsers] = useState([]);
+    const [ckEditor, setCkEditor] = useState(null);
+
+    useEffect(() => {
+        _get_users().then(data => setUsers(data));
+    }, []);
+
+    async function _get_users(){
+        const promise = axios.get(route('api.get_users'));
+        const responseData = promise.then((data) => data.data);
+        return responseData;
+    }
+
     const { data, setData, post, processing, reset } = useForm({
         title: '',
-        description: '',
         type: '',
+        description: '',
         illustration: null,
     });
 
@@ -43,7 +59,13 @@ const Index = ({auth, errors}) => {
 
     const onHandleSubmit = async (event) => {
         event.preventDefault();
+        setData('description', ckEditor);
+        // debugger;
         post(route('api.project.add'));
+    }
+
+    const autosave = (editor) => {
+        setCkEditor(editor.getData());
     }
     
 
@@ -51,7 +73,7 @@ const Index = ({auth, errors}) => {
         return (
             <form onSubmitCapture={onHandleSubmit}>
                 <div className="mb-3">
-                    <Label forInput="Title" value="Title" />
+                    <Label forInput="title" value="Nom du projet" />
                     <Input
                         type="text"
                         name="title"
@@ -73,13 +95,82 @@ const Index = ({auth, errors}) => {
                 </div>
                 <div className="mb-3">
                     <Label forInput="description" value="Description" />
-                    <TextArea
-                        name="description"
-                        value={data.description}
-                        className="mt-1 block w-full"
-                        autoComplete="description"
-                        isFocused={false}
-                        handleChange={onHandleChange}
+                    <CKEditor
+                        data={data.description ?? ''}
+                        onChange={(event, editor) => {
+                            setData('description', editor.getData())
+                        }}
+                        editor={ ClassicEditor }
+                        config={{
+                            ckfinder: {
+                                uploadUrl: route('api.ckupload'),
+                            },
+                            // autosave: {
+                            //     save(editor) {
+                            //         return autosave(editor);
+                            //     },
+                            //     waitingTime: 500,
+                            // },
+                            toolbar: {
+                                items: [
+                                    'heading',
+                                    '|',
+                                    'bold',
+                                    'italic',
+                                    'link',
+                                    'bulletedList',
+                                    'numberedList',
+                                    'horizontalLine',
+                                    '|',
+                                    'fontSize',
+                                    'fontColor',
+                                    'fontFamily',
+                                    'outdent',
+                                    'indent',
+                                    '|',
+                                    'uploadImage',
+                                    'imageResize',
+                                    'blockQuote',
+                                    'codeBlock',
+                                    'insertTable',
+                                    'mediaEmbed',
+                                    'undo',
+                                    'redo',
+                                    'todoList',
+                                ]
+                            },
+                            // mention: {
+                            //     feeds: [
+                            //         {
+                            //             marker: '@',
+                            //             feed: users.name,
+                            //             minimumCharacter: 1
+                            //         }
+                            //     ]
+                            // },
+                            image: {
+                                toolbar: [
+                                    'imageStyle:inline',
+                                    'imageStyle:block',
+                                    'imageStyle:side',
+                                    'imageResize',
+                                    '|',
+                                    'toggleImageCaption',
+                                    'imageTextAlternative',
+                                ]
+                            },
+                            table: {
+                                contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells']
+                            },
+                            codeBlock: {
+                                languages: [
+                                    {language: 'css', label: "CSS", class:"css"},
+                                    {language: 'javascript', label: "JavaScript", class: "js javascript js-code"},
+                                    {language: 'html', label: "HTML", class:"html"},
+                                    {language: 'php', label: "PHP", class:'php'},
+                                ]
+                            }
+                        }}
                     />
                 </div>
                 <div className="grid grid-cols-1 gap-4">

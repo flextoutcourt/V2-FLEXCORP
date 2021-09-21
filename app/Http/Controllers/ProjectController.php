@@ -44,6 +44,9 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+
+        // dd($request);
+        
         $validator = Validator::make($request->all(), [
             'title' => 'required|min:2',
             'description' => 'required|min:4',
@@ -65,7 +68,7 @@ class ProjectController extends Controller
         ]);
 
         if($validator->fails()){
-            dd($validator->errors());
+            // dd($validator->errors());
             return back()->with('errors', $validator->errors());
         }else{
             $path = '';
