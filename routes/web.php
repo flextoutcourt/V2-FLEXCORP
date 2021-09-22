@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ActuController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Ascenseur301Controller;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RealisationController;
@@ -102,4 +103,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/projects/add', [AdminController::class, 'projects_store'])->name('admin.projects.store');
 });
 
+Route::get('/verify-card', [Ascenseur301Controller::class, 'verify_card'])->name('ascenseur.verify_card');
+
 require __DIR__.'/auth.php';
+
+
