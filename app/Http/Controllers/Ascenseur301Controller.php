@@ -32,29 +32,28 @@ class Ascenseur301Controller extends Controller
         ];
 
         foreach($numerosATester as $key => $item){
-            echo ($this->verify($item) ? 'valide' : 'invalide');
+            echo $item.' est '. ($this->verify($item) ? 'valide' : 'invalide');
             echo '<br/>';
         }
         echo '<pre>';
-        echo '$number =strrev($number);
-$limit = strlen($number);
-$total = 0;
-for($i = 0; $i < $limit; $i++){
-    if($i%2){
-        $chiffre = ($number[$i] * 2);
-        if($chiffre > 9){
-            $chiffre -= 9;
-        }
-        $total += $chiffre;
-    }else{
-        $total += $number[$i];
-    }
-}
-if($total % 10 == 0){
-    return true;
-}else{
-    return false;
-}';
+        echo '      private function verify($number)
+        {
+            $number = strrev($number);
+            $limit = strlen($number);
+            $total = 0;
+            for($i = 0; $i < $limit; $i++){
+                if($i%2){
+                    $chiffre = ($number[$i] * 2);
+                    if($chiffre > 9){
+                        $chiffre -= 9;
+                    }
+                    $total += $chiffre;
+                }else{
+                    $total += $number[$i];
+                }
+            }
+            return ($total % 10 == 0) ? true: false;
+        }';
         echo '</pre>';
     }
 
