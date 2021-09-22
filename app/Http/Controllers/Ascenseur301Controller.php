@@ -60,7 +60,7 @@ if($total % 10 == 0){
 
     private function verify($number)
     {
-        $number =strrev($number);
+        $number = strrev($number);
         $limit = strlen($number);
         $total = 0;
         for($i = 0; $i < $limit; $i++){
@@ -74,10 +74,6 @@ if($total % 10 == 0){
                 $total += $number[$i];
             }
         }
-        if($total % 10 == 0){
-            return true;
-        }else{
-            return false;
-        }
+        return ($total % 10 == 0) ? true: false;
     }
 }
