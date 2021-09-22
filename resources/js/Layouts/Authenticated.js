@@ -151,7 +151,7 @@ export default function Authenticated({ auth, header, children, title }) {
             )}
 
             <main className="max-w-7xl mx-auto py-6 pb-0 px-4 sm:px-6 lg:px-8">
-                <Suspense fallback={<Spinner/>}>
+                <Suspense fallback={null}>
                     <ToastContainer
                         position='top-right'
                         autoClose={5000}
