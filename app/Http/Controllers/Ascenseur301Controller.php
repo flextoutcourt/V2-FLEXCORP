@@ -8,12 +8,6 @@ class Ascenseur301Controller extends Controller
 {
     public function verify_card()
     {
-
-        /*
-        6   5   7   8   7   6   8   4   3 
-        6   10  7   16  7   12  8   8   3
-        6   1   7   7   7   3   8   8   3 == 50
-        */
         $numerosATester = [
             "348678756",
             "348678757",
@@ -55,6 +49,7 @@ class Ascenseur301Controller extends Controller
             return ($total % 10 == 0) ? true: false;
         }';
         echo '</code></pre>';
+        echo $this->generate(9999);
     }
 
     private function verify($number)
@@ -74,5 +69,16 @@ class Ascenseur301Controller extends Controller
             }
         }
         return ($total % 10 == 0) ? true: false;
+    }
+
+    public function generate($max){
+        //generer un numéro de carte bleu valide
+        $start = 5355 ;
+        for($i = 0; $i <= $max; $i++){
+            $numero = $start.str_pad($i, 12, '0', STR_PAD_LEFT);
+            if($this->verify($numero)){
+                echo $numero.'<br/>';
+            }
+        }
     }
 }
