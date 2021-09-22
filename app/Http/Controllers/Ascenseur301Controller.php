@@ -35,7 +35,7 @@ class Ascenseur301Controller extends Controller
             echo $item.' est '. ($this->verify($item) ? 'valide' : 'invalide');
             echo '<br/>';
         }
-        echo '<pre>';
+        echo '<pre style="background: black; color: white"><code>';
         echo '      private function verify($number)
         {
             $number = strrev($number);
@@ -54,7 +54,7 @@ class Ascenseur301Controller extends Controller
             }
             return ($total % 10 == 0) ? true: false;
         }';
-        echo '</pre>';
+        echo '</code></pre>';
     }
 
     private function verify($number)
