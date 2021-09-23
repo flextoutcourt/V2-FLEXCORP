@@ -34,6 +34,17 @@ class LoginRequest extends FormRequest
         ];
     }
 
+    public function messages()
+    {
+        return [
+            'email.required' => "L'email est requis",
+            'email.string' => "L'email ne peut pas contenir de caractères spéciaux",
+            'email.email' => "Le format de l'email n'est pas valide",
+            'password.required' => 'Le mot de passe est requis',
+            'password.string' => 'Le mot de passe ne peut pas contenir de caractères spéciaux'
+        ];
+    }
+
     /**
      * Attempt to authenticate the request's credentials.
      *

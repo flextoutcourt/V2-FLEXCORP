@@ -4,6 +4,7 @@ use App\Http\Controllers\ActuController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CKEditorController;
 use App\Http\Controllers\DraftsController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -44,3 +45,7 @@ Route::post('/category/add/{category_id}/{actu}', [CategoryController::class, 's
 
 Route::post('/projects/add', [ProjectController::class, 'store'])->name('api.project.add');
 Route::get('/projects/all/{id}', [ProjectController::class, 'get'])->name('api.get_projects');
+
+Route::post('/contact', [HomeController::class, 'contact_store'])->name('contact.post');
+
+Route::get('/tweets', [HomeController::class, 'get_tweets'])->name('api.get_tweets');

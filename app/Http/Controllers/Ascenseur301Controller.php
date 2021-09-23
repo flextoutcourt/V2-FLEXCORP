@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cards;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class Ascenseur301Controller extends Controller
 {
@@ -23,33 +25,14 @@ class Ascenseur301Controller extends Controller
             "83409592200012",
             "89092299000019",
             "89092290900019",
+            "4513325199993100",
         ];
 
         foreach($numerosATester as $key => $item){
             echo $item.' est '. ($this->verify($item) ? 'valide' : 'invalide');
             echo '<br/>';
         }
-        echo '<pre style="background: black; color: white"><code>';
-        echo '      private function verify($number)
-        {
-            $number = strrev($number);
-            $limit = strlen($number);
-            $total = 0;
-            for($i = 0; $i < $limit; $i++){
-                if($i%2){
-                    $chiffre = ($number[$i] * 2);
-                    if($chiffre > 9){
-                        $chiffre -= 9;
-                    }
-                    $total += $chiffre;
-                }else{
-                    $total += $number[$i];
-                }
-            }
-            return ($total % 10 == 0) ? true: false;
-        }';
-        echo '</code></pre>';
-        echo $this->generate(9999);
+        // echo $this->generate(9999);
     }
 
     private function verify($number)
@@ -77,7 +60,9 @@ class Ascenseur301Controller extends Controller
         for($i = 0; $i <= $max; $i++){
             $numero = $start.str_pad($i, 12, '0', STR_PAD_LEFT);
             if($this->verify($numero)){
-                echo $numero.'<br/>';
+                $card = Cards::firstOrCreate(['number' => $numero]);
+                $card->number = $numero;
+                $card->save();
             }
         }
     }

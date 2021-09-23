@@ -14,13 +14,13 @@ function Model(){
 export default function Flex3d(){
   const ref = useRef()
     return (
-        <Canvas shadows dpr={[1, 2]} camera={{ fov: 45, zoom: 3.5 }} style={{height: "350px"}}>
+        <Canvas shadows dpr={[1, 2]} camera={{ fov: 45, zoom: 3.5 }} style={{height: "300px"}}>
         <Suspense fallback={null}>
             <Stage controls={ref} preset="rembrandt" intensity={1} environment="city">
                 <Model />
             </Stage>
         </Suspense>
-        <OrbitControls ref={ref} minPolarAngle={(Math.PI)/2 - 0.27} maxPolarAngle={(Math.PI) / 2 + 0.27} minAzimuthAngle={-Math.PI/4 - 0.10} maxAzimuthAngle={Math.PI/4 + 0.10} />
+        <OrbitControls ref={ref} minPolarAngle={(Math.PI)/2 - 0.27} maxPolarAngle={(Math.PI) / 2 + 0.27} minAzimuthAngle={-Math.PI/4 - 0.10} maxAzimuthAngle={Math.PI/4 + 0.10} enableZoom={false} />
         </Canvas>
       )
 }

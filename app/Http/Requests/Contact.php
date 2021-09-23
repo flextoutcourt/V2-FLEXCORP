@@ -26,26 +26,28 @@ class Contact extends FormRequest
         return [
             'email' => "required|email",
             'subject' => 'required',
-            'message' => 'required|min:10|alpha_num',
+            'message' => 'required|min:10|string',
         ];
     }
 
     public function messages()
     {
         return [
-            'email.required' => 'Vous devez fournir une adresse email afin que nous puissions vous recontacter.',
-            'email.email' => "Veuillez fournir une adresse mail valide.",
-            'subject.required' => 'Veuillez préciser un sujet.',
-            'message.required' => 'Pourquoi nous contacter si vous ne laissez pas de message ?',
-            'message.min' => 'Votre message doit faire un minimum de 10 caractères.',
-            "message.alpha_num" => 'Votre message ne peut pas contenir de caractères spéciaux.',
+            'email.required' => 'Vous devez fournir une :attribute afin que nous puissions vous recontacter.',
+            'email.email' => "Veuillez fournir une :attribute valide.",
+            'subject.required' => 'Veuillez préciser un :attribute.',
+            'message.required' => 'Pourquoi nous contacter si vous ne laissez pas de :attribute ?',
+            'message.min' => 'Votre :attribute doit faire un minimum de 10 caractères.',
+            "message.string" => 'Votre :attribute ne peut pas contenir de caractères spéciaux.',
         ];
     }
 
     public function attributes()
     {
         return [
-
+            'email' => 'adresse email',
+            'message' => 'message',
+            'subject' => 'sujet'
         ];
     }
 }

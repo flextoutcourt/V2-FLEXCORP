@@ -26,14 +26,14 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+// Route::get('/', function () {
+//     return Inertia::render('Welcome', [
+//         'canLogin' => Route::has('login'),
+//         'canRegister' => Route::has('register'),
+//         'laravelVersion' => Application::VERSION,
+//         'phpVersion' => PHP_VERSION,
+//     ]);
+// });
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [UserController::class, 'index'])->name('dashboard');
@@ -81,7 +81,7 @@ Route::post('/mes-projects/update/{actu}', [ActuController::class, "udpate"])->n
 /** REALISATIONS */
 
 Route::get('/mes-realisations', [RealisationController::class, "index"])->name('realisations');
-Route::get('/mes-realisations/{realisation}-{slug}', [RealisationController::class, 'show'])->name('realisation.show');
+Route::get('/mes-realisations/{realisation}', [RealisationController::class, 'show'])->name('realisation.show');
 
 Route::post('/mes-realisations/add', [RealisationsController::class, 'store'])->name('realisations.store');
 Route::get('/mes-realisations/edit/{realisation}', [RealisationsController::class, 'edit'])->name('realisation.edit');

@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactTooltip from 'react-tooltip';
 import './slideshow.css'
 
 export default function SlideShow({props}) {
@@ -6,168 +7,137 @@ export default function SlideShow({props}) {
     const languages = [
         {
             title: 'HTML',
-            icon: 'https://picsum.photos/45',
+            icon: 'img/html5.svg',
             color: '#DD4B25',
-            description: 'test',
+            tooltip: 'HTML 5',
+            link: '',
         },
         {
             title: 'CSS',
-            icon: 'https://picsum.photos/45',
+            icon: 'img/css3.svg',
             color: '#254BDD',
-            description: 'test',
+            tooltip: 'CSS 3',
+            link: '',
         },
         {
             title: 'JS',
-            icon: 'https://picsum.photos/45',
+            icon: 'img/js.svg',
             color: '#EFD81D',
-            description: 'test',
+            tooltip: 'Javascript',
+            link: '',
         },
         {
             title: 'PHP',
-            icon: 'https://picsum.photos/45',
+            icon: 'img/php.svg',
             color: "#8993be",
-            description: 'test',
+            tooltip: 'PHP',
+            link: '',
         },
         {
             title: 'React',
-            icon: 'https://picsum.photos/45',
+            icon: 'img/rn.svg',
             color: '#61dbfb',
-            description: 'test',
+            tooltip: 'React',
+            link: '',
         },
         {
             title: 'Laravel',
-            icon: 'https://picsum.photos/45',
+            icon: 'img/laravel.svg',
             color: '#fb503b',
-            description: 'test',
+            tooltip: 'Laravel 8',
+            link: '',
         },
         {
             title: 'React Native',
-            icon: 'https://picsum.photos/45',
+            icon: 'img/rn.svg',
             color: '#61dbfb',
-            description: 'test',
+            tooltip: 'React Native',
+            link: '',
         },
         {
             title: 'Bootstrap',
-            icon: 'https://picsum.photos/45',
+            icon: 'img/bootstrap.svg',
             color: '#7310EF',
-            description: 'test',
+            tooltip: 'Bootstrap',
+            link: '',
         },
         {
-            title: 'TailwindCss',
-            icon: 'https://picsum.photos/45',
+            title: 'Tailwind Css',
+            icon: 'img/tailwindcss.svg',
             color: '#15B3C0',
-            description: 'test',
+            tooltip: 'TailwindCss',
+            link: '',
         },
         {
             title: 'Jquery',
-            icon: 'https://picsum.photos/45',
+            icon: 'img/jquery.svg',
             color: '#0769AD',
-            description: 'test',
+            tooltip: 'JQuery',
+            link: '',
         },
         {
             title: 'Mysql',
-            icon: 'https://picsum.photos/45',
+            icon: 'img/mysql.svg',
             color: '#00758F',
-            description: 'test',
+            tooltip: 'MySQL',
+            link: '',
         },
         {
             title: 'Typo3',
-            icon: 'https://picsum.photos/45',
+            icon: 'img/typo3.svg',
             color: '#F49800',
-            description: 'test',
+            tooltip: 'Typo 3',
+            link: '',
         },
         {
             title: 'NodeJS',
-            icon: 'https://picsum.photos/45',
+            icon: 'img/nodejs.svg',
             color: '#026E00',
-            description: 'test',
+            tooltip: 'Node JS 14',
+            link: '',
         },
+        {
+            title: 'Wordpress',
+            icon: 'img/wordpress.svg',
+            color: '#21759b',
+            tooltip: 'Wordpress',
+            link: '',
+        },
+        {
+            title: 'Prestashop',
+            icon: 'img/prestashop.svg',
+            color: '#21759b',
+            tooltip: 'Prestashop',
+            link: '',
+        }
     ]
 
-    return (
-        <div>
-            <div class="slideshow mt-4">
-            {languages.map((item, key) => (
-                <div class="slideshow-item bg-gray-900" key={key}>
-                    <a href="{https://developer.mozilla.org/fr/docs/Web/HTML}" target="_blank" title={item.title} class="purple-text">
-                        <img src="/img/html5.svg" alt={item.title} class=" pic-sm lazyload" title="HTML 5" />
-                        <p>{item.title}</p>
-                    </a>
-                </div>
-            ))}
-                {/* <div class="slideshow-item">
-                    <a href="https://developer.mozilla.org/fr/docs/Web/CSS" target="_blank" title="CSS 3" class="purple-text">
-                        <img src="/img/css3.svg" alt="CSS 3" class=" pic-sm lazyload" title="CSS 3" />
-                        <p>CSS</p>
-                    </a>
-                </div>
-                <div class="slideshow-item">
-                    <a href="https://developer.mozilla.org/fr/docs/Web/JavaScript" target="_blank" title="JavaScript" class="purple-text">
-                        <img src="/img/js.svg" alt="JavaScript" class=" pic-sm lazyload" title="JavaScript" />
-                        <p>JavaScript</p>
-                    </a>
-                </div>
-                <div class="slideshow-item">
-                    <a href="https://api.jquery.com/" target="_blank" title="Jquery" class="purple-text">
-                        <img src="/img/jquery.svg" alt="Jquery" class=" pic-sm lazyload" title="Jquery" />
-                        <p>Jquery</p>
-                    </a>
-                </div>
-                <div class="slideshow-item">
-                    <a href="https://getbootstrap.com/" target="_blank" title="Bootstrap" class="purple-text">
-                        <img src="/img/bootstrap.svg" alt="Bootstrap" class=" pic-sm lazyload" title="Bootstrap" />
-                        <p>Bootstrap</p>
-                    </a>
-                </div>
-                <div class="slideshow-item">
-                    <a href="https://tailwindcss.com/" target="_blank" title="TailwindCSS" class="purple-text">
-                        <img src="/img/tailwindcss.svg" alt="TailwindCSS" class=" pic-sm lazyload" title="TailwindCSS" />
-                        <p>TailwindCss</p>
-                    </a>
-                </div>
-                <div class="slideshow-item">
-                    <a href="https://dev.mysql.com/" target="_blank" title="MySQL" class="purple-text">
-                        <img src="/img/Mysql.svg" alt="MySQL" class=" pic-sm lazyload" title="MySQL" />
-                        <p>MySQL</p>
-                    </a>
-                </div>
-                <div class="slideshow-item">
-                    <a href="https://php.net" target="_blank" title="PHP" class="purple-text">
-                        <img src="/img/PHP.svg" alt="PHP" class=" pic-sm lazyload" title="PHP" />
-                        <p>PHP</p>
-                    </a>
-                </div>
-                <div class="slideshow-item">
-                    <a href="https://reactnative.dev/" target="_blank" title="React Native" class="purple-text">
-                        <img src="/img/RN.svg" alt="React Native" class=" pic-sm lazyload" title="React Native" />
-                        <p>React Native</p>
-                    </a>
-                </div>
-                <div class="slideshow-item">
-                    <a href="https://fr.reactjs.org/" target="_blank" title="React" class="purple-text">
-                        <img src="/img/RN.svg" alt="React" class=" pic-sm lazyload" title="React" />
-                        <p>React</p>
-                    </a>
-                </div>
-                <div class="slideshow-item">
-                    <a href="https://laravel.com/" target="_blank" title="Laravel" class="purple-text">
-                        <img src="/img/laravel.svg" alt="Laravel" class=" pic-sm lazyload" title="Laravel" />
-                        <p>Laravel</p>
-                    </a>
-                </div>
-                <div class="slideshow-item">
-                    <a href="https://nextjs.com/" target="_blank" title="nextjs" class="purple-text">
-                        <img src="/img/nextjs.png" alt="nextjs" class=" pic-sm lazyload" title="nextjs" />
-                        <p>Next JS</p>
-                    </a>
-                </div>
-                <div class="slideshow-item">
-                    <a href="https://wordpress.org/" target="_blank" title="Wordpress" class="purple-text">
-                        <img src="/img/wp-logo.png" alt="Wordpress" class=" pic-sm lazyload" title="Wordpress" />
-                        <p>Wordpress</p>
-                    </a>
-                </div> */}
+    const Item = ({item, key}) => {
+        return (
+            <div className="slideshow-item bg-gray-900" key={key} data-tip={item.tooltip}>
+                <a href="{https://developer.mozilla.org/fr/docs/Web/HTML}" target="_blank" title={item.title} className="text-indigo-500">
+                    <img src={'storage/'+item.icon} alt={item.title} className="h-16 w-full" title={item.title} />
+                    <p>{item.title}</p>
+                </a>
             </div>
+        )
+    }
+
+    const SlideShowItem = () => {
+        return (
+            <div className="slideshow mt-4">
+                {languages.map((item, key) => (
+                    <Item item={item} key={key} />
+                ))}
+            </div>
+        )
+    }
+
+    return (
+        <div className="flex">
+            <ReactTooltip/>
+            <SlideShowItem/>
+            <SlideShowItem/>
         </div>
       )
 }
