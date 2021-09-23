@@ -8,6 +8,7 @@ import Spinner from '@/Components/Spinner';
 import { ToastContainer } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
+import Footer from './Footer';
 
 const navigation = [
     {
@@ -164,6 +165,7 @@ export default function Authenticated({ auth, header, children, title }) {
                     {children}
                 </Suspense>
             </main>
+            <Footer />
         </div>
     );
 }
