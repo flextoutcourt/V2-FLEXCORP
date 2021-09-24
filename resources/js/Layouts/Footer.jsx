@@ -16,7 +16,7 @@ export default function Footer() {
     }
 
     return (
-        <div className="w-full">
+        <div className="w-full absolute top-full">
             <ul className="flex juftify-content align-middle">
                 <li><i className="fas fa-facebook-square"></i></li>
                 <li></li>
