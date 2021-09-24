@@ -4,6 +4,7 @@ import NavLink from '../Components/NavLink';
 import React, { useState } from 'react';
 import ResponsiveNavLink from '../Components/ResponsiveNavLink';
 import { InertiaLink } from '@inertiajs/inertia-react';
+import Footer from './Footer';
 
 const navigation = [
   {
@@ -122,7 +123,7 @@ export default function Guest({children, header, errors}) {
             <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
                 <div className="pt-2 pb-3 space-y-1">
                     <ResponsiveNavLink
-                        method="post"
+                        method="get"
                         href={route('dashboard')}
                         active={route().current('dashboard')}
                     >
@@ -150,6 +151,7 @@ export default function Guest({children, header, errors}) {
         )}
 
         <main className="max-w-7xl mx-auto py-6 pb-0 px-4 sm:px-6 lg:px-8">{children}</main>
+        <Footer />
     </div>
 );
 }

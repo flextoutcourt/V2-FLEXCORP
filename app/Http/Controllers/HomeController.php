@@ -48,7 +48,7 @@ class HomeController extends Controller
     public function get_tweets()
     {
         $twitter = new Twitter("2fd2noDAroC0L6EefQWbhyhJ4","k6zCNYUzoz5U71EM8htIB9eOfdg5iTU2ovHIgWNwIyniGnr0L4", "3225592469-rdk60Q8AsWXguVbg8AvYQYMtGofVU6McKJzlVA2", "PjKdtFJcK8MDpGbs5q03VUWtNw56OO4wKcRMEmFxJlIao");
-        $statuses = $twitter->load(Twitter::ME, 3);
+        $statuses = $twitter->load(Twitter::ME, 2);
         return $statuses;
     }
 

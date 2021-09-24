@@ -19,7 +19,7 @@
         <script src="https://kit.fontawesome.com/efe2083cb7.js" crossorigin="anonymous"></script>
         <script src="{{ mix('js/app.js') }}" defer></script>
     </head>
-    <body class="font-sans antialiased">
+    <body class="font-sans antialiased p-0">
         @inertia
 
         {{-- @env ('local')

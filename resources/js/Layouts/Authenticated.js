@@ -122,7 +122,7 @@ export default function Authenticated({ auth, header, children, title }) {
                 <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
                     <div className="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink
-                            method="post"
+                            method="get"
                             href={route('dashboard')}
                             active={route().current('dashboard')}
                         >
@@ -151,7 +151,7 @@ export default function Authenticated({ auth, header, children, title }) {
                 </header>
             )}
 
-            <main className="max-w-7xl mx-auto py-6 pb-0 px-4 sm:px-6 lg:px-8">
+            <main className="max-w-7xl mx-auto py-6 pb-0 px-4 sm:px-6 lg:px-8" style={{minHeight: window.innerHeight - 150 + 'px'}}>
                 <Suspense fallback={null}>
                     <ToastContainer
                         position='top-right'

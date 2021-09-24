@@ -97,7 +97,7 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function show(Project $project)
+    public function show(Project $project, ?string $slug)
     {
         return Inertia::render('Projects/Show', ['project' => $project]);
     }

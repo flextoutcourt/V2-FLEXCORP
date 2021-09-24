@@ -71,17 +71,17 @@ Route::get('/mes-projets/ascenseur-301', [ProjectController::class, 'asc301'])->
 Route::get('/mes-projets/projets-personnels', [ProjectController::class, 'perso'])->name('projects.perso');
 Route::get('/mes-projets/projets-professionels', [ProjectController::class, "pro"])->name('projects.pro');
 
-Route::get('/mes-projets/{project}', [ProjectController::class, 'show'])->name('project.show');
+Route::get('/mes-projets/{project}-{slug?}', [ProjectController::class, 'show'])->name('project.show');
 
 Route::post('/mes-projets/add', [ProjectController::class, 'store'])->name('projects.store');
 Route::get('/mes-projets/edit', [ProjectController::class, 'store'])->name('projects.edit');
-Route::post('/mes-projects/update/{actu}', [ActuController::class, "udpate"])->name('actu.update');
+Route::post('/mes-projects/update/{actu}-{slug?}', [ActuController::class, "udpate"])->name('actu.update');
 /** FIN PROJECTS */
 
 /** REALISATIONS */
 
 Route::get('/mes-realisations', [RealisationController::class, "index"])->name('realisations');
-Route::get('/mes-realisations/{realisation}', [RealisationController::class, 'show'])->name('realisation.show');
+Route::get('/mes-realisations/{realisation}-{slug?}', [RealisationController::class, 'show'])->name('realisation.show');
 
 Route::post('/mes-realisations/add', [RealisationsController::class, 'store'])->name('realisations.store');
 Route::get('/mes-realisations/edit/{realisation}', [RealisationsController::class, 'edit'])->name('realisation.edit');
@@ -92,7 +92,7 @@ Route::post('/mes-realisations/update', [RealisationsController::class, 'update'
 /** ACTUS */
 Route::get('/les-actus-de-flex', [ActuController::class, 'index'])->name('actus');
 
-Route::get('/les-actus-de-flex/{actu}-{slug}', [ActuController::class, "show"])->name('actu.show');
+Route::get('/les-actus-de-flex/{actu}-{slug?}', [ActuController::class, "show"])->name('actu.show');
 /** FIN ACTUS */
 
 Route::middleware(['auth'])->group(function () {

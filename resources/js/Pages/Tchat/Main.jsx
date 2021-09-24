@@ -84,7 +84,7 @@ function App({auth, errors}) {
                         )
                     })}
                 </div>
-                <form onSubmit={e => submit(e)} className="fixed bottom-0 left-0 right-0 border-t border-indigo-500 bg-gray-900 text-white focus:ring-opacity-50 focus:ring-2 focus:ring-indigo-500">
+                <form onSubmit={e => submit(e)} className="sticky bottom-0 left-0 right-0 border-t border-indigo-500 bg-gray-900 text-white focus:ring-opacity-50 focus:ring-2 focus:ring-indigo-500">
                     <input className="w-full p-4 bg-gray-900 outline-none focus:border-indigo-500 focus:border-t-4 focus:bg-gray-800" placeholder="Write a message" value={message}
                         onChange={e => setMessage(e.target.value)}
                     />
