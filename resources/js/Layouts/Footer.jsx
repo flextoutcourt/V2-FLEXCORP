@@ -16,13 +16,7 @@ export default function Footer() {
     }
 
     return (
-        <div className="w-full absolute top-full">
-            <ul className="flex juftify-content align-middle">
-                <li><i className="fas fa-facebook-square"></i></li>
-                <li></li>
-                <li></li>
-                <li></li>
-            </ul>
+        <div className="w-full">
             <footer className="w-full bg-gray-800 m-0 sm:mt-10 pt-10">
                 <div className="max-w-6xl m-auto text-gray-800 flex flex-wrap justify-left">
                     <div className="p-5 w-full sm:w-6/12 md:w-4/12">
