@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="299.701" height="177.747" viewBox="0 0 299.701 177.747">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.155" y1="0.298" x2="0.898" y2="0.592" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#1ea3bc"/>
+      <stop offset="1" stop-color="#11cdb6"/>
+    </linearGradient>
+  </defs>
+  <g id="tailwindcss" transform="translate(-5358.5 -14.164)">
+    <path id="Path_57" data-name="Path 57" d="M.5,59.647C6.941,3.362,55.1.841,65.466-.279,149.863-9.4,145.273,97.45,226.2,29.964,222.281,51.806,202.959,97.951,137.153,90S60.986-5.319.5,59.647Z" transform="translate(5358 101)" fill="url(#linear-gradient)"/>
+    <path id="Path_57-2" data-name="Path 57" d="M.5,59.647C6.941,3.362,55.1.841,65.466-.279,149.863-9.4,145.273,97.45,226.2,29.964,222.281,51.806,202.959,97.951,137.153,90S60.986-5.319.5,59.647Z" transform="translate(5432 15)" fill="url(#linear-gradient)"/>
+  </g>
+</svg>
