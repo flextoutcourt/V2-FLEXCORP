@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import parse from 'html-react-parser';
 import ReactTooltip from 'react-tooltip';
-import { backgroundImage } from 'tailwindcss/defaultTheme';
 
 export default function Tweets({tweets, quoted_status = null}) {
 
@@ -9,7 +8,8 @@ export default function Tweets({tweets, quoted_status = null}) {
 
     const replace_entities = (item) => {
         item.entities.user_mentions.map((mention, key) => {
-            item.text = item.text.replace('@'+mention.screen_name, `<a href="https://twitter.com/u/${mention.id}" data-tip="${mention.name}" target="_blank" className="text-indigo-500">${mention.name}</a>`);
+            let regex = new RegExp("@"+mention.screen_name, 'gi');
+            item.text = item.text.replace(regex, `<a href="https://twitter.com/u/${mention.id}" data-tip="${mention.name}" target="_blank" className="text-indigo-500">@${mention.screen_name}</a>`);
         })
         item.entities.urls.map((url, key) => {
             item.text = item.text.replace(url.url, `<a href="${url.expanded_url}" target="_blank" className="text-indigo-500">${url.url}</a>`)
@@ -23,13 +23,11 @@ export default function Tweets({tweets, quoted_status = null}) {
                     {item.extended_entities.media.map((ext_media, key) => {
                         item.text = item.text.replace(ext_media.url, '  ');
                         html += '<div className="h-32" style="background-image: url('+ext_media.media_url+'); background-size: cover; background-position: center center; background-repeat: no-repeat"></div>'
-                        //  `<img className="w-full" src="${}"/>`;
                     })}
                 html += `</div>`;
                 item.text += html;
             }
         }
-        // item.text = '<script>console.log("testtgfkjsghfdkjghlskfghkls")</script>';
         return item;
     }
 
@@ -50,7 +48,7 @@ export default function Tweets({tweets, quoted_status = null}) {
                             <span className="ml-2">{quoted_status.retweet_count}</span>
                         </div>
                         <div className="like">
-                            <i className="fas fa-heart"></i>
+                            <i className="far fa-heart"></i>
                             <span className="ml-2">{quoted_status.favorite_count}</span>
                         </div>
                     </div>
@@ -71,7 +69,7 @@ export default function Tweets({tweets, quoted_status = null}) {
                                 <span className="ml-2">{item.retweet_count}</span>
                             </div>
                             <div className="like">
-                                <i className="fas fa-heart"></i>
+                                <i className="far fa-heart"></i>
                                 <span className="ml-2">{item.favorite_count}</span>
                             </div>
                         </div>

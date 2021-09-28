@@ -35,11 +35,11 @@ export default function Home({auth}){
         axios.post(route('contact.post'), data)
         .then(data => {
             setErrors([]);
-            console.log(data.data);
+            // console.log(data.data);
         })
         .catch(error => {
             setErrors(error.response.data.errors);
-            console.log(error.response.data.errors);
+            // console.log(error.response.data.errors);
         })
     };
 
