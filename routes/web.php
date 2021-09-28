@@ -38,6 +38,8 @@ use Inertia\Inertia;
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [UserController::class, 'index'])->name('dashboard');
     Route::get('/user/edit/{user}', [UserController::class, 'edit'])->name('user.edit');
+    Route::get('/user/edit/{user}/avatar', [UserController::class, "edit_picture"])->name('user.edit_photo');
+    Route::post('/user/update/picture', [UserController::class, "update_picture"])->name('user.update_photo');
     Route::post('/user/update', [UserController::class, 'update'])->name('user.update');
 
     Route::get('/parlez-moi', [TchatController::class, 'index'])->name('tchat');

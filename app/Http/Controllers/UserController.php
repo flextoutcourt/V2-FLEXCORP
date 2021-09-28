@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AvatarRequest;
 use App\Http\Requests\User\Update;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
+use Intervention\Image\Facades\Image;
 
 class UserController extends Controller
 {
@@ -73,6 +75,29 @@ class UserController extends Controller
     public function edit($id)
     {
         return Inertia::render('Auth/Edit');
+    }
+
+    public function edit_picture($id)
+    {
+        return Inertia::render('Auth/EditPicture');
+    }
+
+    public function update_picture(AvatarRequest $request)
+    {
+        if($request->hasFile('illustration')){
+            if($request->file('illustration')->isValid()){
+                $filePath = time().'.'.$request->file('illustration')->extension();
+                $img = Image::make($request->file('illustration')->path());
+                $img->resize(1920, 1080, function($const){
+                    $const->aspectRatio();
+                })->save('users/'.$filePath);
+                $path = $request->file('illustration')->move('users', $filePath);
+                $user = User::find(Auth::user()->id);
+                $user->avatar = $path;
+                $user->save();
+            }
+        }
+        return redirect()->route('dashboard');
     }
 
     /**
