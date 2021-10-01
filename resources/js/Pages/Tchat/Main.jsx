@@ -4,11 +4,14 @@ import axios from "axios";
 import Authenticated from "@/Layouts/Authenticated";
 import Message from '../Tchat/Message';
 import Echo from "laravel-echo";
+import { getLinkPreview, getPreviewFromContent } from "link-preview-js";
+import { toast } from 'react-toastify';
 
 function App({auth, errors}) {
     const [oldMessages, setoldMessages] = useState([]);
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState('');
+    const [linkPreview, setLinkPreview] = useState('');
     const [users, setUsers] = useState([]);
     
     useEffect(() => {
@@ -44,13 +47,40 @@ function App({auth, errors}) {
     const submit = async e => {
         e.preventDefault();
 
-        await axios.post(route('tchat.send', {message}))
-        .then(() => {
-            setMessage('');
-            window.scroll(0, document.body.scrollHeight);
-        });
-        await axios.post(route('notify.user', {type: message}));
+        const regex = new RegExp("^(https?|ftp)://[^\s/$.?#].[^\s]*$", 'i')
+        const str = message;
+        let m;
 
+        if ((m = regex.exec(str)) !== null) {
+            await getLinkPreview(m[0]).then((response) => {
+                axios.post(route('tchat.send', {message, response}))
+                .then(() => {
+                    setMessage('');
+                    window.scroll(0, document.body.scrollHeight);
+                })    
+            })
+            .catch((e) => {
+                console.log(e);
+                toast.error('Une erreur est survenue lors de la récupération des données du lien');
+                axios.post(route('tchat.send', {message}))
+                .then(() => {
+                    setMessage('');
+                    window.scroll(0, document.body.scrollHeight);
+                })
+            })
+        }else{
+            axios.post(route('tchat.send', {message}))
+                .then(() => {
+                    setMessage('');
+                    window.scroll(0, document.body.scrollHeight);
+                });
+        }
+        await axios.post(route('notify.user', {type: "message"}));
+
+    }
+
+    const handleChange = e => {
+        setMessage(e.target.value);
     }
 
     return (
@@ -86,7 +116,7 @@ function App({auth, errors}) {
                 </div>
                 <form onSubmit={e => submit(e)} className="sticky bottom-0 left-0 right-0 border-t border-indigo-500 bg-gray-900 text-white focus:ring-opacity-50 focus:ring-2 focus:ring-indigo-500">
                     <input className="w-full p-4 bg-gray-900 outline-none focus:border-indigo-500 focus:border-t-4 focus:bg-gray-800" placeholder="Write a message" value={message}
-                        onChange={e => setMessage(e.target.value)}
+                        onChange={handleChange}
                     />
                 </form>
             </div>

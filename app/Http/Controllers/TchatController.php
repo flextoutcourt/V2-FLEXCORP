@@ -25,6 +25,7 @@ class TchatController extends Controller
         event(new EventsTchat(Auth::user(), $request->input('message')));
         $message = new Message();
         $message->message = $request->input('message');
+        $message->link_preview = json_encode($request->input('response'));
         $message->user_id = Auth::user()->id;
         $message->save();
 
@@ -36,6 +37,7 @@ class TchatController extends Controller
         $messages = Message::all();
         foreach($messages as $key => $message){
             $messages[$key]->user = $message->user()->get();
+            $message->link_preview = json_decode($message->link_preview);
         }
         return $messages;
     }

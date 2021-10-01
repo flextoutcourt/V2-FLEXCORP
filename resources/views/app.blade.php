@@ -21,6 +21,10 @@
     </head>
     <body class="font-sans antialiased p-0 overflow-x-hidden">
         @inertia
+
+        {{-- @env ('local')
+            <script src="http://localhost:3000/browser-sync/browser-sync-client.js"></script>
+        @endenv --}}
         @yield('js-scripts')
     </body>
 </html>

@@ -168,7 +168,7 @@ export default function Authenticated({ auth, header, children, title }) {
                 :
                 null
             }
-            <main className="max-w-7xl mx-auto py-6 pb-0 px-4 sm:px-6 lg:px-8" style={{minHeight: window.innerHeight - 150 + 'px'}}>
+            <main className="max-w-7xl mx-auto py-6 pb-0 px-4 sm:px-6 lg:px-8" style={{minHeight: window.innerHeight - 160 + 'px'}}>
                 <Suspense fallback={null}>
                     <ToastContainer
                         position='top-right'
@@ -182,7 +182,12 @@ export default function Authenticated({ auth, header, children, title }) {
                     {children}
                 </Suspense>
             </main>
-            <Footer />
+            {route().current('tchat')
+                ?
+                   null
+                :
+                <Footer />
+            }
         </div>
     );
 }
