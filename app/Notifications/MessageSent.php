@@ -45,8 +45,9 @@ class MessageSent extends Notification implements ShouldQueue
     {
         return (new MailMessage)
                     ->line('Un nouveau message est disponible sur le tchat')
-                    ->action('Notification Action', url('http://localhost:8000/parlez-moi'))
+                    ->action('Notification Action', url(env('APP_URL').'/parlez-moi'))
                     ->line($this->message);
+                    
     }
 
     /**

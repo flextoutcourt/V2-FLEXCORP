@@ -6,6 +6,7 @@ import ResponsiveNavLink from '../Components/ResponsiveNavLink';
 import { InertiaLink } from '@inertiajs/inertia-react';
 import Spinner from '@/Components/Spinner';
 import { ToastContainer } from 'react-toastify';
+import HeroBanner from '@/Components/Home/HeroBanner';
 
 import 'react-toastify/dist/ReactToastify.css';
 import Footer from './Footer';
@@ -121,24 +122,32 @@ export default function Authenticated({ auth, header, children, title }) {
 
                 <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
                     <div className="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink
-                            method="get"
-                            href={route('dashboard')}
-                            active={route().current('dashboard')}
-                        >
-                            {title}
-                        </ResponsiveNavLink>
+                        {navigation.map((item, key) => (
+                            <ResponsiveNavLink
+                                key={key}
+                                method="get"
+                                href={route(item.link)}
+                                active={route().current(item.link)}
+                            >
+                                <div className="text-white">
+                                    {item.name}
+                                </div>
+                            </ResponsiveNavLink>
+                        ))}
+                        
                     </div>
-
-                    <div className="pt-4 pb-1 border-t bg-indigo-500 border-gray-200">
-                        <div className="px-4">
-                            <div className="font-medium text-base text-gray-800">{auth.user.name}</div>
-                            <div className="font-medium text-sm text-gray-500">{auth.user.email}</div>
-                        </div>
-
+                    <div className="pb-1 border-t bg-gray-800 border-gray-200">
                         <div className="mt-3 space-y-1">
+                            <ResponsiveNavLink method="get" href={route('login')} active={route().current('login')}>
+                                <div className="px-4 text-white">
+                                    <div className="font-medium text-base">{auth.user.name}</div>
+                                    <div className="font-medium text-sm">{auth.user.email}</div>
+                                </div>
+                            </ResponsiveNavLink>
                             <ResponsiveNavLink method="post" href={route('logout')} as="button">
-                                Log Out
+                                <div className="text-white px-2 py-1 w-full">
+                                    Déconnexion
+                                </div>
                             </ResponsiveNavLink>
                         </div>
                     </div>
@@ -153,7 +162,12 @@ export default function Authenticated({ auth, header, children, title }) {
                     </div>
                 </header>
             )}
-
+            {route().current('home')
+                ?
+                    <HeroBanner/>
+                :
+                null
+            }
             <main className="max-w-7xl mx-auto py-6 pb-0 px-4 sm:px-6 lg:px-8" style={{minHeight: window.innerHeight - 150 + 'px'}}>
                 <Suspense fallback={null}>
                     <ToastContainer

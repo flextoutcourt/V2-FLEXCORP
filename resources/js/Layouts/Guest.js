@@ -5,6 +5,8 @@ import React, { useState } from 'react';
 import ResponsiveNavLink from '../Components/ResponsiveNavLink';
 import { InertiaLink } from '@inertiajs/inertia-react';
 import Footer from './Footer';
+import HeroBanner from '@/Components/Home/HeroBanner';
+
 
 const navigation = [
   {
@@ -122,22 +124,32 @@ export default function Guest({children, header, errors}) {
 
             <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
                 <div className="pt-2 pb-3 space-y-1">
-                    <ResponsiveNavLink
-                        method="get"
-                        href={route('dashboard')}
-                        active={route().current('dashboard')}
-                    >
-                        testgfgsldfk
-                    </ResponsiveNavLink>
+                    {navigation.map((item, key) => (
+                        <ResponsiveNavLink
+                            key={key}
+                            method="get"
+                            href={route(item.link)}
+                            active={route().current(item.link)}
+                        >
+                            <div className="text-white">
+                                {item.name}
+                            </div>
+                        </ResponsiveNavLink>
+                    ))}
+                    
                 </div>
 
-                <div className="pt-4 pb-1 border-t bg-indigo-500 border-gray-200">
+                <div className="pb-1 border-t bg-gray-800 border-gray-200">
                     <div className="mt-3 space-y-1">
-                        <ResponsiveNavLink method="get" href={route('login')}>
-                            Connexion
+                        <ResponsiveNavLink method="get" href={route('login')} active={route().current('login')}>
+                            <div className="text-white px-2 py-1 w-full">
+                                Connexion
+                            </div>
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink method="get" href={route('register')}>
-                            Inscription
+                        <ResponsiveNavLink method="get" href={route('register')} active={route().current('register')}>
+                            <div className="text-white px-2 py-1 w-full">
+                                Inscription
+                            </div>
                         </ResponsiveNavLink>
                     </div>
                 </div>
@@ -152,7 +164,12 @@ export default function Guest({children, header, errors}) {
                 </div>
             </header>
         )}
-
+        {route().current('home')
+            ?
+                <HeroBanner/>
+            :
+            null
+        }
         <main className="max-w-7xl mx-auto py-6 pb-0 px-4 sm:px-6 lg:px-8">{children}</main>
         <Footer />
     </div>

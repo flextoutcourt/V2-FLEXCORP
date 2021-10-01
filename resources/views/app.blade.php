@@ -19,12 +19,8 @@
         <script src="https://kit.fontawesome.com/efe2083cb7.js" crossorigin="anonymous"></script>
         <script src="{{ mix('js/app.js') }}" defer></script>
     </head>
-    <body class="font-sans antialiased p-0">
+    <body class="font-sans antialiased p-0 overflow-x-hidden">
         @inertia
-
-        {{-- @env ('local')
-            <script src="http://localhost:3000/browser-sync/browser-sync-client.js"></script>
-        @endenv --}}
         @yield('js-scripts')
     </body>
 </html>

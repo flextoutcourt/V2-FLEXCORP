@@ -16,7 +16,7 @@ export default function Footer() {
     }
 
     return (
-        <div className="w-full">
+        <div className="w-full mt-4">
             <footer className="w-full bg-gray-800 m-0 sm:mt-10 pt-10">
                 <div className="max-w-6xl m-auto text-gray-800 flex flex-wrap justify-left">
                     <div className="p-5 w-full sm:w-6/12 md:w-4/12">

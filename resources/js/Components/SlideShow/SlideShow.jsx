@@ -147,7 +147,7 @@ export default function SlideShow({props}) {
     }
 
     return (
-        <div className="flex">
+        <div className="flex max-w-screen">
             <ReactTooltip/>
             <SlideShowItem/>
             <SlideShowItem/>
