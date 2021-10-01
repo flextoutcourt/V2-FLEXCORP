@@ -28,18 +28,20 @@ class TchatController extends Controller
         $message->link_preview = json_encode($request->input('response'));
         $message->user_id = Auth::user()->id;
         $message->save();
-        event(new EventsTchat(Auth::user(), $str));
+        event(new EventsTchat(Auth::user(), $str, $request->input('response')));
 
         return [];
     }
 
     public function is_link($message)
     {
-        $re = '%(?:(https?|ftp)://)(\S+(:\S*)?@|\d{1,3}(?:\.\d{1,3}){3}|(?:(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)(\.(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)*(?:\.[a-z\x{00a1}-\x{ffff}]{2,6}))(:\d+)?(?:[^\s]*)%iu';
+        $re = '%[^\'](https?|ftp)(://)(\S+(:\S*)?@|\d{1,3}(?:\.\d{1,3}){3}|(?:(?:[a-z\d\x{00a1}\-\x{ffff}]+-?)*[a-z\d\x{00a1}\-\x{ffff}]+)(\.(?:[a-z\d\x{00a1}\-\x{ffff}]+-?)*[a-z\d\x{00a1}\-\x{ffff}]+)*(?:\.[a-z\x{00a1}\-\x{ffff}]{2,6}))(:\d+)?(?:[^\s]*)%i';
+        $str = $message;
 
         return preg_replace_callback($re, function($matches){
-            return "<a href='{$matches[1]}'>{$matches[2]}</a>";
-        }, $message);
+            return "<a href='{$matches[1]}{$matches[2]}{$matches[3]}'>{$matches[0]}</a>";
+        }, $str);
+
     }
 
     public function list()

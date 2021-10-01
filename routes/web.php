@@ -107,6 +107,10 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('/verify-card', [Ascenseur301Controller::class, 'verify_card'])->name('ascenseur.verify_card');
 
+Route::middleware(['cors'])->group(function () {
+    Route::post('/hogehoge', 'Controller@hogehoge');
+});
+
 require __DIR__.'/auth.php';
 
 
