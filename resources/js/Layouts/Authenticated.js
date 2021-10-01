@@ -157,7 +157,7 @@ export default function Authenticated({ auth, header, children, title }) {
             {header && (
                 <header className="bg-gray-800 shadow">
                     <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-gray-100">
-                        <div className="bg-yellow-600 rounded-md shadow-lg p-4"><i className="fas fa-excalamation-circle"></i> Cette version est une version de développement, les accès a votre compte peuvent etre supprimés lors d'un import d'une nouvelle base de données</div>
+                        <div className="bg-yellow-600 rounded-md shadow-lg p-4"><i className="fas fa-excalamation-circle"></i> Cette version est une version de développement, les accès a votre compte peuvent etre supprimés lors d'un import d'une nouvelle base de données ! Dernière maj des données : 01/10/2021</div>
                         {/* {header} */}
                     </div>
                 </header>

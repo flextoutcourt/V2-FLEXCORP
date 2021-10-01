@@ -19,11 +19,11 @@ function App({auth, errors}) {
         _get_users().then(val => setUsers(val));
       }, []);
     
-      async function _get_users(){
-          const promise = axios.get(route('api.get_users'));
-          const responseData = promise.then(data => data.data);
-          return responseData;
-      }
+    async function _get_users(){
+        const promise = axios.get(route('api.get_users'));
+        const responseData = promise.then(data => data.data);
+        return responseData;
+    }
 
     async function _get_messages(){ 
         const promise = axios.get(route("tchat.list"));
@@ -52,30 +52,30 @@ function App({auth, errors}) {
         let m;
 
         if ((m = regex.exec(str)) !== null) {
-            await getLinkPreview(m[0]).then((response) => {
-                axios.post(route('tchat.send', {message, response}))
+            await getLinkPreview(m[0]).then(async(response) => {
+                await axios.post(route('tchat.send', {message, response}))
                 .then(() => {
                     setMessage('');
                     window.scroll(0, document.body.scrollHeight);
                 })    
             })
-            .catch((e) => {
+            .catch(async(e) => {
                 console.log(e);
                 toast.error('Une erreur est survenue lors de la récupération des données du lien');
-                axios.post(route('tchat.send', {message}))
+                await axios.post(route('tchat.send', {message}))
                 .then(() => {
                     setMessage('');
                     window.scroll(0, document.body.scrollHeight);
                 })
             })
         }else{
-            axios.post(route('tchat.send', {message}))
+            await axios.post(route('tchat.send', {message}))
                 .then(() => {
                     setMessage('');
                     window.scroll(0, document.body.scrollHeight);
                 });
         }
-        await axios.post(route('notify.user', {type: "message"}));
+        // axios.post(route('notify.user', {type: "message"}));
 
     }
 

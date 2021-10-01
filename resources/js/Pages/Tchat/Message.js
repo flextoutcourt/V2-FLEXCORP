@@ -1,3 +1,5 @@
+import parse from 'html-react-parser';
+
 export default function Message ({message, auth}){
 
     console.log(message);
@@ -11,7 +13,7 @@ export default function Message ({message, auth}){
             ?
                 <div className="bg-gray-800 rounded-xl rounded-br-none self-end max-w-3/4 text-gray-100 p-4 my-2 message-gradient">
                     <h3>{auth.user.name}</h3>
-                    <p>{message.message}</p>
+                    <p>{parse(message.message)}</p>
                     {message.link_preview
                         ?
                             <div>
@@ -41,7 +43,7 @@ export default function Message ({message, auth}){
             :
                 <div className="bg-gray-800 rounded-xl rounded-bl-none self-start max-w-3/4 text-gray-100 p-4 my-2 message-gradient">
                     <h3>{message.user[0].name ?? message.user.name}</h3>
-                    <p>{message.message}</p>
+                    <p>{parse(message.message)}</p>
                     {message.link_preview
                         ?
                             <div>
@@ -74,7 +76,7 @@ export default function Message ({message, auth}){
             ?
                 <div className="bg-gray-800 rounded-xl rounded-br-none self-end max-w-3/4 text-gray-100 p-4 my-2 message-gradient">
                     <h3>{message.auth.name}</h3>
-                    <p>{message.message}</p>
+                    <p>{parse(message.message)}</p>
                     {message.link_preview
                         ?
                             <div>
@@ -104,7 +106,7 @@ export default function Message ({message, auth}){
             :
                 <div className="bg-gray-800 rounded-xl rounded-bl-none self-start max-w-3/4 text-gray-100 p-4 my-2 message-gradient">
                     <h3>{message.auth.name}</h3>
-                    <p>{message.message}</p>
+                    <p>{parse(message.message)}</p>
                     {message.link_preview
                         ?
                             <div>
