@@ -128,7 +128,7 @@ function App({auth, errors}) {
                         ))}
                     </div>
                 </div> */}
-                <div className="flex flex-col w-full overflow-auto" style={{maxHeight: "calc(100vh - 273px)"}}>
+                <div className="flex flex-col w-full overflow-y-auto" style={{maxHeight: "calc(100vh - 273px)"}}>
                     {oldMessages.map((m, key) => {
                         return (
                             <Message message={m} key={key} auth={auth} />
