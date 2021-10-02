@@ -166,22 +166,41 @@ export default function Authenticated({ auth, header, children, title }) {
                 ?
                     <HeroBanner/>
                 :
-                null
+                    null
             }
-            <main className="max-w-7xl mx-auto py-6 pb-0 px-4 sm:px-6 lg:px-8" style={{minHeight: window.innerHeight - 160 + 'px'}}>
-                <Suspense fallback={null}>
-                    <ToastContainer
-                        position='top-right'
-                        autoClose={5000}
-                        hideProgressBar={false}
-                        closeOnClick
-                        draggable
-                        pauseOnHover
-                        theme='dark'
-                    />
-                    {children}
-                </Suspense>
-            </main>
+            {
+                route().current('tchat')
+                ?
+                    <main className="max-w-7xl mx-auto py-6 pb-0 px-4 sm:px-6 lg:px-8 overflow-hidden" style={{height: window.innerHeight - 193 + 'px'}}>
+                        <Suspense fallback={null}>
+                            <ToastContainer
+                                position='top-right'
+                                autoClose={5000}
+                                hideProgressBar={false}
+                                closeOnClick
+                                draggable
+                                pauseOnHover
+                                theme='dark'
+                            />
+                            {children}
+                        </Suspense>
+                    </main>
+                :
+                    <main className="max-w-7xl mx-auto py-6 pb-0 px-4 sm:px-6 lg:px-8" style={{minHeight: window.innerHeight - 160 + 'px'}}>
+                        <Suspense fallback={null}>
+                            <ToastContainer
+                                position='top-right'
+                                autoClose={5000}
+                                hideProgressBar={false}
+                                closeOnClick
+                                draggable
+                                pauseOnHover
+                                theme='dark'
+                            />
+                            {children}
+                        </Suspense>
+                    </main>
+            }
             {route().current('tchat')
                 ?
                    null

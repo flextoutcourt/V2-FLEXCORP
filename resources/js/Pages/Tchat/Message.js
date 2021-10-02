@@ -2,10 +2,6 @@ import parse from 'html-react-parser';
 
 export default function Message ({message, auth}){
 
-    console.log(message);
-
-    // message.response = JSON.parse(message.response);
-
     return (
         (message.user
         ?

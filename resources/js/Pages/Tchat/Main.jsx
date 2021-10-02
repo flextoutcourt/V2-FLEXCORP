@@ -13,6 +13,8 @@ function App({auth, errors}) {
     const [message, setMessage] = useState('');
     const [linkPreview, setLinkPreview] = useState('');
     const [users, setUsers] = useState([]);
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [retracted, setRetracted] = useState(false);
     
     useEffect(() => {
         _get_messages().then(val => setoldMessages(val));
@@ -46,41 +48,65 @@ function App({auth, errors}) {
 
     const submit = async e => {
         e.preventDefault();
-
-        const regex = new RegExp("^(https?|ftp)://[^\s/$.?#].[^\s]*$", 'i')
-        const str = message;
-        let m;
-
-        if ((m = regex.exec(str)) !== null) {
-            await getLinkPreview(m[0]).then(async(response) => {
-                await axios.post(route('tchat.send', {message, response}))
-                .then(() => {
-                    setMessage('');
-                    window.scroll(0, document.body.scrollHeight);
-                })    
-            })
-            .catch(async(e) => {
-                console.log(e);
-                toast.error('Une erreur est survenue lors de la récupération des données du lien');
-                await axios.post(route('tchat.send', {message}))
-                .then(() => {
-                    setMessage('');
-                    window.scroll(0, document.body.scrollHeight);
+        if(message.length > 0){
+            const regex = new RegExp("^(https?|ftp)://[^\s/$.?#].[^\s]*$", 'i')
+            const str = message;
+            let m;
+    
+            if ((m = regex.exec(str)) !== null) {
+                await getLinkPreview(m[0]).then(async(response) => {
+                    await axios.post(route('tchat.send', {message, response}))
+                    .then(() => {
+                        setMessage('');
+                        window.scroll(0, document.body.scrollHeight);
+                    })    
                 })
-            })
+                .catch(async(e) => {
+                    toast.error('Une erreur est survenue lors de la récupération des données du lien');
+                    await axios.post(route('tchat.send', {message}))
+                    .then(() => {
+                        setMessage('');
+                        window.scroll(0, document.body.scrollHeight);
+                    })
+                })
+            }else{
+                await axios.post(route('tchat.send', {message}))
+                    .then(() => {
+                        setMessage('');
+                        window.scroll(0, document.body.scrollHeight);
+                    });
+            }
         }else{
-            await axios.post(route('tchat.send', {message}))
-                .then(() => {
-                    setMessage('');
-                    window.scroll(0, document.body.scrollHeight);
-                });
+            toast.warning('Vous ne pouvez pas envoyer un message vide');
         }
+
         // axios.post(route('notify.user', {type: "message"}));
 
     }
 
+    const deployMessageMenu = (e) => {
+        e.preventDefault();
+        setMenuOpen(!menuOpen);
+    }
+
+    const toggleFileMenu = (e) => {
+        e.preventDefault();
+    }
+    const togglePictureMenu = (e) => {
+        e.preventDefault();
+    }
+    const toggleGifMenu = (e) => {
+        e.preventDefault();
+    }
+
     const handleChange = e => {
         setMessage(e.target.value);
+        console.log(e.target.value.length);
+        if(e.target.value.length > 0){
+            setRetracted(true);
+        }else{
+            setRetracted(false);
+        }
     }
 
     return (
@@ -102,7 +128,7 @@ function App({auth, errors}) {
                         ))}
                     </div>
                 </div> */}
-                <div className="flex flex-col w-full">
+                <div className="flex flex-col w-full overflow-auto" style={{maxHeight: "calc(100vh - 273px)"}}>
                     {oldMessages.map((m, key) => {
                         return (
                             <Message message={m} key={key} auth={auth} />
@@ -114,10 +140,51 @@ function App({auth, errors}) {
                         )
                     })}
                 </div>
-                <form onSubmit={e => submit(e)} className="sticky bottom-0 left-0 right-0 border-t border-indigo-500 bg-gray-900 text-white focus:ring-opacity-50 focus:ring-2 focus:ring-indigo-500">
-                    <input className="w-full p-4 bg-gray-900 outline-none focus:border-indigo-500 focus:border-t-4 focus:bg-gray-800" placeholder="Write a message" value={message}
-                        onChange={handleChange}
-                    />
+                <form onSubmit={e => submit(e)} className="z-20 sticky bottom-0 left-0 right-0 border-t border-indigo-500 text-white focus:ring-opacity-50 focus:ring-2 focus:ring-indigo-500 bg-gray-900">
+                    {
+                        menuOpen
+                        ?
+                            <div className="z-0 absolute -top-full grid grid-cols-3 gap-2 w-full duration-200 opacity-1 overflow-hidden">
+                                <button onClick={toggleFileMenu} className="text-center p-2 text-white hover:bg-gray-600 duration-200 shadow-2xl bg-gray-700 rounded-lg">Ajouter un fichier</button>
+                                <button onClick={togglePictureMenu} className="text-center p-2 text-white hover:bg-gray-600 duration-200 shadow-2xl bg-gray-700 rounded-lg">Ajouter une image</button>
+                                <button onClick={toggleGifMenu} className="text-center p-2 text-white hover:bg-gray-600 duration-200 shadow-2xl bg-gray-700 rounded-lg">Ajouter un gif</button>
+                            </div>
+                        :
+                            <div className="absolute top-0 grid grid-cols-3 gap-2 w-full duration-200 opacity-0 overflow-hidden">
+                                <button className="text-center p-2 text-white hover:bg-gray-600 duration-200 shadow-2xl bg-gray-700 rounded-lg">Ajouter un fichier</button>
+                                <button className="text-center p-2 text-white hover:bg-gray-600 duration-200 shadow-2xl bg-gray-700 rounded-lg">Ajouter une image</button>
+                                <button className="text-center p-2 text-white hover:bg-gray-600 duration-200 shadow-2xl bg-gray-700 rounded-lg">Ajouter un gif</button>
+                            </div>
+                    }
+                    <div className="relative w-full flex items-center justify-between gap-2 bg-gray-900">
+                        <button onClick={deployMessageMenu} className="rounded-xl border border-transparent hover:border-indigo-500 bg-indigo-500 hover:bg-transparent duration-200 text-white hover:text-indigo-500 p-2 h-10 w-10 text-center cursor-pointer">
+                            <i className="fas fa-plus"></i>
+                        </button>
+                        {
+                            !retracted
+                            ?
+                                <div className="rounded-xl border border-transparent hover:border-indigo-500 bg-indigo-500 hover:bg-transparent duration-200 text-white hover:text-indigo-500 p-2 h-10 w-10 text-center cursor-pointer">
+                                    <i className="fas fa-paperclip"></i>
+                                </div>
+                            :
+                                null
+                        }
+                        {
+                            !retracted
+                            ?
+                                <div className="rounded-xl border border-transparent hover:border-indigo-500 bg-indigo-500 hover:bg-transparent duration-200 text-white hover:text-indigo-500 p-2 h-10 w-10 text-center cursor-pointer">
+                                    <i className="fas fa-dice"></i>
+                                </div>
+                            :
+                                null
+                        }
+                        <input className="w-full p-4 bg-gray-900 outline-none focus:border-indigo-500 focus:border-t-4 focus:bg-gray-800" placeholder="Écrivez votre message" value={message}
+                            onChange={handleChange}
+                        />
+                        <button type="submit" className="rounded-xl border border-indigo-500 hover:bg-indigo-500 duration-200 text-indigo-500 hover:text-white p-2 h-10 w-10 text-center cursor-pointer">
+                            <i className="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
                 </form>
             </div>
         </Authenticated>
