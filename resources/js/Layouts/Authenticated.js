@@ -35,7 +35,7 @@ export default function Authenticated({ auth, header, children, title }) {
 
     return (
         <div className="min-h-screen bg-gray-900">
-            <nav className="bg-gray-800 border-b border-indigo-500 sticky top-0 z-50">
+            <nav className="bg-gray-800 border-b border-indigo-500 sticky top-0 z-50" id="nav">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
                         <div className="flex">
@@ -155,10 +155,10 @@ export default function Authenticated({ auth, header, children, title }) {
             </nav>
 
             {header && (
-                <header className="bg-gray-800 shadow">
+                <header className="bg-gray-800 shadow" id="header">
                     <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-gray-100">
-                        <div className="bg-yellow-600 rounded-md shadow-lg p-4"><i className="fas fa-excalamation-circle"></i> Cette version est une version de développement, les accès a votre compte peuvent etre supprimés lors d'un import d'une nouvelle base de données ! Dernière maj des données : 01/10/2021</div>
-                        {/* {header} */}
+                        {/* <div className="bg-yellow-600 rounded-md shadow-lg p-4"><i className="fas fa-excalamation-circle"></i> Cette version est une version de développement, les accès a votre compte peuvent etre supprimés lors d'un import d'une nouvelle base de données ! Dernière maj des données : 01/10/2021</div> */}
+                        {header}
                     </div>
                 </header>
             )}
@@ -171,7 +171,7 @@ export default function Authenticated({ auth, header, children, title }) {
             {
                 route().current('tchat')
                 ?
-                    <main className="max-w-7xl mx-auto py-6 pb-0 px-4 sm:px-6 lg:px-8 overflow-hidden" style={{height: window.innerHeight - 193 + 'px'}}>
+                    <main className="max-w-7xl mx-auto py-6 pb-0 px-4 sm:px-6 lg:px-8 overflow-hidden" style={{height: window.innerHeight - 138 + 'px'}}>
                         <Suspense fallback={null}>
                             <ToastContainer
                                 position='top-right'

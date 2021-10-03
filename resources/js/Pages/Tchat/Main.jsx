@@ -58,6 +58,7 @@ function App({auth, errors}) {
                     await axios.post(route('tchat.send', {message, response}))
                     .then(() => {
                         setMessage('');
+                        setRetracted(false);
                         window.scroll(0, document.body.scrollHeight);
                     })    
                 })
@@ -66,6 +67,7 @@ function App({auth, errors}) {
                     await axios.post(route('tchat.send', {message}))
                     .then(() => {
                         setMessage('');
+                        setRetracted(false);
                         window.scroll(0, document.body.scrollHeight);
                     })
                 })
@@ -73,6 +75,7 @@ function App({auth, errors}) {
                 await axios.post(route('tchat.send', {message}))
                     .then(() => {
                         setMessage('');
+                        setRetracted(false);
                         window.scroll(0, document.body.scrollHeight);
                     });
             }
@@ -128,7 +131,7 @@ function App({auth, errors}) {
                         ))}
                     </div>
                 </div> */}
-                <div className="flex flex-col w-full overflow-y-auto overflow-x-hidden" style={{maxHeight: "calc(100vh - 273px)"}}>
+                <div className="flex flex-col w-full overflow-y-auto overflow-x-hidden" style={{maxHeight: "calc(100vh - 218px)"}}>
                     {oldMessages.map((m, key) => {
                         return (
                             <Message message={m} key={key} auth={auth} />
@@ -141,21 +144,23 @@ function App({auth, errors}) {
                     })}
                 </div>
                 <form onSubmit={e => submit(e)} className="z-20 sticky bottom-0 left-0 right-0 border-t border-indigo-500 text-white focus:ring-opacity-50 focus:ring-2 focus:ring-indigo-500 bg-gray-900">
-                    {
-                        menuOpen
-                        ?
-                            <div className="z-0 absolute -top-full grid grid-cols-3 gap-2 w-full duration-200 opacity-1 overflow-hidden">
-                                <button onClick={toggleFileMenu} className="text-center p-2 text-white hover:bg-gray-600 duration-200 shadow-2xl bg-gray-700 rounded-lg">Ajouter un fichier</button>
-                                <button onClick={togglePictureMenu} className="text-center p-2 text-white hover:bg-gray-600 duration-200 shadow-2xl bg-gray-700 rounded-lg">Ajouter une image</button>
-                                <button onClick={toggleGifMenu} className="text-center p-2 text-white hover:bg-gray-600 duration-200 shadow-2xl bg-gray-700 rounded-lg">Ajouter un gif</button>
-                            </div>
-                        :
-                            <div className="absolute top-0 grid grid-cols-3 gap-2 w-full duration-200 opacity-0 overflow-hidden">
-                                <button className="text-center p-2 text-white hover:bg-gray-600 duration-200 shadow-2xl bg-gray-700 rounded-lg">Ajouter un fichier</button>
-                                <button className="text-center p-2 text-white hover:bg-gray-600 duration-200 shadow-2xl bg-gray-700 rounded-lg">Ajouter une image</button>
-                                <button className="text-center p-2 text-white hover:bg-gray-600 duration-200 shadow-2xl bg-gray-700 rounded-lg">Ajouter un gif</button>
-                            </div>
-                    }
+                    <div className="relative">
+                        {
+                            menuOpen
+                            ?
+                                <div className="mb-2 z-0 absolute bottom-0 grid grid-cols-2 md:grid-cols-3 gap-2 w-full duration-200 opacity-1 overflow-hidden">
+                                    <button onClick={toggleFileMenu} className="text-center p-2 text-white hover:bg-gray-600 duration-200 shadow-2xl bg-gray-700 rounded-lg">Ajouter un fichier</button>
+                                    <button onClick={togglePictureMenu} className="text-center p-2 text-white hover:bg-gray-600 duration-200 shadow-2xl bg-gray-700 rounded-lg">Ajouter une image</button>
+                                    <button onClick={toggleGifMenu} className="text-center p-2 text-white hover:bg-gray-600 duration-200 shadow-2xl bg-gray-700 rounded-lg">Ajouter un gif</button>
+                                </div>
+                            :
+                                <div className="mb-2 absolute -bottom-full grid grid-cols-2 md:grid-cols-3 gap-2 w-full duration-200 opacity-0 overflow-hidden">
+                                    <button className="text-center p-2 text-white hover:bg-gray-600 duration-200 shadow-2xl bg-gray-700 rounded-lg">Ajouter un fichier</button>
+                                    <button className="text-center p-2 text-white hover:bg-gray-600 duration-200 shadow-2xl bg-gray-700 rounded-lg">Ajouter une image</button>
+                                    <button className="text-center p-2 text-white hover:bg-gray-600 duration-200 shadow-2xl bg-gray-700 rounded-lg">Ajouter un gif</button>
+                                </div>
+                        }
+                    </div>
                     <div className="relative w-full flex items-center justify-between gap-2 bg-gray-900">
                         <button onClick={deployMessageMenu} className="rounded-xl border border-transparent hover:border-indigo-500 bg-indigo-500 hover:bg-transparent duration-200 text-white hover:text-indigo-500 p-2 h-10 w-10 text-center cursor-pointer">
                             <i className="fas fa-plus"></i>
