@@ -14,12 +14,14 @@ class Tchat implements ShouldBroadcastNow
     public $auth;
     public $message;
     public $link_preview;
+    public $medias;
 
-    public function __construct($auth, $message, $link_preview)
+    public function __construct($auth, $message, $link_preview, $medias)
     {
         $this->auth = $auth;
         $this->message = $message;
         $this->link_preview = $link_preview;
+        $this->medias = $medias;
     }
 
     public function broadcastOn()

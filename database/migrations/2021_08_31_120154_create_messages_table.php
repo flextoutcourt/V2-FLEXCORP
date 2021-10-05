@@ -19,6 +19,7 @@ class CreateMessagesTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->longText('link_preview')->nullable();
             $table->text('message');
+            $table->longText('medias')->nullable();
             $table->timestamps();
           });
     }

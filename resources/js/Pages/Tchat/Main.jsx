@@ -6,18 +6,32 @@ import Message from '../Tchat/Message';
 import Echo from "laravel-echo";
 import { getLinkPreview, getPreviewFromContent } from "link-preview-js";
 import { toast } from 'react-toastify';
+import Textarea from 'react-expanding-textarea'
+import { MentionsInput, Mention } from 'react-mentions'
+import { backgroundPosition } from "tailwindcss/defaultTheme";
+import { v4 as uuidv4 } from 'uuid';
+
 
 function App({auth, errors}) {
     const [oldMessages, setoldMessages] = useState([]);
-    const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState('');
     const [linkPreview, setLinkPreview] = useState('');
     const [users, setUsers] = useState([]);
     const [menuOpen, setMenuOpen] = useState(false);
     const [retracted, setRetracted] = useState(false);
+    const [offset, setOffset] = useState(0);
+    const [fileUpload, setFileUpload] = useState(false);
+    const [fileUploadMenu, setFileUploadMenu] = useState(false);
+    const [mentionsMenu, setMentionsMenu] = useState(false);
+    const [mentions, setMentions] = useState([]);
+
+    const [files, setFiles] = useState([]);
+    const [filesD, setFilesD] = useState([]);
     
     useEffect(() => {
-        _get_messages().then(val => setoldMessages(val));
+        _get_messages(0).then(val => {
+            setoldMessages(val)
+        })
         _get_users().then(val => setUsers(val));
       }, []);
     
@@ -27,14 +41,17 @@ function App({auth, errors}) {
         return responseData;
     }
 
-    async function _get_messages(){ 
-        const promise = axios.get(route("tchat.list"));
+    async function _get_messages(k){
+        const promise = axios.get(route("tchat.list"), {
+            params: {
+                offset: k
+            }
+        });
         const responseData = promise.then((data) => data.data);
         return responseData;
     }
 
     useEffect(() => {
-        // Pusher.logToConsole = true;
 
         const pusher = new Pusher('4c81c662885079cc5c1e', {
             cluster: 'eu' 
@@ -42,41 +59,77 @@ function App({auth, errors}) {
 
         const channel = pusher.subscribe('chat');
         channel.bind('message', (data) => {
-            setMessages(messages => ([...messages, data]));
+            setoldMessages(oldMessages => [data, ...oldMessages]);
         });
     }, []);
 
+    const onEndReachTreshold = (e) => {
+        e.preventDefault();
+        let offsetTop = e.target.scrollHeight + e.target.scrollTop - e.target.clientHeight;
+        if(offsetTop < 1){
+            _get_messages(oldMessages.length).then((data) => {
+                data.map((item, key) => {
+                    setoldMessages(oldMessages => [...oldMessages, item])
+                })
+                // offsetTop = 0
+            });
+        }
+    }
+
     const submit = async e => {
         e.preventDefault();
-        if(message.length > 0){
+        if(message.length > 0 || files.length > 0){
             const regex = new RegExp("^(https?|ftp)://[^\s/$.?#].[^\s]*$", 'i')
             const str = message;
             let m;
     
             if ((m = regex.exec(str)) !== null) {
                 await getLinkPreview(m[0]).then(async(response) => {
-                    await axios.post(route('tchat.send', {message, response}))
+                    let fd = new FormData();
+                    fd.append('message', message);
+                    fd.append('files', JSON.stringify(filesD));
+                    fd.append('response', JSON.stringify(response));
+                    // fd.append('files', files);
+                    await axios.post(route('tchat.send'), fd)
                     .then(() => {
                         setMessage('');
                         setRetracted(false);
-                        window.scroll(0, document.body.scrollHeight);
+                        setOffset(offset + 1);
+                        setFileUploadMenu(false);
+                        setFilesD(false);
+                        setFiles(false);
+                        document.querySelector('#AllMessages').scroll(0, document.querySelector('#AllMessages').scrollHeight);
                     })    
                 })
                 .catch(async(e) => {
                     toast.error('Une erreur est survenue lors de la récupération des données du lien');
-                    await axios.post(route('tchat.send', {message}))
+                    let fd = new FormData();
+                    fd.append('message', message);
+                    fd.append('files', JSON.stringify(filesD));
+                    await axios.post(route('tchat.send'), fd)
                     .then(() => {
                         setMessage('');
                         setRetracted(false);
-                        window.scroll(0, document.body.scrollHeight);
+                        setOffset(offset + 1);
+                        setFileUploadMenu(false);
+                        setFilesD(false);
+                        setFiles(false);
+                        document.querySelector('#AllMessages').scroll(0, document.querySelector('#AllMessages').scrollHeight);
                     })
                 })
             }else{
-                await axios.post(route('tchat.send', {message}))
+                let fd = new FormData();
+                fd.append('files', JSON.stringify(filesD));
+                fd.append('message', message);
+                await axios.post(route('tchat.send'), fd)
                     .then(() => {
                         setMessage('');
                         setRetracted(false);
-                        window.scroll(0, document.body.scrollHeight);
+                        setOffset(offset + 1);
+                        setFileUploadMenu(false);
+                        setFilesD(false);
+                        setFiles(false);
+                        document.querySelector('#AllMessages').scroll(0, document.querySelector('#AllMessages').scrollHeight);
                     });
             }
         }else{
@@ -87,8 +140,61 @@ function App({auth, errors}) {
 
     }
 
+    const uploadFile = (e) => {
+        const items = [...e.target.files];
+        items.map((item, key) => {
+            setFiles(files => [...files, item]);
+            let fd = new FormData();
+            fd.append('file', item, item.name);
+            fd.append('uuid', uuidv4());
+            axios.post(route('tchat.media_add'), fd, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                }
+            })
+            .then((data) => {
+                setFilesD(filesD => [...filesD, data.data]);
+            })
+        });
+        console.log(files);
+        setMenuOpen(false);
+        setFileUploadMenu(true);
+    }
+
+    const deleteFile = (e) => {
+        e.preventDefault();
+        let itemKey = e.target.parentNode.id ?? 0;
+        let fileId = filesD[itemKey].id
+
+        
+        let fd = new FormData();
+        fd.append('itemId', fileId);
+        axios.post(route('tchat.delete_media'), fd)
+        .then((data) => {
+            setFilesD(
+                filesD.filter((item, key) => {
+                    return item.id != data.data.id;
+                })
+            )
+        })
+
+        if(filesD.length < 2){
+            setMenuOpen(false);
+            setFileUploadMenu(false)
+        }
+    }
+
     const deployMessageMenu = (e) => {
         e.preventDefault();
+        if(menuOpen){
+            if(message.length > 0){
+                setRetracted(true);
+            }else{
+                setRetracted(false);
+            }
+        }else{
+            setRetracted(true);
+        }
         setMenuOpen(!menuOpen);
     }
 
@@ -102,9 +208,35 @@ function App({auth, errors}) {
         e.preventDefault();
     }
 
+    const userData = users.map((item, key) => ({
+        id: item.id,
+        display: item.name
+    }))
+
     const handleChange = e => {
         setMessage(e.target.value);
-        console.log(e.target.value.length);
+        // const regex = /\@(\w?)*/gmi;
+        // const str = e.target.value;
+        // let m;
+        // setMentionsMenu(false);
+        // while ((m = regex.exec(str)) !== null) {
+
+            
+        //     if (m.index === regex.lastIndex) {
+        //         regex.lastIndex++;
+        //     }
+            
+        //     // The result can be accessed through the `m`-variable.
+        //     m.forEach((match, groupIndex) => {
+        //         console.log(match);
+        //         if(match.length > 1){
+        //             setMentions(users.find(item => item.name.match(match+'\w*')));
+        //         }else{
+        //             setMentions(users);
+        //         }
+        //         setMentionsMenu(true);
+        //     });
+        // }
         if(e.target.value.length > 0){
             setRetracted(true);
         }else{
@@ -131,67 +263,160 @@ function App({auth, errors}) {
                         ))}
                     </div>
                 </div> */}
-                <div className="flex flex-col w-full overflow-y-auto overflow-x-hidden" style={{maxHeight: "calc(100vh - 218px)"}}>
+                <div className="scrollbar scrollbar-thumb-indigo-500 scrollbar pr-5 flex flex-col-reverse w-full overflow-y-auto overflow-x-hidden" style={{maxHeight: "calc(100vh - 218px)"}} id="AllMessages" onScroll={onEndReachTreshold}>
+                    {/* {messages.reverse().map((m, key) => {
+                        return (
+                            <Message message={m} key={key} auth={auth} />
+                        )
+                    })} */}
                     {oldMessages.map((m, key) => {
                         return (
                             <Message message={m} key={key} auth={auth} />
                         )
                     })}
-                    {messages.map((m, key) => {
-                        return (
-                            <Message message={m} key={key} auth={auth} />
-                        )
-                    })}
                 </div>
-                <form onSubmit={e => submit(e)} className="z-20 sticky bottom-0 left-0 right-0 border-t border-indigo-500 text-white focus:ring-opacity-50 focus:ring-2 focus:ring-indigo-500 bg-gray-900">
+                <form onSubmit={e => submit(e)} className="z-20 sticky bottom-0 left-0 right-0 border-t border-indigo-500 text-white focus:ring-opacity-50 focus:ring-2 focus:ring-indigo-500 bg-gray-900" encType='multipart/formdata'>
                     <div className="relative">
                         {
                             menuOpen
                             ?
                                 <div className="mb-2 z-0 absolute bottom-0 grid grid-cols-2 md:grid-cols-3 gap-2 w-full duration-200 opacity-1 overflow-hidden">
-                                    <button onClick={toggleFileMenu} className="text-center p-2 text-white hover:bg-gray-600 duration-200 shadow-2xl bg-gray-700 rounded-lg">Ajouter un fichier</button>
+
+                                    <div>
+                                        <input type="file" id="fileUpload" className="hidden" onChange={uploadFile} multiple/>
+                                        <label htmlFor="fileUpload">
+                                            <div className="text-center p-2 text-white hover:bg-gray-600 duration-200 shadow-2xl bg-gray-700 rounded-lg cursor-pointer">
+                                                Ajouter un fichier
+                                            </div>
+                                        </label>
+                                    </div>
                                     <button onClick={togglePictureMenu} className="text-center p-2 text-white hover:bg-gray-600 duration-200 shadow-2xl bg-gray-700 rounded-lg">Ajouter une image</button>
                                     <button onClick={toggleGifMenu} className="text-center p-2 text-white hover:bg-gray-600 duration-200 shadow-2xl bg-gray-700 rounded-lg">Ajouter un gif</button>
                                 </div>
                             :
-                                <div className="mb-2 absolute -bottom-full grid grid-cols-2 md:grid-cols-3 gap-2 w-full duration-200 opacity-0 overflow-hidden">
+                                <div className="mb-2 absolute -bottom-full grid grid-cols-2 md:grid-cols-3 gap-2 w-full duration-200 opacity-0 overflow-hidden invisible">
                                     <button className="text-center p-2 text-white hover:bg-gray-600 duration-200 shadow-2xl bg-gray-700 rounded-lg">Ajouter un fichier</button>
                                     <button className="text-center p-2 text-white hover:bg-gray-600 duration-200 shadow-2xl bg-gray-700 rounded-lg">Ajouter une image</button>
                                     <button className="text-center p-2 text-white hover:bg-gray-600 duration-200 shadow-2xl bg-gray-700 rounded-lg">Ajouter un gif</button>
                                 </div>
                         }
+                        {
+                            fileUploadMenu
+                            ?
+                                <div className="mb-2 z-0 absolute bg-gray-700 rounded-md bottom-0 flex align-center gap-2 duration-200 opacity-1 p-2 overflow-x-auto">
+                                    {filesD.map((item, key) => (
+                                        <div key={key} id={key}>
+                                            <div className="rounded-md p-2 h-20 w-20 relative" style={{backgroundImage: "url('/"+item.content+"')", backgroundSize: 'cover', backgroundPosition: 'center center' }} id={key}>
+                                                <button className="text-center absolute -top-2 -right-2 h-6 w-6 p-0 bg-indigo-500 rounded-full" onClick={deleteFile} id={key}>
+                                                    <i className="fas fa-times text-sm"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                    <div>
+                                        <input type="file" id="fileUpload" className="hidden" onChange={uploadFile} multiple/>
+                                        <label htmlFor="fileUpload">
+                                            <div className="text-center w-20 h-20 flex items-center justify-center p-1 text-white hover:bg-gray-600 duration-200 shadow-2xl bg-gray-700 rounded-lg cursor-pointer">
+                                                <i className="fas fa-paperclip text-2xl"></i>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                            :
+                            null
+                        }
                     </div>
-                    <div className="relative w-full flex items-center justify-between gap-2 bg-gray-900">
-                        <button onClick={deployMessageMenu} className="rounded-xl border border-transparent hover:border-indigo-500 bg-indigo-500 hover:bg-transparent duration-200 text-white hover:text-indigo-500 p-2 h-10 w-10 text-center cursor-pointer">
+                    <div className="relative w-full flex items-end justify-between gap-2 bg-gray-900 py-1">
+                        <button onClick={files.length > 0 ? (e) => {e.preventDefault()} : deployMessageMenu} disabled={files.length > 0 ? true : false} className={files.length < 1 ? "rounded-xl border border-transparent hover:border-indigo-500 bg-indigo-500 hover:bg-transparent duration-200 text-white hover:text-indigo-500 p-2 h-10 w-10 text-center cursor-pointer" : "rounded-xl border border-transparent  bg-indigo-100 duration-200 text-indigo-500 p-2 h-10 w-10 text-center cursor-not-allowed"}>
                             <i className="fas fa-plus"></i>
                         </button>
                         {
                             !retracted
                             ?
-                                <div className="rounded-xl border border-transparent hover:border-indigo-500 bg-indigo-500 hover:bg-transparent duration-200 text-white hover:text-indigo-500 p-2 h-10 w-10 text-center cursor-pointer">
-                                    <i className="fas fa-paperclip"></i>
-                                </div>
+                                files.length > 0
+                                ?
+                                    <button className="rounded-xl border-0 border-transparent hover:border-indigo-500 bg-indigo-500 hover:bg-transparent duration-200 text-white hover:text-indigo-500 p-0 w-0 text-center cursor-pointer opacity-0 h-0">
+                                        <i className="fas fa-paperclip" style={{fontSize: 0}}></i>
+                                    </button>
+                                :
+                                    <div>
+                                        <input type="file" id="fileUpload" className="hidden" onChange={uploadFile} multiple/>
+                                        <label htmlFor="fileUpload">
+                                            <div className="rounded-xl border border-transparent hover:border-indigo-500 bg-indigo-500 hover:bg-transparent duration-200 text-white hover:text-indigo-500 p-2 h-10 w-10 text-center cursor-pointer opacity-1">
+                                                <i className="fas fa-paperclip"></i>
+                                            </div>
+                                        </label>
+                                    </div>
                             :
-                                null
+                                <button className="rounded-xl border-0 border-transparent hover:border-indigo-500 bg-indigo-500 hover:bg-transparent duration-200 text-white hover:text-indigo-500 p-0 w-0 text-center cursor-pointer opacity-0 h-0">
+                                    <i className="fas fa-paperclip" style={{fontSize: 0}}></i>
+                                </button>
                         }
                         {
                             !retracted
                             ?
-                                <div className="rounded-xl border border-transparent hover:border-indigo-500 bg-indigo-500 hover:bg-transparent duration-200 text-white hover:text-indigo-500 p-2 h-10 w-10 text-center cursor-pointer">
-                                    <i className="fas fa-dice"></i>
-                                </div>
+                                files.length > 0
+                                    ?
+                                        <button className="rounded-xl border-0 border-transparent hover:border-indigo-500 bg-indigo-500 hover:bg-transparent duration-200 text-white hover:text-indigo-500 p-0 w-0 text-center cursor-pointer opacity-0 h-0">
+                                            <i className="fas fa-paperclip" style={{fontSize: 0}}></i>
+                                        </button>
+                                    :
+                                        <button className="rounded-xl border border-transparent hover:border-indigo-500 bg-indigo-500 hover:bg-transparent duration-200 text-white hover:text-indigo-500 p-2 h-10 w-10 text-center cursor-pointer" onClick={e => e.preventDefault()}>
+                                            <i className="fas fa-dice"></i>
+                                        </button>
                             :
-                                null
+                                <button className="rounded-xl border-0 border-transparent hover:border-indigo-500 bg-indigo-500 hover:bg-transparent duration-200 text-white hover:text-indigo-500 p-0 h-0 w-0 opacity-0 text-center cursor-pointer">
+                                    <i className="fas fa-dice" style={{fontSize: 0}}></i>
+                                </button>
                         }
-                        <input className="w-full p-4 bg-gray-900 outline-none focus:border-indigo-500 focus:border-t-4 focus:bg-gray-800" placeholder="Écrivez votre message" value={message}
+                        {/* <span className="w-full p-4 bg-gray-900 focus:bg-gray-800" onChange={handleChange}>
+                            {message}
+                        </span> */}
+                        <Textarea
+                            autoFocus={true}
+                            value={message}
                             onChange={handleChange}
-                        />
+                            className="w-full overflow-hidden align-bottom py-auto h-10 px-4 bg-gray-900 rounded-2xl border border-transparent outline-none focus:border-indigo-500 focus:border-t-4 focus:bg-gray-800 resize-none"
+                            placeholder="Écrivez votre message"
+                            autoCapitalize="true"
+                            rows={1}
+                            style={{maxHeight: "90px"}}
+                        >
+                        {/* <MentionsInput
+                            value={message}
+                            onChange={handleChange}
+                            className="w-full overflow-hidden align-bottom py-auto h-10 px-4 bg-gray-900 rounded-2xl border border-transparent outline-none focus:border-indigo-500 focus:border-t-4 focus:bg-gray-800 resize-none"
+                            style={{maxHeight: "90px"}}
+                            autoCapitalize="true"
+                            rows={1}
+                            placeholder="Ecrivez votre message"
+
+                        >
+                            <Mention
+                                type='user'
+                                className='absolute bottom-0 text-white bg-gray-800'
+                                style={{backgroundColor: 'red!important'}}
+                                trigger="@"
+                                data={userData}
+                            >
+
+                            </Mention>
+                        </MentionsInput> */}
+                        </Textarea>
+                        
                         <button type="submit" className="rounded-xl border border-indigo-500 hover:bg-indigo-500 duration-200 text-indigo-500 hover:text-white p-2 h-10 w-10 text-center cursor-pointer">
                             <i className="fas fa-paper-plane"></i>
                         </button>
                     </div>
                 </form>
             </div>
+            {
+                fileUpload
+                ?
+                    <div className="absolute top-0 bottom-0 left-0 right-0 bg-white">test</div>
+                :
+                    null
+            }
         </Authenticated>
     );
 }

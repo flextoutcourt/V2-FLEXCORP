@@ -45,6 +45,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/parlez-moi', [TchatController::class, 'index'])->name('tchat');
     Route::get('/parlez-moi/messages', [TchatController::class, "list"])->name('tchat.list');
     Route::post('/parlez-moi/messages', [TchatController::class, "message"])->name('tchat.send');
+    Route::post('/parlez-moi/add_media', [TchatController::class, 'add_media'])->name('tchat.media_add');
+    Route::post('/parlez-moi/delete_media', [TchatController::class, "delete_media"])->name('tchat.delete_media');
 
     Route::get('/les-actus-de-flex/new', [ActuController::class, "new"])->name('actus.new');
     Route::get('/les-actus-de-flex/draft/{draft_id}/edit', [ActuController::class, "draft"])->name('actus.draft.edit');

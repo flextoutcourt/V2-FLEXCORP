@@ -1,13 +1,13 @@
 import parse from 'html-react-parser';
 
 export default function Message ({message, auth}){
-
+    // console.log(message);
     return (
         (message.user
         ?
             (auth.user.id === message.user_id 
             ?
-                <div className="bg-gray-800 rounded-xl rounded-br-none self-end max-w-2xl text-gray-100 p-4 my-2 message-gradient">
+                <div className="bg-gray-800 rounded-xl rounded-br-none self-end max-w-2xl text-gray-100 p-4 my-2 message-gradient" id={message.id}>
                     <h3 className="text-xl">{auth.user.name}</h3>
                     <p className="my-2">{parse(message.message)}</p>
                     {message.link_preview
@@ -35,9 +35,21 @@ export default function Message ({message, auth}){
                         :
                             null
                     }
+                    {
+                        JSON.parse(message.medias).length > 0
+                        ?
+                        <div className="grid grid-cols-3 gap-1">
+
+                            {JSON.parse(message.medias).map((item, key) => (
+                                <div class="rounded-lg w-48 h-48" style={{backgroundImage: `url(${item.content})`, backgroundPosition: 'center center', backgroundSize: 'cover'}}></div>
+                            ))}
+                        </div>
+                        :
+                        null
+                    }
                 </div>
             :
-                <div className="bg-gray-800 rounded-xl rounded-bl-none self-start max-w-2xl text-gray-100 p-4 my-2 message-gradient">
+                <div className="bg-gray-800 rounded-xl rounded-bl-none self-start max-w-2xl text-gray-100 p-4 my-2 message-gradient" id={message.id}>
                     <h3 className="text-xl">{message.user[0].name ?? message.user.name}</h3>
                     <p className="my-2">{parse(message.message)}</p>
                     {message.link_preview
@@ -65,12 +77,24 @@ export default function Message ({message, auth}){
                         :
                             null
                     }
+                    {
+                        JSON.parse(message.medias).length > 0
+                        ?
+                        <div className="grid grid-cols-3 gap-1">
+
+                            {JSON.parse(message.medias).map((item, key) => (
+                                <div class="rounded-lg w-48 h-48" style={{backgroundImage: `url(${item.content})`, backgroundPosition: 'center center', backgroundSize: 'cover'}}></div>
+                            ))}
+                        </div>
+                        :
+                        null
+                    }
                 </div>
             )
         :
             (message.auth.id === auth.user.id)
             ?
-                <div className="bg-gray-800 rounded-xl rounded-br-none self-end max-w-2xl text-gray-100 p-4 my-2 message-gradient">
+                <div className="bg-gray-800 rounded-xl rounded-br-none self-end max-w-2xl text-gray-100 p-4 my-2 message-gradient" id={message.id}>
                     <h3 className="text-xl">{message.auth.name}</h3>
                     <p className="my-2">{parse(message.message)}</p>
                     {message.link_preview
@@ -98,9 +122,21 @@ export default function Message ({message, auth}){
                         :
                             null
                     }
+                    {
+                        JSON.parse(message.medias).length > 0
+                        ?
+                        <div className="grid grid-cols-3 gap-1">
+
+                            {JSON.parse(message.medias).map((item, key) => (
+                                <div class="rounded-lg w-48 h-48" style={{backgroundImage: `url(${item.content})`, backgroundPosition: 'center center', backgroundSize: 'cover'}}></div>
+                            ))}
+                        </div>
+                        :
+                        null
+                    }
                 </div>
             :
-                <div className="bg-gray-800 rounded-xl rounded-bl-none self-start max-w-2xl text-gray-100 p-4 my-2 message-gradient">
+                <div className="bg-gray-800 rounded-xl rounded-bl-none self-start max-w-2xl text-gray-100 p-4 my-2 message-gradient" id={message.id}>
                     <h3 className="text-xl">{message.auth.name}</h3>
                     <p className="my-2">{parse(message.message)}</p>
                     {message.link_preview
@@ -127,6 +163,18 @@ export default function Message ({message, auth}){
                             </div>
                         :
                             null
+                    }
+                    {
+                        JSON.parse(message.medias).length > 0
+                        ?
+                        <div className="grid grid-cols-3 gap-1">
+
+                            {JSON.parse(message.medias).map((item, key) => (
+                                <div class="rounded-lg w-48 h-48" style={{backgroundImage: `url(${item.content})`, backgroundPosition: 'center center', backgroundSize: 'cover'}}></div>
+                            ))}
+                        </div>
+                        :
+                        null
                     }
                 </div>
         )
