@@ -10,6 +10,7 @@ import Textarea from 'react-expanding-textarea'
 import { MentionsInput, Mention } from 'react-mentions'
 import { backgroundPosition } from "tailwindcss/defaultTheme";
 import { v4 as uuidv4 } from 'uuid';
+import Games from "./Games/Games";
 
 
 function App({auth, errors}) {
@@ -18,6 +19,7 @@ function App({auth, errors}) {
     const [linkPreview, setLinkPreview] = useState('');
     const [users, setUsers] = useState([]);
     const [menuOpen, setMenuOpen] = useState(false);
+    const [gamesMenu, setGamesMenu] = useState(false);
     const [retracted, setRetracted] = useState(false);
     const [offset, setOffset] = useState(0);
     const [fileUpload, setFileUpload] = useState(false);
@@ -208,6 +210,11 @@ function App({auth, errors}) {
         e.preventDefault();
     }
 
+    const toggleGamesMenu = (e) => {
+        e.preventDefault();
+        setGamesMenu(!gamesMenu);
+    }
+
     const userData = users.map((item, key) => ({
         id: item.id,
         display: item.name
@@ -325,6 +332,15 @@ function App({auth, errors}) {
                             :
                             null
                         }
+                        {
+                            gamesMenu
+                            ?
+                                <div className="mb-2 z-0 absolute bg-gray-700 rounded-md bottom-0 grid grid-cols-4 w-full h-48 gap-2 duration-200 opacity-1 p-2 overflow-x-auto">
+                                    <Games/>
+                                </div>
+                            :
+                                null
+                        }
                     </div>
                     <div className="relative w-full flex items-end justify-between gap-2 bg-gray-900 py-1">
                         <button onClick={files.length > 0 ? (e) => {e.preventDefault()} : deployMessageMenu} disabled={files.length > 0 ? true : false} className={files.length < 1 ? "rounded-xl border border-transparent hover:border-indigo-500 bg-indigo-500 hover:bg-transparent duration-200 text-white hover:text-indigo-500 p-2 h-10 w-10 text-center cursor-pointer" : "rounded-xl border border-transparent  bg-indigo-100 duration-200 text-indigo-500 p-2 h-10 w-10 text-center cursor-not-allowed"}>
@@ -357,11 +373,11 @@ function App({auth, errors}) {
                             ?
                                 files.length > 0
                                     ?
-                                        <button className="rounded-xl border-0 border-transparent hover:border-indigo-500 bg-indigo-500 hover:bg-transparent duration-200 text-white hover:text-indigo-500 p-0 w-0 text-center cursor-pointer opacity-0 h-0">
+                                        <button className="rounded-xl border-0 border-transparent hover:border-indigo-500 bg-indigo-500 hover:bg-transparent duration-200 text-white hover:text-indigo-500 p-0 w-0 text-center cursor-pointer opacity-0 h-0" onClick={toggleGamesMenu}>
                                             <i className="fas fa-paperclip" style={{fontSize: 0}}></i>
                                         </button>
                                     :
-                                        <button className="rounded-xl border border-transparent hover:border-indigo-500 bg-indigo-500 hover:bg-transparent duration-200 text-white hover:text-indigo-500 p-2 h-10 w-10 text-center cursor-pointer" onClick={e => e.preventDefault()}>
+                                        <button className="rounded-xl border border-transparent hover:border-indigo-500 bg-indigo-500 hover:bg-transparent duration-200 text-white hover:text-indigo-500 p-2 h-10 w-10 text-center cursor-pointer" onClick={toggleGamesMenu}>
                                             <i className="fas fa-dice"></i>
                                         </button>
                             :
@@ -410,13 +426,6 @@ function App({auth, errors}) {
                     </div>
                 </form>
             </div>
-            {
-                fileUpload
-                ?
-                    <div className="absolute top-0 bottom-0 left-0 right-0 bg-white">test</div>
-                :
-                    null
-            }
         </Authenticated>
     );
 }

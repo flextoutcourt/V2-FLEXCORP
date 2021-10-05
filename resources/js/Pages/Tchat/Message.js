@@ -2,6 +2,21 @@ import parse from 'html-react-parser';
 
 export default function Message ({message, auth}){
     // console.log(message);
+
+    const regexMentions = new RegExp(`\@([a-zA-Z0-9_:/.]+)*`, 'i');
+    const strMentions = message.message;
+    const substMentions = `<a href="/user/$1">$1</a>`;
+
+    message.message = strMentions.replace(regexMentions, substMentions);
+
+    const regex = new RegExp(`\#([a-zA-Z0-9_:/.]+)*`, 'i');
+    const str = message.message; 
+    const subst = `<a href="$1">$1</a>`;
+
+    // The substituted value will be contained in the result variable
+    message.message = str.replace(regex, subst);
+
+    
     return (
         (message.user
         ?
@@ -41,7 +56,7 @@ export default function Message ({message, auth}){
                         <div className="grid grid-cols-3 gap-1">
 
                             {JSON.parse(message.medias).map((item, key) => (
-                                <div class="rounded-lg w-48 h-48" style={{backgroundImage: `url(${item.content})`, backgroundPosition: 'center center', backgroundSize: 'cover'}}></div>
+                                <div key={key} className="rounded-lg w-48 h-48" style={{backgroundImage: `url(${item.content})`, backgroundPosition: 'center center', backgroundSize: 'cover'}}></div>
                             ))}
                         </div>
                         :
@@ -83,7 +98,7 @@ export default function Message ({message, auth}){
                         <div className="grid grid-cols-3 gap-1">
 
                             {JSON.parse(message.medias).map((item, key) => (
-                                <div class="rounded-lg w-48 h-48" style={{backgroundImage: `url(${item.content})`, backgroundPosition: 'center center', backgroundSize: 'cover'}}></div>
+                                <div key={key} className="rounded-lg w-48 h-48" style={{backgroundImage: `url(${item.content})`, backgroundPosition: 'center center', backgroundSize: 'cover'}}></div>
                             ))}
                         </div>
                         :
@@ -128,7 +143,7 @@ export default function Message ({message, auth}){
                         <div className="grid grid-cols-3 gap-1">
 
                             {JSON.parse(message.medias).map((item, key) => (
-                                <div class="rounded-lg w-48 h-48" style={{backgroundImage: `url(${item.content})`, backgroundPosition: 'center center', backgroundSize: 'cover'}}></div>
+                                <div key={key} className="rounded-lg w-48 h-48" style={{backgroundImage: `url(${item.content})`, backgroundPosition: 'center center', backgroundSize: 'cover'}}></div>
                             ))}
                         </div>
                         :
@@ -165,14 +180,18 @@ export default function Message ({message, auth}){
                             null
                     }
                     {
-                        JSON.parse(message.medias).length > 0
+                        JSON.parse(message.medias)
                         ?
-                        <div className="grid grid-cols-3 gap-1">
+                            JSON.parse(message.media).length > 0
+                            ?
+                                <div className="grid grid-cols-3 gap-1">
 
-                            {JSON.parse(message.medias).map((item, key) => (
-                                <div class="rounded-lg w-48 h-48" style={{backgroundImage: `url(${item.content})`, backgroundPosition: 'center center', backgroundSize: 'cover'}}></div>
-                            ))}
-                        </div>
+                                    {JSON.parse(message.medias).map((item, key) => (
+                                        <div key={key} className="rounded-lg w-48 h-48" style={{backgroundImage: `url(${item.content})`, backgroundPosition: 'center center', backgroundSize: 'cover'}}></div>
+                                    ))}
+                                </div>
+                            :
+                                null
                         :
                         null
                     }

@@ -42,6 +42,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/user/update/picture', [UserController::class, "update_picture"])->name('user.update_photo');
     Route::post('/user/update', [UserController::class, 'update'])->name('user.update');
 
+    Route::get('/user/{name}', [UserController::class, "show"])->name('user.show');
+
     Route::get('/parlez-moi', [TchatController::class, 'index'])->name('tchat');
     Route::get('/parlez-moi/messages', [TchatController::class, "list"])->name('tchat.list');
     Route::post('/parlez-moi/messages', [TchatController::class, "message"])->name('tchat.send');

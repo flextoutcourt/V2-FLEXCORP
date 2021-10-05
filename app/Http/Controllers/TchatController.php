@@ -39,7 +39,7 @@ class TchatController extends Controller
             return $validator;
         }else{
             $message = new Message();
-            $str = $this->is_link($request->message) ? $this->is_link($request->message) : $request->message;
+            $str = $this->is_link($request->message) ?? $request->message;
             $message->message = $str;
             $message->link_preview = $request->response;
             $message->user_id = Auth::user()->id;
@@ -92,12 +92,13 @@ class TchatController extends Controller
 
     public function is_link($message)
     {
-        $re = '%[^\'](https?|ftp)(://)(\S+(:\S*)?@|\d{1,3}(?:\.\d{1,3}){3}|(?:(?:[a-z\d\x{00a1}\-\x{ffff}]+-?)*[a-z\d\x{00a1}\-\x{ffff}]+)(\.(?:[a-z\d\x{00a1}\-\x{ffff}]+-?)*[a-z\d\x{00a1}\-\x{ffff}]+)*(?:\.[a-z\x{00a1}\-\x{ffff}]{2,6}))(:\d+)?(?:[^\s]*)%i';
+        $re = '#\b(([\w-]+://?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/)))#i';
         $str = $message;
 
-        return preg_replace_callback($re, function($matches){
-            return "<a href='{$matches[1]}{$matches[2]}{$matches[3]}'>{$matches[0]}</a>";
-        }, $str);
+        return preg_replace($re, "#$1", $str, 1);
+        // return preg_replace_callback($re, function($matches){
+        //     return "#{$matches[0]}";
+        // }, $str);
 
     }
 
