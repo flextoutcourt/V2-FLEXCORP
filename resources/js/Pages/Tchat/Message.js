@@ -5,7 +5,7 @@ export default function Message ({message, auth}){
 
     const regexMentions = new RegExp(`\@([a-zA-Z0-9_:/.]+)*`, 'i');
     const strMentions = message.message;
-    const substMentions = `<a href="/user/$1">$1</a>`;
+    const substMentions = `<a href="/user/$1">$0</a>`;
 
     message.message = strMentions.replace(regexMentions, substMentions);
 
