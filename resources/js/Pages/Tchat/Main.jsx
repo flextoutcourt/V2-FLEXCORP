@@ -61,6 +61,8 @@ function App({auth, errors}) {
 
         const channel = pusher.subscribe('chat');
         channel.bind('message', (data) => {
+            console.log(data);
+            debugger
             setoldMessages(oldMessages => [data, ...oldMessages]);
         });
     }, []);
@@ -86,13 +88,15 @@ function App({auth, errors}) {
             let m;
     
             if ((m = regex.exec(str)) !== null) {
-                await getLinkPreview(m[0]).then(async(response) => {
+                await getLinkPreview(m[0], {
+                    proxyUrl: 'https://cors-anywhere.herokuapp.com/'
+                }).then((response) => {
                     let fd = new FormData();
                     fd.append('message', message);
                     fd.append('files', JSON.stringify(filesD));
                     fd.append('response', JSON.stringify(response));
                     // fd.append('files', files);
-                    await axios.post(route('tchat.send'), fd)
+                    axios.post(route('tchat.send'), fd)
                     .then(() => {
                         setMessage('');
                         setRetracted(false);
@@ -343,13 +347,13 @@ function App({auth, errors}) {
                         }
                     </div>
                     <div className="relative w-full flex items-end justify-between gap-2 bg-gray-900 py-1">
-                        <button onClick={files.length > 0 ? (e) => {e.preventDefault()} : deployMessageMenu} disabled={files.length > 0 ? true : false} className={files.length < 1 ? "rounded-xl border border-transparent hover:border-indigo-500 bg-indigo-500 hover:bg-transparent duration-200 text-white hover:text-indigo-500 p-2 h-10 w-10 text-center cursor-pointer" : "rounded-xl border border-transparent  bg-indigo-100 duration-200 text-indigo-500 p-2 h-10 w-10 text-center cursor-not-allowed"}>
+                        <button onClick={fileUploadMenu ? (e) => {e.preventDefault()} : deployMessageMenu} disabled={fileUploadMenu} className={!fileUploadMenu ? "rounded-xl border border-transparent hover:border-indigo-500 bg-indigo-500 hover:bg-transparent duration-200 text-white hover:text-indigo-500 p-2 h-10 w-10 text-center cursor-pointer" : "rounded-xl border border-transparent  bg-indigo-100 duration-200 text-indigo-500 p-2 h-10 w-10 text-center cursor-not-allowed"}>
                             <i className="fas fa-plus"></i>
                         </button>
                         {
                             !retracted
                             ?
-                                files.length > 0
+                                filesD.length > 0
                                 ?
                                     <button className="rounded-xl border-0 border-transparent hover:border-indigo-500 bg-indigo-500 hover:bg-transparent duration-200 text-white hover:text-indigo-500 p-0 w-0 text-center cursor-pointer opacity-0 h-0">
                                         <i className="fas fa-paperclip" style={{fontSize: 0}}></i>
@@ -371,7 +375,7 @@ function App({auth, errors}) {
                         {
                             !retracted
                             ?
-                                files.length > 0
+                                filesD.length > 0
                                     ?
                                         <button className="rounded-xl border-0 border-transparent hover:border-indigo-500 bg-indigo-500 hover:bg-transparent duration-200 text-white hover:text-indigo-500 p-0 w-0 text-center cursor-pointer opacity-0 h-0" onClick={toggleGamesMenu}>
                                             <i className="fas fa-paperclip" style={{fontSize: 0}}></i>

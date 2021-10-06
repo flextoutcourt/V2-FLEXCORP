@@ -41,11 +41,20 @@ class TchatController extends Controller
             $message = new Message();
             $str = $this->is_link($request->message) ?? $request->message;
             $message->message = $str;
-            $message->link_preview = $request->response;
+            $json = json_decode($request->response);
+            $response = NULL;
+            if($json){
+                if($json->title != "" && $json->url != "" && !empty($images)){
+                    $response = json_encode($json);
+                    $message->link_preview = $request->response;
+                }
+            }
             $message->user_id = Auth::user()->id;
             $message->medias = $request->all()['files'];
             $message->save();
-            event(new EventsTchat(Auth::user(), $str, $request->response, $request->all()['files']));
+            event(new EventsTchat(Auth::user(), $str, $response, $request->all()['files']));
+
+            return $message->id;
     
             return [];
         }
@@ -96,9 +105,6 @@ class TchatController extends Controller
         $str = $message;
 
         return preg_replace($re, "#$1", $str, 1);
-        // return preg_replace_callback($re, function($matches){
-        //     return "#{$matches[0]}";
-        // }, $str);
 
     }
 

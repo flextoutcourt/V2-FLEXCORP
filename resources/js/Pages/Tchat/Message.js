@@ -1,7 +1,6 @@
 import parse from 'html-react-parser';
 
 export default function Message ({message, auth}){
-    // console.log(message);
 
     const regexMentions = new RegExp(`\@([a-zA-Z0-9_:/.]+)*`, 'i');
     const strMentions = message.message;
@@ -51,14 +50,18 @@ export default function Message ({message, auth}){
                             null
                     }
                     {
-                        JSON.parse(message.medias).length > 0
+                        JSON.parse(message.medias)
                         ?
-                        <div className="grid grid-cols-3 gap-1">
+                            JSON.parse(message.medias).length > 0
+                            ?
+                                <div className={`grid grid-cols-${JSON.parse(message.medias).length < 4 ? JSON.parse(message.medias).length : JSON.parse(message.medias).length == 4 ? 2 : 3} gap-1`}>
 
-                            {JSON.parse(message.medias).map((item, key) => (
-                                <div key={key} className="rounded-lg w-48 h-48" style={{backgroundImage: `url(${item.content})`, backgroundPosition: 'center center', backgroundSize: 'cover'}}></div>
-                            ))}
-                        </div>
+                                    {JSON.parse(message.medias).map((item, key) => (
+                                        <div key={key} className="rounded-lg w-48 h-48" style={{backgroundImage: `url(${item.content})`, backgroundPosition: 'center center', backgroundSize: 'cover'}}></div>
+                                    ))}
+                                </div>
+                            :
+                                null
                         :
                         null
                     }
@@ -93,14 +96,18 @@ export default function Message ({message, auth}){
                             null
                     }
                     {
-                        JSON.parse(message.medias).length > 0
+                        JSON.parse(message.medias)
                         ?
-                        <div className="grid grid-cols-3 gap-1">
+                            JSON.parse(message.medias).length > 0
+                            ?
+                                <div className={`grid grid-cols-${JSON.parse(message.medias).length < 4 ? JSON.parse(message.medias).length : JSON.parse(message.medias).length == 4 ? 2 : 3} gap-1`}>
 
-                            {JSON.parse(message.medias).map((item, key) => (
-                                <div key={key} className="rounded-lg w-48 h-48" style={{backgroundImage: `url(${item.content})`, backgroundPosition: 'center center', backgroundSize: 'cover'}}></div>
-                            ))}
-                        </div>
+                                    {JSON.parse(message.medias).map((item, key) => (
+                                        <div key={key} className="rounded-lg w-48 h-48" style={{backgroundImage: `url(${item.content})`, backgroundPosition: 'center center', backgroundSize: 'cover'}}></div>
+                                    ))}
+                                </div>
+                            :
+                                null
                         :
                         null
                     }
@@ -108,7 +115,7 @@ export default function Message ({message, auth}){
             )
         :
             (message.auth.id === auth.user.id)
-            ?
+            ?  
                 <div className="bg-gray-800 rounded-xl rounded-br-none self-end max-w-2xl text-gray-100 p-4 my-2 message-gradient" id={message.id}>
                     <h3 className="text-xl">{message.auth.name}</h3>
                     <p className="my-2">{parse(message.message)}</p>
@@ -117,19 +124,19 @@ export default function Message ({message, auth}){
                             <div className="w-full">
                                 <article className=" mx-auto bg-transparent group relative rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transform duration-200 md:max-w-lg max-w-sm">
                                     <div className="relative w-full h-80 md:h-64 lg:h-44 bg-white p-2">
-                                        <img src={message.link_preview.images[0]}
-                                            alt={message.link_preview.description}
+                                        <img src={JSON.parse(message.link_preview).images[0]}
+                                            alt={JSON.parse(message.link_preview).description}
                                             className="w-full h-full object-center object-cover"/>
                                     </div>
                                     <div className="px-3 py-4 border border-indigo-500 border-t-0 rounded-lg rounded-t-none">
                                         <h3 className="text-sm text-white pb-2">
-                                            <a className="bg-indigo-600 py-1 px-2 text-white rounded-lg" href={message.link_preview.url} target="_blank">
+                                            <a className="bg-indigo-600 py-1 px-2 text-white rounded-lg" href={JSON.parse(message.link_preview).url} target="_blank">
                                                 <span className="absolute inset-0"></span>
-                                                {message.link_preview.title}
+                                                {JSON.parse(message.link_preview).title}
                                             </a>
                                         </h3>
                                         <p className="text-base font-semibold text-white">
-                                            {message.link_preview.description}
+                                            {JSON.parse(message.link_preview).description}
                                         </p>
                                     </div>
                                 </article>
@@ -138,14 +145,18 @@ export default function Message ({message, auth}){
                             null
                     }
                     {
-                        JSON.parse(message.medias).length > 0
+                        JSON.parse(message.medias)
                         ?
-                        <div className="grid grid-cols-3 gap-1">
+                            JSON.parse(message.medias).length > 0
+                            ?
+                                <div className={`grid grid-cols-${JSON.parse(message.medias).length < 4 ? JSON.parse(message.medias).length : JSON.parse(message.medias).length == 4 ? 2 : 3} gap-1`}>
 
-                            {JSON.parse(message.medias).map((item, key) => (
-                                <div key={key} className="rounded-lg w-48 h-48" style={{backgroundImage: `url(${item.content})`, backgroundPosition: 'center center', backgroundSize: 'cover'}}></div>
-                            ))}
-                        </div>
+                                    {JSON.parse(message.medias).map((item, key) => (
+                                        <div key={key} className="rounded-lg w-48 h-48" style={{backgroundImage: `url(${item.content})`, backgroundPosition: 'center center', backgroundSize: 'cover'}}></div>
+                                    ))}
+                                </div>
+                            :
+                                null
                         :
                         null
                     }
@@ -182,9 +193,9 @@ export default function Message ({message, auth}){
                     {
                         JSON.parse(message.medias)
                         ?
-                            JSON.parse(message.media).length > 0
+                            JSON.parse(message.medias).length > 0
                             ?
-                                <div className="grid grid-cols-3 gap-1">
+                                <div className={`grid grid-cols-${JSON.parse(message.medias).length < 4 ? JSON.parse(message.medias).length : JSON.parse(message.medias).length == 4 ? 2 : 3} gap-1`}>
 
                                     {JSON.parse(message.medias).map((item, key) => (
                                         <div key={key} className="rounded-lg w-48 h-48" style={{backgroundImage: `url(${item.content})`, backgroundPosition: 'center center', backgroundSize: 'cover'}}></div>
