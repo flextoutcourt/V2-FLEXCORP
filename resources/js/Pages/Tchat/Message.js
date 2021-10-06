@@ -16,7 +16,7 @@ export default function Message ({message, auth}){
     const subst = `<a href="$1">$1</a>`;
     message.message = str.replace(regex, subst);
 
-    const regexCode = /\`\`\`(?:\n)?(?:(.*)(?:\n)?)*?(?:\n)?\`\`\`/gm
+    const regexCode = /\`\`\`((?:\n)?(?:(.*)(?:\n)?)*?(?:\n)?)\`\`\`/gm
     const strCode = message.message;
     const substCode = `<code className="bg-black mt-2 text-white p-2 block rounded-sm">$1</code>`;
 

@@ -159,7 +159,7 @@ export default function Guest({children, header, errors}) {
         {header && (
             <header className="bg-gray-800 shadow">
                 <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-gray-100">
-                    <div className="bg-yellow-600 rounded-md shadow-lg p-4"><i className="fas fa-exclamation-circle"></i> Cette version est une version de développement, les accès a votre compte peuvent etre supprimés lors d'un import d'une nouvelle base de données ! Dernière maj des données : 05/10/2021 19:53 (si vous avez créé votre compte après cette date, il n'a pas été supprimé :) )</div>
+                    <div className="bg-yellow-600 rounded-md shadow-lg p-4"><i className="fas fa-exclamation-circle"></i> Cette version est une version de développement, les accès a votre compte peuvent etre supprimés lors d'un import d'une nouvelle base de données ! Dernière maj des données : 06/10/2021 20:59 (si vous avez créé votre compte après cette date, il n'a pas été supprimé :) )</div>
                     {/* {header} */}
                 </div>
             </header>
