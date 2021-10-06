@@ -25,7 +25,13 @@ function App({auth, errors}) {
     const [fileUpload, setFileUpload] = useState(false);
     const [fileUploadMenu, setFileUploadMenu] = useState(false);
     const [mentionsMenu, setMentionsMenu] = useState(false);
-    const [mentions, setMentions] = useState([]);
+    const [mentions, setMentions] = useState([
+        {user: 'flex'},
+        {user: 'magnier'},
+        {user: 'gaston'},
+        {user: 'rémi'},
+        {user: 'geoffroy'}
+    ]);
 
     const [files, setFiles] = useState([]);
     const [filesD, setFilesD] = useState([]);
@@ -35,6 +41,9 @@ function App({auth, errors}) {
             setoldMessages(val)
         })
         _get_users().then(val => setUsers(val));
+        document.querySelector('#form').addEventListener('keydown', e => {
+            handleCtrlKey(e)
+        })
       }, []);
     
     async function _get_users(){
@@ -53,6 +62,13 @@ function App({auth, errors}) {
         return responseData;
     }
 
+    const handleCtrlKey = e => {  
+        console.log(message.length);      
+        if(e.ctrlKey && e.keyCode == 13 && message.length != 0){
+            submit(e)
+        }
+    }
+
     useEffect(() => {
 
         const pusher = new Pusher('4c81c662885079cc5c1e', {
@@ -61,8 +77,6 @@ function App({auth, errors}) {
 
         const channel = pusher.subscribe('chat');
         channel.bind('message', (data) => {
-            console.log(data);
-            debugger
             setoldMessages(oldMessages => [data, ...oldMessages]);
         });
     }, []);
@@ -102,8 +116,8 @@ function App({auth, errors}) {
                         setRetracted(false);
                         setOffset(offset + 1);
                         setFileUploadMenu(false);
-                        setFilesD(false);
-                        setFiles(false);
+                        setFilesD([]);
+                        setFiles([]);
                         document.querySelector('#AllMessages').scroll(0, document.querySelector('#AllMessages').scrollHeight);
                     })    
                 })
@@ -118,8 +132,8 @@ function App({auth, errors}) {
                         setRetracted(false);
                         setOffset(offset + 1);
                         setFileUploadMenu(false);
-                        setFilesD(false);
-                        setFiles(false);
+                        setFilesD([]);
+                        setFiles([]);
                         document.querySelector('#AllMessages').scroll(0, document.querySelector('#AllMessages').scrollHeight);
                     })
                 })
@@ -133,8 +147,8 @@ function App({auth, errors}) {
                         setRetracted(false);
                         setOffset(offset + 1);
                         setFileUploadMenu(false);
-                        setFilesD(false);
-                        setFiles(false);
+                        setFilesD([]);
+                        setFiles([]);
                         document.querySelector('#AllMessages').scroll(0, document.querySelector('#AllMessages').scrollHeight);
                     });
             }
@@ -286,7 +300,7 @@ function App({auth, errors}) {
                         )
                     })}
                 </div>
-                <form onSubmit={e => submit(e)} className="z-20 sticky bottom-0 left-0 right-0 border-t border-indigo-500 text-white focus:ring-opacity-50 focus:ring-2 focus:ring-indigo-500 bg-gray-900" encType='multipart/formdata'>
+                <form onSubmit={e => submit(e)} className="z-20 sticky bottom-0 left-0 right-0 border-t border-indigo-500 text-white focus:ring-opacity-50 focus:ring-2 focus:ring-indigo-500 bg-gray-900" encType='multipart/formdata' id="form">
                     <div className="relative">
                         {
                             menuOpen
@@ -316,6 +330,16 @@ function App({auth, errors}) {
                             ?
                                 <div className="mb-2 z-0 absolute bg-gray-700 rounded-md bottom-0 flex align-center gap-2 duration-200 opacity-1 p-2 overflow-x-auto">
                                     {filesD.map((item, key) => (
+                                        item.type == 'video/mp4'
+                                        ?
+                                        <div key={key} id={key}>
+                                            <div className="rounded-md p-2 h-20 w-20 relative" style={{backgroundImage: "url('/"+item.thumb+"')", backgroundSize: 'cover', backgroundPosition: 'center center' }} id={key}>
+                                                <button className="text-center absolute -top-2 -right-2 h-6 w-6 p-0 bg-indigo-500 rounded-full" onClick={deleteFile} id={key}>
+                                                    <i className="fas fa-times text-sm"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        :
                                         <div key={key} id={key}>
                                             <div className="rounded-md p-2 h-20 w-20 relative" style={{backgroundImage: "url('/"+item.content+"')", backgroundSize: 'cover', backgroundPosition: 'center center' }} id={key}>
                                                 <button className="text-center absolute -top-2 -right-2 h-6 w-6 p-0 bg-indigo-500 rounded-full" onClick={deleteFile} id={key}>
@@ -376,14 +400,14 @@ function App({auth, errors}) {
                             !retracted
                             ?
                                 filesD.length > 0
-                                    ?
-                                        <button className="rounded-xl border-0 border-transparent hover:border-indigo-500 bg-indigo-500 hover:bg-transparent duration-200 text-white hover:text-indigo-500 p-0 w-0 text-center cursor-pointer opacity-0 h-0" onClick={toggleGamesMenu}>
-                                            <i className="fas fa-paperclip" style={{fontSize: 0}}></i>
-                                        </button>
-                                    :
-                                        <button className="rounded-xl border border-transparent hover:border-indigo-500 bg-indigo-500 hover:bg-transparent duration-200 text-white hover:text-indigo-500 p-2 h-10 w-10 text-center cursor-pointer" onClick={toggleGamesMenu}>
-                                            <i className="fas fa-dice"></i>
-                                        </button>
+                                ?
+                                    <button className="rounded-xl border-0 border-transparent hover:border-indigo-500 bg-indigo-500 hover:bg-transparent duration-200 text-white hover:text-indigo-500 p-0 w-0 text-center cursor-pointer opacity-0 h-0" onClick={toggleGamesMenu}>
+                                        <i className="fas fa-paperclip" style={{fontSize: 0}}></i>
+                                    </button>
+                                :
+                                    <button className="rounded-xl border border-transparent hover:border-indigo-500 bg-indigo-500 hover:bg-transparent duration-200 text-white hover:text-indigo-500 p-2 h-10 w-10 text-center cursor-pointer" onClick={toggleGamesMenu}>
+                                        <i className="fas fa-dice"></i>
+                                    </button>
                             :
                                 <button className="rounded-xl border-0 border-transparent hover:border-indigo-500 bg-indigo-500 hover:bg-transparent duration-200 text-white hover:text-indigo-500 p-0 h-0 w-0 opacity-0 text-center cursor-pointer">
                                     <i className="fas fa-dice" style={{fontSize: 0}}></i>
@@ -392,37 +416,32 @@ function App({auth, errors}) {
                         {/* <span className="w-full p-4 bg-gray-900 focus:bg-gray-800" onChange={handleChange}>
                             {message}
                         </span> */}
-                        <Textarea
-                            autoFocus={true}
-                            value={message}
-                            onChange={handleChange}
-                            className="w-full overflow-hidden align-bottom py-auto h-10 px-4 bg-gray-900 rounded-2xl border border-transparent outline-none focus:border-indigo-500 focus:border-t-4 focus:bg-gray-800 resize-none"
-                            placeholder="Écrivez votre message"
-                            autoCapitalize="true"
-                            rows={1}
-                            style={{maxHeight: "90px"}}
-                        >
-                        {/* <MentionsInput
-                            value={message}
-                            onChange={handleChange}
-                            className="w-full overflow-hidden align-bottom py-auto h-10 px-4 bg-gray-900 rounded-2xl border border-transparent outline-none focus:border-indigo-500 focus:border-t-4 focus:bg-gray-800 resize-none"
-                            style={{maxHeight: "90px"}}
-                            autoCapitalize="true"
-                            rows={1}
-                            placeholder="Ecrivez votre message"
-
-                        >
-                            <Mention
-                                type='user'
-                                className='absolute bottom-0 text-white bg-gray-800'
-                                style={{backgroundColor: 'red!important'}}
-                                trigger="@"
-                                data={userData}
-                            >
-
-                            </Mention>
-                        </MentionsInput> */}
-                        </Textarea>
+                        <div className="relative w-full h-full">
+                            {
+                                mentionsMenu
+                                ?
+                                    <div className="absolute bg-red-500 rounded-lg shadow-lg p-4 flex-col gap-2">
+                                        {mentions.map((item, key) => (
+                                            <div>
+                                                {item.user}
+                                            </div>
+                                        ))}
+                                    </div>
+                                :
+                                    null
+                            }
+                            <Textarea
+                                    autoFocus={true}
+                                    value={message}
+                                    onChange={handleChange}
+                                    className="w-full overflow-hidden align-bottom py-auto h-10 px-4 bg-gray-900 rounded-2xl border border-transparent outline-none focus:border-indigo-500 focus:border-t-4 focus:bg-gray-800 resize-none"
+                                    placeholder="Écrivez votre message"
+                                    autoCapitalize="true"
+                                    rows={1}
+                                    style={{maxHeight: "90px"}}
+                                >
+                            </Textarea>
+                        </div>
                         
                         <button type="submit" className="rounded-xl border border-indigo-500 hover:bg-indigo-500 duration-200 text-indigo-500 hover:text-white p-2 h-10 w-10 text-center cursor-pointer">
                             <i className="fas fa-paper-plane"></i>

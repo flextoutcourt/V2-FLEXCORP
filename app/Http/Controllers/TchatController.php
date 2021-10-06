@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Events\Tchat as EventsTchat;
 use App\Models\Media;
 use App\Models\Message;
+use FFMpeg\Coordinate\TimeCode;
+use FFMpeg\FFMpeg;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -67,6 +69,31 @@ class TchatController extends Controller
         ], [
             'file.file' => 'Le format du fichier n\'est pas pris en compte',
         ]);
+        
+        if($request->file('file')->getMimeType() === 'video/mp4'){
+            $filePathWoutExt = time().$request->uuid;
+            $filePath = $filePathWoutExt.'.'.$request->file('file')->extension();
+            $path = $request->file('file')->store('tchat/videos', ['disk' => 'tchat_videos']);
+            
+            $media = new Media();
+            $media->save();
+
+            $media->type = $request->file('file')->getMimeType();
+            $media->user_id = Auth::user()['id'];
+            $media->content = $path;
+            $media->short_code = '#flex#'.$media->id."#flex#";
+            $ffmpeg = \FFMpeg\FFMpeg::create([
+                'ffmpeg.binaries' => "/usr/bin/ffmpeg", 
+                'ffprobe.binaries' => "/usr/bin/ffprobe"
+            ]);
+            $video = $ffmpeg->open($path);
+            $video->frame(TimeCode::fromSeconds(1))->save("tchat/thumbs/$filePathWoutExt.jpg");
+            $media->thumb = "tchat/thumbs/$filePathWoutExt.jpg";
+            $media->save();
+
+            return $media;
+        }
+
 
         if($validator->fails()){
             return $validator->errors();
@@ -77,11 +104,12 @@ class TchatController extends Controller
                     $img = Image::make($request->file('file')->path());
                     $img->resize(1920, 1080, function($const){
                         $const->aspectRatio();
-                    })->save('tchat/'.$filePath);
-                    $path = $request->file('file')->move('tchat', $filePath);
+                    })->save('tchat/pictures/'.$filePath);
+                    $path = $request->file('file')->move('tchat/pictures', $filePath);
 
                     $media = new Media();
                     $media->save();
+                    $media->type = 'img';
                     $media->user_id = Auth::user()['id'];
                     $media->content = $path->getPathname();
                     $media->short_code = '#flex#'.$media->id."#flex#";

@@ -1,4 +1,7 @@
 import parse from 'html-react-parser';
+import SyntaxHighlighter from "react-syntax-highlighter";
+import { atelierSavannaDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import replace from 'string-replace-to-array';
 
 export default function Message ({message, auth}){
 
@@ -11,10 +14,13 @@ export default function Message ({message, auth}){
     const regex = new RegExp(`\#([a-zA-Z0-9_:/.]+)*`, 'i');
     const str = message.message; 
     const subst = `<a href="$1">$1</a>`;
-
-    // The substituted value will be contained in the result variable
     message.message = str.replace(regex, subst);
 
+    const regexCode = /\`\`\`(?:\n)?(?:(.*)(?:\n)?)*?(?:\n)?\`\`\`/gm
+    const strCode = message.message;
+    const substCode = `<code className="bg-black mt-2 text-white p-2 block rounded-sm">$1</code>`;
+
+    message.message = strCode.replace(regexCode, substCode)
     
     return (
         (message.user
@@ -23,7 +29,9 @@ export default function Message ({message, auth}){
             ?
                 <div className="bg-gray-800 rounded-xl rounded-br-none self-end max-w-2xl text-gray-100 p-4 my-2 message-gradient" id={message.id}>
                     <h3 className="text-xl">{auth.user.name}</h3>
-                    <p className="my-2">{parse(message.message)}</p>
+                    <p className="my-2">
+                        {parse(message.message)}
+                    </p>
                     {message.link_preview
                         ?
                             <div className="w-full">
@@ -57,7 +65,11 @@ export default function Message ({message, auth}){
                                 <div className={`grid grid-cols-${JSON.parse(message.medias).length < 4 ? JSON.parse(message.medias).length : JSON.parse(message.medias).length == 4 ? 2 : 3} gap-1`}>
 
                                     {JSON.parse(message.medias).map((item, key) => (
-                                        <div key={key} className="rounded-lg w-48 h-48" style={{backgroundImage: `url(${item.content})`, backgroundPosition: 'center center', backgroundSize: 'cover'}}></div>
+                                        item.type == 'img'
+                                        ?
+                                            <div key={key} className="rounded-lg w-48 h-48" style={{backgroundImage: `url(${item.content})`, backgroundPosition: 'center center', backgroundSize: 'cover'}}></div>
+                                        :
+                                            <video key={key} src={item.content} controls className="rounded-lg" poster={item.thumb ?? null} preload='none'></video>
                                     ))}
                                 </div>
                             :
@@ -69,7 +81,9 @@ export default function Message ({message, auth}){
             :
                 <div className="bg-gray-800 rounded-xl rounded-bl-none self-start max-w-2xl text-gray-100 p-4 my-2 message-gradient" id={message.id}>
                     <h3 className="text-xl">{message.user[0].name ?? message.user.name}</h3>
-                    <p className="my-2">{parse(message.message)}</p>
+                    <p className="my-2">
+                        {message.message}
+                    </p>
                     {message.link_preview
                         ?
                             <div className="w-full">
@@ -103,7 +117,11 @@ export default function Message ({message, auth}){
                                 <div className={`grid grid-cols-${JSON.parse(message.medias).length < 4 ? JSON.parse(message.medias).length : JSON.parse(message.medias).length == 4 ? 2 : 3} gap-1`}>
 
                                     {JSON.parse(message.medias).map((item, key) => (
-                                        <div key={key} className="rounded-lg w-48 h-48" style={{backgroundImage: `url(${item.content})`, backgroundPosition: 'center center', backgroundSize: 'cover'}}></div>
+                                        item.type == 'img'
+                                        ?
+                                            <div key={key} className="rounded-lg w-48 h-48" style={{backgroundImage: `url(${item.content})`, backgroundPosition: 'center center', backgroundSize: 'cover'}}></div>
+                                        :
+                                            <video key={key} src={item.content} controls className="rounded-lg" poster={item.thumb ?? null} preload='none'></video>
                                     ))}
                                 </div>
                             :
@@ -118,7 +136,9 @@ export default function Message ({message, auth}){
             ?  
                 <div className="bg-gray-800 rounded-xl rounded-br-none self-end max-w-2xl text-gray-100 p-4 my-2 message-gradient" id={message.id}>
                     <h3 className="text-xl">{message.auth.name}</h3>
-                    <p className="my-2">{parse(message.message)}</p>
+                    <p className="my-2">
+                        {message.message}
+                    </p>
                     {message.link_preview
                         ?
                             <div className="w-full">
@@ -152,7 +172,11 @@ export default function Message ({message, auth}){
                                 <div className={`grid grid-cols-${JSON.parse(message.medias).length < 4 ? JSON.parse(message.medias).length : JSON.parse(message.medias).length == 4 ? 2 : 3} gap-1`}>
 
                                     {JSON.parse(message.medias).map((item, key) => (
-                                        <div key={key} className="rounded-lg w-48 h-48" style={{backgroundImage: `url(${item.content})`, backgroundPosition: 'center center', backgroundSize: 'cover'}}></div>
+                                        item.type == 'img'
+                                        ?
+                                            <div key={key} className="rounded-lg w-48 h-48" style={{backgroundImage: `url(${item.content})`, backgroundPosition: 'center center', backgroundSize: 'cover'}}></div>
+                                        :
+                                            <video key={key} src={item.content} controls className="rounded-lg" poster={item.thumb ?? null} preload='none'></video>
                                     ))}
                                 </div>
                             :
@@ -164,7 +188,9 @@ export default function Message ({message, auth}){
             :
                 <div className="bg-gray-800 rounded-xl rounded-bl-none self-start max-w-2xl text-gray-100 p-4 my-2 message-gradient" id={message.id}>
                     <h3 className="text-xl">{message.auth.name}</h3>
-                    <p className="my-2">{parse(message.message)}</p>
+                    <p className="my-2">
+                        {message.message}
+                    </p>
                     {message.link_preview
                         ?
                             <div className="w-full">
@@ -198,7 +224,11 @@ export default function Message ({message, auth}){
                                 <div className={`grid grid-cols-${JSON.parse(message.medias).length < 4 ? JSON.parse(message.medias).length : JSON.parse(message.medias).length == 4 ? 2 : 3} gap-1`}>
 
                                     {JSON.parse(message.medias).map((item, key) => (
-                                        <div key={key} className="rounded-lg w-48 h-48" style={{backgroundImage: `url(${item.content})`, backgroundPosition: 'center center', backgroundSize: 'cover'}}></div>
+                                        item.type == 'img'
+                                        ?
+                                            <div key={key} className="rounded-lg w-48 h-48" style={{backgroundImage: `url(${item.content})`, backgroundPosition: 'center center', backgroundSize: 'cover'}}></div>
+                                        :
+                                            <video key={key} src={item.content} controls className="rounded-lg" poster={item.thumb ?? null} preload='none'></video>
                                     ))}
                                 </div>
                             :

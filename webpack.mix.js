@@ -26,3 +26,4 @@ if (mix.inProduction()) {
 
 
 mix.browserSync('localhost:8000');
+mix.disableNotifications(true);

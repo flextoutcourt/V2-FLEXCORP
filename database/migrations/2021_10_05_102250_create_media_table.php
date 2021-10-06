@@ -19,6 +19,7 @@ class CreateMediaTable extends Migration
             $table->text('type')->nullable();
             $table->longText('content')->nullable();
             $table->text('short_code')->nullable();
+            $table->longText('thumb')->nullable();
             $table->timestamps();
         });
     }
