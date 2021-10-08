@@ -115,6 +115,10 @@ Route::middleware(['cors'])->group(function () {
     Route::post('/hogehoge', 'Controller@hogehoge');
 });
 
+Route::get('/offline', function() {
+    return 'test';
+})->name('offline');
+
 require __DIR__.'/auth.php';
 
 

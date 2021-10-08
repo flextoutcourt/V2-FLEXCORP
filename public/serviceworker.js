@@ -1,4 +1,4 @@
-var staticCacheName = "pwa-v" + new Date().getTime();
+var staticCacheName = "flexcorp-v2.0.01" + new Date().getTime();
 var filesToCache = [
     '/offline',
     '/css/app.css',
