@@ -77,7 +77,7 @@ Route::get('/mes-projets/ascenseur-301', [ProjectController::class, 'asc301'])->
 Route::get('/mes-projets/projets-personnels', [ProjectController::class, 'perso'])->name('projects.perso');
 Route::get('/mes-projets/projets-professionels', [ProjectController::class, "pro"])->name('projects.pro');
 
-Route::get('/mes-projets/{project}-{slug?}', [ProjectController::class, 'show'])->name('project.show');
+Route::get('/mes-projets/{project}', [ProjectController::class, 'show'])->name('project.show');
 
 Route::post('/mes-projets/add', [ProjectController::class, 'store'])->name('projects.store');
 Route::get('/mes-projets/edit', [ProjectController::class, 'store'])->name('projects.edit');

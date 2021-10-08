@@ -34890,25 +34890,25 @@ footer {
   }
 }
 
-.ck-content h1{
-  font-size: 3rem;
-  color: white;
-  position: relative;
-  margin-bottom: 3rem;
-  text-align: center;
-  position: sticky;
-  top: 65px;
-  background-color: #111827;
-  padding-bottom: 5px;
-}
+/* .ck-content h1{
+	font-size: 3rem;
+	color: white;
+	position: relative;
+	margin-bottom: 3rem;
+	text-align: center;
+	position: sticky;
+	top: 65px;
+	background-color: #111827;
+	padding-bottom: 5px;
+} */
 
-.ck-content h1::after{
-  content: '';
-  position: absolute;
-  top: 100%; left: 0; right: 0;
-  height: 2px;
-  background: #6366F1;
-}
+/* .ck-content h1::after{
+	content: '';
+	position: absolute;
+	top: 100%; left: 0; right: 0;
+	height: 2px;
+	background: #6366F1;
+} */
 
 .ck-content h2{
   font-size: 2.5rem;

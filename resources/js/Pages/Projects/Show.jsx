@@ -1,12 +1,24 @@
-import React, { Component, useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import Authenticated from '@/Layouts/Authenticated';
 import Guest from '@/Layouts/Guest';
-import {Background, Parallax} from 'react-parallax';
+import {Parallax} from 'react-parallax';
 import parse from 'html-react-parser';
 import './styles.css';
 
 export default function Show({auth, errors, project}){
     
+    const [comments, setComments] = useState([]);
+
+    useEffect(() => {
+        _get_comments().then(val => setComments(val));
+    }, []);
+
+    async function _get_comments(){
+        const promise = axios.get(route('api.get_comments', route().params.project));
+        const responseData = promise.then(data => data.data);
+        return responseData;
+    }
+
     function content() {
         return (
             <div>
@@ -23,6 +35,13 @@ export default function Show({auth, errors, project}){
                 <div className="ck-blurred ck ck-content ck-rounded-corners">
                     {parse(project.description)}
                 </div>
+                    <div className="grid grid-cols-1 gap-4">
+                        {comments.map((item, key) => {
+                            <div className="bg-gray-700">
+                                {item.content}
+                            </div>
+                        })}
+                    </div>
             </div>
         )
     }

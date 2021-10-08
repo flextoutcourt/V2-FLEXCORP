@@ -20,6 +20,7 @@
         "nexmo/laravel": "^2.4",
         "php-ffmpeg/php-ffmpeg": "^0.18.0",
         "pusher/pusher-php-server": "^7.0",
+        "silviolleite/laravelpwa": "^2.0",
         "tightenco/ziggy": "^1.0"
     },
     "require-dev": {

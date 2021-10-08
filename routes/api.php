@@ -46,6 +46,8 @@ Route::post('/category/add/{category_id}/{actu}', [CategoryController::class, 's
 Route::post('/projects/add', [ProjectController::class, 'store'])->name('api.project.add');
 Route::get('/projects/all/{id}', [ProjectController::class, 'get'])->name('api.get_projects');
 
+Route::get('/project/comment/{id}', [ProjectController::class, 'comments'])->name('api.get_comments');
+
 Route::post('/contact', [HomeController::class, 'contact_store'])->name('contact.post');
 
 Route::get('/tweets', [HomeController::class, 'get_tweets'])->name('api.get_tweets');

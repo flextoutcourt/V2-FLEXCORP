@@ -10,4 +10,9 @@ class Project extends Model
     use HasFactory;
 
     protected $fillable = ['title', 'description', 'illustration', 'type'];
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class); 
+    }
 }

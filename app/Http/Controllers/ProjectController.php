@@ -97,7 +97,7 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function show(Project $project, ?string $slug)
+    public function show(Project $project, ?string $slug = null)
     {
         return Inertia::render('Projects/Show', ['project' => $project]);
     }
@@ -149,5 +149,14 @@ class ProjectController extends Controller
     public function pro()
     {
         return Inertia::render('Projects/Pro');
+    }
+
+    public function comments(int $id)
+    {
+        $comments = Project::find($id)->comments()->get();
+        foreach($comments as $key => $item){
+            $comments[$key]['user'] = $item->user()->get()->first();
+        }
+        return $comments;
     }
 }
