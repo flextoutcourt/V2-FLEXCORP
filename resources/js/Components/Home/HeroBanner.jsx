@@ -13,7 +13,7 @@ export default function HeroBanner() {
                 bgImageAlt={'Bannière'} 
                 strength={-150} 
                 bgImageStyle={{minWidth: 1920}} 
-                className="rounded-md shadow-lg mb-4"
+                className="rounded-md shadow-lg"
             >
                 <div className="max-w-7xl md:mx-auto md:py-36 py-2 md:my-auto mx-2">
                     <div className="flex flex-col md:flex-row gap-4 my-auto">

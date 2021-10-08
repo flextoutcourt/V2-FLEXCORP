@@ -35,6 +35,12 @@ export default function Authenticated({ auth, header, children, title }) {
 
     return (
         <div className="min-h-screen bg-gray-900">
+            {route().current('home')
+                ?
+                    <HeroBanner/>
+                :
+                    null
+            }
             <nav className="bg-gray-800 border-b border-indigo-500 sticky top-0 z-50" id="nav">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
@@ -162,12 +168,7 @@ export default function Authenticated({ auth, header, children, title }) {
                     </div>
                 </header>
             )}
-            {route().current('home')
-                ?
-                    <HeroBanner/>
-                :
-                    null
-            }
+            
             {
                 route().current('tchat')
                 ?
