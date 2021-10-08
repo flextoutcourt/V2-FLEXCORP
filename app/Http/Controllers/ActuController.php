@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Actu;
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Drafts;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -69,7 +70,7 @@ class ActuController extends Controller
      */
     public function show(Actu $actu)
     {
-        //
+        return Inertia::render('Actus/Show', ['actu' => $actu]);
     }
 
     /**
@@ -104,5 +105,18 @@ class ActuController extends Controller
     public function destroy(Actu $actu)
     {
         //
+    }
+
+    public function comments($id)
+    {
+        $comments = Actu::find($id)->comments()->where('belongs_to', null)->get();
+        foreach($comments as $key => $item){
+            $comments[$key]['user'] = $item->user()->get()->first();
+            $comments[$key]['sub_comments'] = Comment::where('belongs_to', $item->id)->get();
+            foreach($comments[$key]['sub_comments'] as $k => $sub_comment){
+                $comments[$key]['sub_comments'][$k]['user'] = $sub_comment->user->get()->first();
+            }
+        }
+        return $comments;
     }
 }
