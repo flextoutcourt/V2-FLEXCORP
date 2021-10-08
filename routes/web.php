@@ -98,7 +98,7 @@ Route::post('/mes-realisations/update', [RealisationsController::class, 'update'
 /** ACTUS */
 Route::get('/les-actus-de-flex', [ActuController::class, 'index'])->name('actus');
 
-Route::get('/les-actus-de-flex/{actu}-{slug?}', [ActuController::class, "show"])->name('actu.show');
+Route::get('/les-actus-de-flex/{actu}', [ActuController::class, "show"])->name('actu.show');
 /** FIN ACTUS */
 
 Route::middleware(['auth'])->group(function () {

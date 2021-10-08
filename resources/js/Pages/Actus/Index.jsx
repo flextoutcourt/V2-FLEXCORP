@@ -26,9 +26,9 @@ export default function Actus   ({auth, errors}){
                             (data.actus.length > 0 
                             ?
                                 data.actus.map((item, key) => (
-                                    <div className="bg-gray-800" key={key}>
+                                    <a href={route('actu.show', {actu: item})} className="bg-gray-800" key={key}>
                                         {item.title}
-                                    </div>
+                                    </a>
                                 ))
                             :
                                 <p>Aucune actualité a afficher</p>
