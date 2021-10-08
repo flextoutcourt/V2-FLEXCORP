@@ -90,12 +90,15 @@ export default function Home({auth}){
                 </div>
                 <div className="md:my-12 md:h-1" ></div> */}
                 <div className="w-full mt-4">
-                    <h3 className="text-2xl text-white">Les langages que j'utilise</h3>
+                    <h3 className="text-2xl py-4 sticky top-16 bg-gray-900 z-40 text-white">Les langages que j'utilise</h3>
                     <SlideShow />
                 </div>
                 <div className="md:my-12 md:h-1" ></div>
                 <div className="w-full mt-4 text-white">
+                <div className="py-4 sticky top-16 bg-gray-900">
                     <h3 className="text-2xl">Pourquoi me choisir ?</h3>
+                    <p>Une bonne connaissance des languages du web</p>
+                </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <div className="mt-4 bg-gray-800 shadow-lg rounded-md p-4">
@@ -157,8 +160,10 @@ export default function Home({auth}){
                 </div>
                 <div className="md:my-12 md:h-1" ></div>
                 <div className="w-full mt-4 text-white">
-                    <h3 className="text-2xl">Mais encore...</h3>
-                    <p>Toute la partie Back-End (ma spécialité)</p>
+                    <div className="py-4 sticky top-16 bg-gray-900">
+                        <h3 className="text-2xl">Mais encore...</h3>
+                        <p>Toute la partie Back-End (ma spécialité)</p>
+                    </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <div className="mt-4 bg-gray-800 shadow-lg rounded-md p-4">

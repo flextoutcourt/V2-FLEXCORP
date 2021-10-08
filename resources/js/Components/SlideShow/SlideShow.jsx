@@ -127,7 +127,7 @@ export default function SlideShow({props}) {
 
     const Item = ({item, k}) => {
         return (
-            <div className="slideshow-item bg-gray-900" key={k} data-tip={item.tooltip}>
+            <div className="slideshow-item bg-gray-900 z-30" key={k} data-tip={item.tooltip}>
                 <a href={item.link} target="_blank" title={item.title} className="text-indigo-500">
                     <img src={'storage/'+item.icon} alt={item.title} className="h-16 w-full" title={item.title} />
                     <p>{item.title}</p>
