@@ -14,7 +14,12 @@ class CreateActusTable extends Migration
     public function up()
     {
         Schema::create('actus', function (Blueprint $table) {
-            $table->id();
+            $table->id('id');
+            $table->unsignedInteger('user_id');
+            $table->text('title')->nullable();
+            $table->longText('illustration')->nullable();
+            $table->longText('content')->nullable();
+            $table->unsignedBigInteger('category_id')->nullable();
             $table->timestamps();
         });
     }
