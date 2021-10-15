@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -49,13 +50,8 @@ class UserSeeder extends Seeder
         ];
 
         foreach($users as $key => $user){
-            DB::table('users')->insert([
-                'name' => $user['name'],
-                'email' => $user['email'],
-                'email_verified_at' => date('Y-m-d H:i:s'),
-                'password' => $user['password'],
-                'admin' => $user['admin']
-            ]);
+            $user = new User($user);
+            $user->save();
         }
     }
 }
