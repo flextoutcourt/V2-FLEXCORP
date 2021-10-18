@@ -26,7 +26,7 @@ class ActuFactory extends Factory
             'user_id' => User::first()->id,
             'title' => $this->faker->title(),
             'content' => $this->faker->text(1000),
-            'category_id' => 1
+            'category_id' => rand(1, 5)
         ];
     }
 }
