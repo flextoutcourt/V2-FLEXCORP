@@ -37,6 +37,7 @@ Route::get('/users/get', [UserController::class, "get"])->name('api.get_users');
 
 Route::get('/user/get_drafts/{user_id}', [DraftsController::class, 'get'])->name('api.get_drafts');
 
+Route::get('/actus/get_categories', [CategoryController::class, 'list'])->name('api.get_categories');
 Route::get('/user/get_actus', [ActuController::class, 'get'])->name('api.get_actus');
 
 Route::get('/category/get', [CategoryController::class, "get"])->name('api.get_categories');

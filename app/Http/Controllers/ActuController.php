@@ -23,9 +23,10 @@ class ActuController extends Controller
 
     public function get()
     {
-        $data = [];
-        $data['actus'] = Actu::all();
-        $data['categories'] = Category::all();
+        $data = Actu::all();
+        foreach($data as $key => $item){
+            $data[$key]['category'] = Category::find($item->category_id);
+        }
         return $data;
     }
 
