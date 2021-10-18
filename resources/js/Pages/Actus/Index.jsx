@@ -2,7 +2,6 @@ import React, { Component, useState, useEffect, useRef } from 'react';
 import Authenticated from '@/Layouts/Authenticated';
 import Guest from '@/Layouts/Guest';
 import Isotope from 'isotope-layout';
-import { backgroundColor } from 'tailwindcss/defaultTheme';
 
 export default function Actus ({auth, errors}){
 
@@ -37,7 +36,7 @@ export default function Actus ({auth, errors}){
         const [filterKey, setFilterKey] = useState('*')
       
         // initialize an Isotope object with configs
-        React.useEffect(() => {
+        useEffect(() => {
           isotope.current = new Isotope('.filter-container', {
             itemSelector: '.filter-item',
           })
@@ -106,7 +105,7 @@ export default function Actus ({auth, errors}){
                         actus
                         ?
                             actus.map((actu, key) => (
-                                <a href={route('actu.show', {actu})} key={key} className={"filter-item w-full mb-2 bg-gray-800 shadow-lg rounded-md flex justify-start items-center overflow-hidden "+actu.category.title+" text-white"}>
+                                <a href={route('actu.show', actu)} key={key} className={"filter-item w-full mb-2 bg-gray-800 shadow-lg rounded-md flex justify-start items-center overflow-hidden "+actu.category.title+" text-white"}>
                                     <img src="https://picsum.photos/150" alt={actu.title} className="object-cover" style={{minHeight: 150}} />
                                     <p className="ml-4">
                                         <span>{actu.title}</span>
