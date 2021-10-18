@@ -26,15 +26,6 @@ use Inertia\Inertia;
 |
 */
 
-// Route::get('/', function () {
-//     return Inertia::render('Welcome', [
-//         'canLogin' => Route::has('login'),
-//         'canRegister' => Route::has('register'),
-//         'laravelVersion' => Application::VERSION,
-//         'phpVersion' => PHP_VERSION,
-//     ]);
-// });
-
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [UserController::class, 'index'])->name('dashboard');
     Route::get('/user/edit/{user}', [UserController::class, 'edit'])->name('user.edit');
@@ -96,17 +87,20 @@ Route::post('/mes-realisations/update', [RealisationsController::class, 'update'
 /** FIN REALISATIONS */
 
 /** ACTUS */
-Route::get('/les-actus-de-flex', [ActuController::class, 'index'])->name('actus');
 
+Route::get('/les-actus-de-flex', [ActuController::class, 'index'])->name('actus');
 Route::get('/les-actus-de-flex/{actu}', [ActuController::class, "show"])->name('actu.show');
+
 /** FIN ACTUS */
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin');
-    Route::get('/admin/realisation/add', [AdminController::class, 'realisations_add'])->name('admin.realisations.add');
-    Route::post('/admin/realisation/add', [AdminController::class, 'realisations_store'])->name('admin.realisations.store');
-    Route::get('/admin/projects/add', [AdminController::class, 'projects_add'])->name('admin.projects.add');
-    Route::post('/admin/projects/add', [AdminController::class, 'projects_store'])->name('admin.projects.store');
+Route::prefix('admin')->middleware(['admin'])->group(function () {
+    Route::get('/', [AdminController::class, 'index'])->name('admin');
+    Route::get('/realisation/add', [AdminController::class, 'realisation_add'])->name('admin.realisation.add');
+    Route::post('/realisation/add', [AdminController::class, 'realisation_store'])->name('admin.realisation.store');
+    Route::get('/project/add', [AdminController::class, 'project_add'])->name('admin.project.add');
+    Route::post('/project/add', [AdminController::class, 'project_store'])->name('admin.project.store');
+    Route::get('/user/edit', [AdminController::class, "user_edit"])->name('admin.user.edit');
+    Route::get('/users/list', [AdminController::class, 'user_list'])->name('admin.user.list');
 });
 
 Route::get('/verify-card', [Ascenseur301Controller::class, 'verify_card'])->name('ascenseur.verify_card');

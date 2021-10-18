@@ -14,9 +14,9 @@ use Intervention\Image\Facades\Image;
 class UserController extends Controller
 {
 
-    public function get()
+    public function get(?int $offset = 0, ?int $limit = 15)
     {
-        return User::all();
+        return User::take($limit)->skip($offset)->get();
     }
 
     /**
@@ -133,5 +133,10 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function isAdmin()
+    {
+        return Auth::user()['role'] == "admin";
     }
 }

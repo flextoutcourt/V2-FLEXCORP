@@ -21,31 +21,31 @@ class UserSeeder extends Seeder
                 'name' => 'Flex',
                 'email' => 'quentin.leclercbte@gmail.com',
                 'password' => Hash::make('123456789'),
-                'admin' => 1,
+                'role' => 'admin',
             ],
             [
                 'name' => 'Geoffrey',
                 'email' => 'geoffrey@test.com',
                 'password' => Hash::make('123456789'),
-                'admin' => 0
+                'role' => 'user'
             ],
             [
                 'name' => 'Quentin',
                 'email' => 'quentin@test.com',
                 'password' => Hash::make('123456789'),
-                'admin' => 0,
+                'role' => 'user',
             ],
             [
                 'name' => 'Remy',
                 'email' => 'remy@test.com',
                 'password' => Hash::make('123456789'),
-                'admin' => 0,
+                'role' => 'user',
             ],
             [
                 'name' => 'Anton',
                 'email' => 'anton@test.com',
                 'password' => Hash::make('123456789'),
-                'admin' => 0,
+                'role' => 'user',
             ]
         ];
 

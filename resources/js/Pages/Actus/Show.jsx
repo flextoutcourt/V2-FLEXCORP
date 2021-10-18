@@ -6,6 +6,7 @@ import parse from 'html-react-parser';
 export default function Show({auth, errors, actu}) {
 
     const [comments, setComments] = useState([]);
+    const [comment, setComment] = useState(null);
 
     useEffect(() => {
         _get_comments().then(val => setComments(val));
@@ -15,6 +16,14 @@ export default function Show({auth, errors, actu}) {
         const promise = axios.get(route('api.get_comments', actu.id));
         const responseData = promise.then(data => data.data);
         return responseData;
+    }
+
+    const handleCommentSubmit = (e) => {
+        console.log(e)
+    } 
+
+    const handleChange = (e) => {
+        setComment(e.target.value);
     }
     
     const content = () => {
@@ -30,6 +39,18 @@ export default function Show({auth, errors, actu}) {
                     <div className="mt-4">
                     <hr className="my-4"/>
                         <h3 className="text-2xl mb-4">Commentaires</h3>
+                        {
+                            auth.user
+                            ?
+                                <form method="post" onSubmit={handleCommentSubmit}>
+                                    <div className="mb-3">
+                                        <input type="text" onChange={handleChange} />
+                                    </div>
+                                </form>
+                            :
+                                <p>Vous devez être <a href={route('login')} className="text-indigo-500">connecté</a> pour pouvoir commenter</p>
+                        }
+                        <hr className="my-4" />
                         <div className="grid grid-cols-1 gap-4">
                             {comments.map((comment, key) => (
                                 <div className="shadow-lg rounded-xl p-4 bg-gray-800 relative overflow-hidden">

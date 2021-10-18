@@ -12,6 +12,7 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "inertiajs/inertia-laravel": "^0.3.5",
         "intervention/image": "^2.6",
+        "laravel-lang/lang": "^10.1",
         "laravel/framework": "^8.40",
         "laravel/nexmo-notification-channel": "^2.5",
         "laravel/sanctum": "^2.6",
@@ -21,7 +22,8 @@
         "php-ffmpeg/php-ffmpeg": "^0.18.0",
         "pusher/pusher-php-server": "^7.0",
         "silviolleite/laravelpwa": "^2.0",
-        "tightenco/ziggy": "^1.0"
+        "tightenco/ziggy": "^1.0",
+        "yajra/laravel-datatables-oracle": "^9.18"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

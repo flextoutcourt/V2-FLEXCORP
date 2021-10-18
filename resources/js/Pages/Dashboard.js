@@ -23,9 +23,9 @@ export default function Dashboard(props) {
                             </div>
                         </div>
                         {
-                            (props.auth.user.admin == 1)
+                            (props.auth.user.role == 'admin')
                             ?
-                                <InertiaLink href={route('admin')} as="a">
+                                <InertiaLink href={route('admin')} as="a" className="my-3 block w-full bg-transparent border border-green-500 text-green-500 py-1 px-3 rounded-md hover:text-white hover:border-transparent hover:bg-green-600 cursor-pointer duration-200">
                                     Admin
                                 </InertiaLink>
                             :
