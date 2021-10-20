@@ -45,6 +45,6 @@ class AdminController extends Controller
 
     public function user_edit(User $user)
     {
-        dd($user);
+        return Inertia::render('Admin/Users/Edit', ['user' => $user]);
     }
 }

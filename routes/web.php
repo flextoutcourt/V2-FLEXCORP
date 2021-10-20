@@ -99,7 +99,7 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
     Route::post('/realisation/add', [AdminController::class, 'realisation_store'])->name('admin.realisation.store');
     Route::get('/project/add', [AdminController::class, 'project_add'])->name('admin.project.add');
     Route::post('/project/add', [AdminController::class, 'project_store'])->name('admin.project.store');
-    Route::get('/user/edit', [AdminController::class, "user_edit"])->name('admin.user.edit');
+    Route::get('/user/edit/{user}', [AdminController::class, "user_edit"])->name('admin.user.edit');
     Route::get('/users/list', [AdminController::class, 'user_list'])->name('admin.user.list');
 });
 

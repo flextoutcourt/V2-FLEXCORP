@@ -1,6 +1,7 @@
 import React, { Component, useState, useEffect } from 'react';
 import Authenticated from '@/Layouts/Authenticated';
 import Guest from '@/Layouts/Guest';
+import { InertiaLink } from '@inertiajs/inertia-react';
 
 const Index = ({auth, errors}) => {
 
@@ -26,7 +27,7 @@ const Index = ({auth, errors}) => {
                             <th className="bg-gray-800 p-2 text-white font-bold text-left block md:table-cell">Name</th>
                             <th className="bg-gray-800 p-2 text-white font-bold text-left block md:table-cell">Email Address</th>
                             <th className="bg-gray-800 p-2 text-white font-bold text-left block md:table-cell">Role</th>
-                            <th className="bg-gray-800 p-2 text-white font-bold text-left block md:table-cell">Actions</th>
+                            <th className="bg-gray-800 p-2 text-white font-bold text-left block">Actions</th>
                         </tr>
                     </thead>
                     <tbody className="block md:table-row-group">
@@ -37,10 +38,10 @@ const Index = ({auth, errors}) => {
                                 <td className="p-2 text-left block md:table-cell"><span className="inline-block w-1/3 md:hidden font-bold">User Name</span>{user.name}</td>
                                 <td className="p-2 text-left block md:table-cell"><span className="inline-block w-1/3 md:hidden font-bold">Email Address</span>{user.email}</td>
                                 <td className="p-2 text-left block md:table-cell"><span className="inline-block w-1/3 md:hidden font-bold">Role</span>{user.role}</td>
-                                <td className="p-2 text-left grid grid-cols-3 gap-2 md:table-cell">
+                                <td className="p-2 text-left grid grid-cols-3 gap-2">
                                     <span className="inline-block w-1/3 md:hidden font-bold">Actions</span>
-                                    <button className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-1 px-2 rounded">Edit</button>
-                                    <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">Delete</button>
+                                    <InertiaLink href={route('admin.user.edit', {user})} className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-1 px-2 rounded">Edit</InertiaLink>
+                                    <a className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">Delete</a>
                                 </td>
                             </tr>		
                         ))

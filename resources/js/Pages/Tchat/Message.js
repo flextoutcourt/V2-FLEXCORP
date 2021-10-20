@@ -110,7 +110,10 @@ export default function Message ({message, auth}){
             (auth.user.id === message.user_id 
             ?
                 <div className="bg-gray-800 rounded-xl rounded-br-none self-end max-w-2xl text-gray-100 p-4 my-2 message-gradient" id={message.id}>
-                    <h3 className="text-xl">{auth.user.name}</h3>
+                    <div className="flex justify-end items-center w-full">
+                        <h3 className="text-xl mr-2">{auth.user.name}</h3>
+                        <img src={auth?.user?.avatar != null ? '/' + auth?.user?.avatar : '/users/default.svg'} alt={auth.user.name} className="h-12 w-12 object-cover rounded-md shadow-xl" />
+                    </div>
                     <p className="my-2">
                         {parse(message.texte)}
                     </p>
@@ -173,7 +176,10 @@ export default function Message ({message, auth}){
                 </div>
             :
                 <div className="bg-gray-800 rounded-xl rounded-bl-none self-start max-w-2xl text-gray-100 p-4 my-2 message-gradient" id={message.id}>
-                    <h3 className="text-xl">{message.user[0].name ?? message.user.name}</h3>
+                    <div className="flex justify-start items-center">
+                        <img src={message?.user[0]?.avatar != null ? '/' + message?.user[0]?.avatar : '/users/default.svg'} alt={message?.user[0]?.name ?? message?.user?.name} className="h-12 w-12 object-cover rounded-md shadow-xl" />
+                        <h3 className="text-xl ml-2">{message.user[0].name ?? message.user.name}</h3>
+                    </div>
                     <p className="my-2">
                         {parse(message.texte)}
                     </p>
@@ -239,7 +245,10 @@ export default function Message ({message, auth}){
             (message.auth.id === auth.user.id)
             ?  
                 <div className="bg-gray-800 rounded-xl rounded-br-none self-end max-w-2xl text-gray-100 p-4 my-2 message-gradient" id={message.id}>
-                    <h3 className="text-xl">{message.auth.name}</h3>
+                    <div className="flex justify-end items-center">
+                        <img src={message?.auth?.avatar != null ? "/" + message?.auth?.avatar : '/users/default.svg'} alt={message?.auth?.name} className="h-12 w-12 object-cover rounded-md shadow-xl" />
+                        <h3 className="text-xl mr-2">{message.auth.name}</h3>
+                    </div>
                     <p className="my-2">
                         {parse(message.texte)}
                     </p>
@@ -302,7 +311,10 @@ export default function Message ({message, auth}){
                 </div>
             :
                 <div className="bg-gray-800 rounded-xl rounded-bl-none self-start max-w-2xl text-gray-100 p-4 my-2 message-gradient" id={message.id}>
-                    <h3 className="text-xl">{message.auth.name}</h3>
+                    <div className="flex justify-start items-center">
+                        <img src={message?.auth?.avatar != null ? "/" + message?.auth?.avatar : '/users/default.svg'} alt={message?.auth?.name} className="h-12 w-12 object-cover rounded-md shadow-xl" />
+                        <h3 className="text-xl ml-2">{message.auth.name}</h3>
+                    </div>
                     <p className="my-2">
                         {parse(message.texte)}
                     </p>
