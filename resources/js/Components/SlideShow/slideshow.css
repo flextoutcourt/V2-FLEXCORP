@@ -19,6 +19,9 @@
     justify-content: flex-start;
     align-items: center;
     width: 100%;
+    display: grid;
+    grid-template-columns: 5rem 2fr;
+    grid-gap: 1.5rem;
 }
 
 /* .slideshow:hover{
