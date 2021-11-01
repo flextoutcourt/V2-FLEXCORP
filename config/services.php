@@ -31,6 +31,21 @@ return [
     ],
     'nexmo' => [
         'sms_from' => '',
-    ]
+    ],
+    'google' => [
+        'client_id' => '976787034548-0n11odedkg4nu0q7cf1g8g56j4d4ao08.apps.googleusercontent.com',
+        'client_secret' => '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',
+        'redirect' => 'http://localhost:3000/login/google/callback',
+    ],
+    'facebook' => [
+        'client_id' => '675735063377855',
+        'client_secret' => '978d41b25cd20c38d2b7a376da4a8ce8',
+        'redirect' => 'http://localhost:3000/login/facebook/callback'
+    ],
+    'github' => [
+        'client_id' => 'e72f2b8a7bb160d2045e',
+        'client_secret' => '3e317c95cbcb3be7c284b3c091eaebc44762d869',
+        'redirect' => 'http://localhost:3000/login/github/callback',
+    ],
 
 ];

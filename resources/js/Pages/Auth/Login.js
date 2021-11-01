@@ -85,10 +85,21 @@ export default function Login({ status, canResetPassword }) {
                             Forgot your password?
                         </InertiaLink>
                     )}
-
                     <Button className="ml-4" processing={processing}>
                         Log in
                     </Button>
+                </div>
+                <h3>Où</h3>
+                <div className="grid grid-cols-3 gap-4">
+                    <a href={route('auth.google')} className="p-2 bg-red-600 rounded-md shadow-lg text-white">
+                        Login With Google
+                    </a>
+                    <a href={route('auth.facebook')} className="p-2 bg-blue-600 rounded-md shadow-lg text-white">
+                        Login With Facebook (incoming)
+                    </a>
+                    <a href={route('auth.github')} className="p-2 bg-indigo-600 rounded-md shadow-lg text-white">
+                        Login With Github (incoming)
+                    </a>
                 </div>
             </form>
         </Guest>

@@ -8,8 +8,10 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\SocialiteAuthController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Facades\Socialite;
 
 Route::get('/register', [RegisteredUserController::class, 'create'])
                 ->middleware('guest')
@@ -63,3 +65,15 @@ Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store']
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->middleware('auth')
                 ->name('logout');
+
+/** LOGIN WITH GOOGLE */
+Route::get('/login/google/redirect', [SocialiteAuthController::class, 'googleRedirect'])->name('auth.google');
+Route::get('/login/google/callback', [SocialiteAuthController::class, 'loginWithGoogle']);
+
+/** LOGIN WITH FACEBOOK */
+Route::get('/login/facebook/redirect', [SocialiteAuthController::class, 'facebookRedirect'])->name('auth.facebook');
+Route::get('/login/facebook/callback', [SocialiteAuthController::class, 'loginWithFacebook']);
+
+/** LOGIN WITH GITHUB */
+Route::get('/login/github/redirect', [SocialiteAuthController::class, 'githubRedirect'])->name('auth.github');
+Route::get('/login/github/callback', [SocialiteAuthController::class, 'loginWithGithub']);

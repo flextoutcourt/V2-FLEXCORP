@@ -16,7 +16,7 @@ export default function Dashboard(props) {
                 <div className="md:w-1/3 w-full md:mb-0 mb-4 bg-gray-800 text-white shadow-lg px-2 py-4 rounded-lg relative overflow-hidden scrollbar-none">
                     <div className="user relative">
                         <div className="w-full sm:flex border-b-2 border-gray-900 mb-4 pb-2 overflow-auto">
-                            <img src={props.auth.user.avatar ? '/'+props.auth.user.avatar : 'https://picsum.photos/500'} alt="Photo de profil de Flex" className="mx-auto sm:mx-0 border-4 border-white rounded-full max-h-24" />
+                            <img src={props.auth.user.avatar ? props.auth.user.avatar : 'https://picsum.photos/500'} alt="Photo de profil de Flex" className="mx-auto sm:mx-0 border-4 border-white rounded-full max-h-24" />
                             <div className="my-auto ml-3">
                                 <h3 className="text-xl font-bold text-center sm:text-left">{props.auth.user.name}</h3>
                                 <h4 className=" text-center sm:text-left"><a className="hover:text-indigo-500 duration-300 whitespace-pre-wrap" href={"mailto:"+props.auth.user.email}>{props.auth.user.email}</a></h4>
