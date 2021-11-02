@@ -67,10 +67,15 @@ export default function Authenticated({ auth, header, children, title }) {
                                         <span className="inline-flex rounded-md">
                                             <button
                                                 type="button"
-                                                className="inline-flex bg-indigo-500 items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-100 hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
+                                                className="inline-flex gap-1 bg-indigo-500 items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-100 hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
                                             >
-                                                {auth.user.name}
-
+                                                {
+                                                    auth?.user?.avatar
+                                                    ?
+                                                        <img src={auth?.user?.avatar} alt={auth?.user?.name} className="w-8 h-8 rounded-md shadow-md"/>
+                                                    :
+                                                        auth?.user?.name
+                                                }
                                                 <svg
                                                     className="ml-2 -mr-0.5 h-4 w-4"
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -103,7 +108,7 @@ export default function Authenticated({ auth, header, children, title }) {
                         <div className="-mr-2 flex items-center sm:hidden">
                             <button
                                 onClick={() => setShowingNavigationDropdown((previousState) => !previousState)}
-                                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
+                                className="bg-indigo-500 inline-flex items-center justify-center p-2 rounded-md text-white hover:text-white hover:bg-indigo-500 focus:outline-none focus:bg-indigo-500 focus:text-white transition duration-150 ease-in-out"
                             >
                                 <svg className="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                                     <path
@@ -145,9 +150,14 @@ export default function Authenticated({ auth, header, children, title }) {
                     <div className="pb-1 border-t bg-gray-800 border-gray-200">
                         <div className="mt-3 space-y-1">
                             <ResponsiveNavLink method="get" href={route('login')} active={route().current('login')}>
-                                <div className="px-4 text-white">
-                                    <div className="font-medium text-base">{auth.user.name}</div>
-                                    <div className="font-medium text-sm">{auth.user.email}</div>
+                                <div className="px-2 text-white flex items-center justify-start gap-2">
+                                    <div>
+                                        <img src={auth?.user?.avatar} alt={auth?.user?.name} className="w-16 h-16 rounded-md shadow-lg" />
+                                    </div>
+                                    <div>
+                                        <div className="font-medium text-base">{auth.user.name}</div>
+                                        <div className="font-medium text-sm">{auth.user.email}</div>
+                                    </div>
                                 </div>
                             </ResponsiveNavLink>
                             <ResponsiveNavLink method="post" href={route('logout')} as="button">
