@@ -82,23 +82,23 @@ export default function Login({ status, canResetPassword }) {
                             href={route('password.request')}
                             className="underline text-sm text-gray-600 hover:text-gray-900"
                         >
-                            Forgot your password?
+                            Forgot your password ?
                         </InertiaLink>
                     )}
                     <Button className="ml-4" processing={processing}>
                         Log in
                     </Button>
                 </div>
-                <h3>Où</h3>
-                <div className="grid grid-cols-3 gap-4">
-                    <a href={route('auth.google')} className="p-2 bg-red-600 rounded-md shadow-lg text-white">
+                <h3 className="text-white my-4 text-center">Où</h3>
+                <div className="grid md:grid-cols-3 grid-cols-1 gap-4">
+                    <a href={route('auth.provider', {provider: 'google'})} className="p-2 bg-red-600 rounded-md shadow-lg text-white">
                         Login With Google
                     </a>
-                    <a href={route('auth.facebook')} className="p-2 bg-blue-600 rounded-md shadow-lg text-white">
+                    <a href={route('auth.provider', {provider: 'facebook'})} className="p-2 bg-blue-600 rounded-md shadow-lg text-white">
                         Login With Facebook (incoming)
                     </a>
-                    <a href={route('auth.github')} className="p-2 bg-indigo-600 rounded-md shadow-lg text-white">
-                        Login With Github (incoming)
+                    <a href={route('auth.provider', {provider: 'github'})} className="p-2 bg-indigo-600 rounded-md shadow-lg text-white">
+                        Login With Github
                     </a>
                 </div>
             </form>

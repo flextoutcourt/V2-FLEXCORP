@@ -201,7 +201,7 @@ export default function Home({auth}){
                     </div>
                     <div className="md:my-12 md:h-1" ></div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="h-full hidden md:block">
+                        <div className="h-full hidden md:block">
                             <img src="/storage/img/illustrations/progress.svg" alt="progress" className="w-full my-auto" style={{maxHeight: 450}} />
                         </div>
                         <div>

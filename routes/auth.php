@@ -66,14 +66,6 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->middleware('auth')
                 ->name('logout');
 
-/** LOGIN WITH GOOGLE */
-Route::get('/login/google/redirect', [SocialiteAuthController::class, 'googleRedirect'])->name('auth.google');
-Route::get('/login/google/callback', [SocialiteAuthController::class, 'loginWithGoogle']);
-
-/** LOGIN WITH FACEBOOK */
-Route::get('/login/facebook/redirect', [SocialiteAuthController::class, 'facebookRedirect'])->name('auth.facebook');
-Route::get('/login/facebook/callback', [SocialiteAuthController::class, 'loginWithFacebook']);
-
-/** LOGIN WITH GITHUB */
-Route::get('/login/github/redirect', [SocialiteAuthController::class, 'githubRedirect'])->name('auth.github');
-Route::get('/login/github/callback', [SocialiteAuthController::class, 'loginWithGithub']);
+/** LOGIN WITH ANY PROVIDER */
+Route::get('/login/{provider}/redirect', [SocialiteAuthController::class, 'providerRedirect'])->name('auth.provider');
+Route::get('/login/{provider}/callback', [SocialiteAuthController::class, 'loginWith']);
