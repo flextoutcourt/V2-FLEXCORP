@@ -13,6 +13,8 @@ import ValidationErrors from '@/Components/ValidationErrors';
 import { useForm } from '@inertiajs/inertia-react';
 import TextArea from '@/Components/TextArea';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
+import '@/../../src/translations/i18n';
 
 export default function Home({auth}){
 
@@ -70,6 +72,8 @@ export default function Home({auth}){
         }
     }
 
+    const {t} = useTranslation();
+
     function content() {
         return (
             <div className="w-full">
@@ -96,8 +100,8 @@ export default function Home({auth}){
                 <div className="md:my-12 md:h-1" ></div>
                 <div className="w-full mt-4 text-white">
                 <div className="py-4 sticky top-16 bg-gray-900">
-                    <h3 className="text-2xl">Pourquoi me choisir ?</h3>
-                    <p>Une bonne connaissance des languages du web</p>
+                    <h3 className="text-2xl">{t("home.chooseMe")}</h3>
+                    <p>{t("home.goodKnowledge")}</p>
                 </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
