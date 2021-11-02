@@ -52,3 +52,7 @@ Route::get('/actu/comment/{id}', [ActuController::class, 'comments'])->name('api
 Route::post('/contact', [HomeController::class, 'contact_store'])->name('contact.post');
 
 Route::get('/tweets', [HomeController::class, 'get_tweets'])->name('api.get_tweets');
+
+Route::post('/translate/{query}', function($query){
+    return __($query);
+})->name('api.translates.lang');

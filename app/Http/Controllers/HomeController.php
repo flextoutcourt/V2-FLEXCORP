@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Contact;
+use App\Mail\ContactMail;
 use App\Models\Home;
 use DG\Twitter\Twitter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 
 class HomeController extends Controller
@@ -39,10 +41,8 @@ class HomeController extends Controller
 
     public function contact_store(Contact $request)
     {
-        // verifier si la requete contient des erreurs
-            //return back()->withErrors($errors);
-        
-        //envoyer le mail si la validation a réussie
+        Mail::to('contact@dev.quentinleclerc.fr')->send(new ContactMail($request));
+        // Mail::to($request->email)->send(new ContactMail($request));
     }
 
     public function get_tweets()

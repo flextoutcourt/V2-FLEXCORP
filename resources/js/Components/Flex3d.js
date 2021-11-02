@@ -14,7 +14,7 @@ function Model(){
 export default function Flex3d(){
   const ref = useRef()
     return (
-        <Canvas shadows dpr={[1, 2]} camera={{ fov: 45, zoom: 3.5 }} style={{height: "300px"}}>
+        <Canvas shadows dpr={[1, 2]} camera={{ fov: 45, zoom: 3.5 }} style={{height: 300}}>
         <Suspense fallback={null}>
             <Stage controls={ref} preset="rembrandt" intensity={1} environment="city">
                 <Model />

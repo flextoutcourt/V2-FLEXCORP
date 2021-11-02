@@ -7,6 +7,7 @@ import React, { useEffect } from 'react';
 import ValidationErrors from '@/Components/ValidationErrors';
 import { InertiaLink } from '@inertiajs/inertia-react';
 import { useForm } from '@inertiajs/inertia-react';
+import Translate from '@/Functions/translate';
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -82,7 +83,7 @@ export default function Login({ status, canResetPassword }) {
                             href={route('password.request')}
                             className="underline text-sm text-gray-600 hover:text-gray-900"
                         >
-                            Forgot your password ?
+                            {Translate('Password')}
                         </InertiaLink>
                     )}
                     <Button className="ml-4" processing={processing}>

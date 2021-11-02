@@ -1584,16 +1584,16 @@
         },
         {
             "name": "laravel-lang/lang",
-            "version": "10.1.7",
+            "version": "10.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Laravel-Lang/lang.git",
-                "reference": "ec4920fbe2b88739c3cae177d628bf0d4d0a1817"
+                "reference": "94341379ad4c7df6738477ecc07ee0ddcb3b7086"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Laravel-Lang/lang/zipball/ec4920fbe2b88739c3cae177d628bf0d4d0a1817",
-                "reference": "ec4920fbe2b88739c3cae177d628bf0d4d0a1817",
+                "url": "https://api.github.com/repos/Laravel-Lang/lang/zipball/94341379ad4c7df6738477ecc07ee0ddcb3b7086",
+                "reference": "94341379ad4c7df6738477ecc07ee0ddcb3b7086",
                 "shasum": ""
             },
             "require": {
@@ -1601,7 +1601,7 @@
             },
             "require-dev": {
                 "andrey-helldar/pretty-array": "^2.3",
-                "andrey-helldar/support": "^3.16.1",
+                "andrey-helldar/support": "^4.7",
                 "guzzlehttp/guzzle": "^7.3",
                 "laravel/breeze": "^1.2",
                 "laravel/fortify": "^1.7",
@@ -1639,7 +1639,7 @@
                 "issues": "https://github.com/Laravel-Lang/lang/issues",
                 "source": "https://github.com/Laravel-Lang/lang"
             },
-            "time": "2021-09-27T13:45:07+00:00"
+            "time": "2021-10-21T18:21:33+00:00"
         },
         {
             "name": "laravel/framework",

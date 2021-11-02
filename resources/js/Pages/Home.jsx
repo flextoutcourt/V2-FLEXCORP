@@ -249,7 +249,7 @@ export default function Home({auth}){
                     </div>
                 </div>
                 <div className="md:my-12 md:h-1" ></div>
-                <div className="w-full bg-gray-800 p-4 rounded-md shadow-lg mt-4">
+                <div className="w-full bg-gray-800 p-4 rounded-md shadow-lg mt-4" id="contact">
                     <h3 className="text-2xl text-white">Nous contacter</h3>
                     <ValidationErrors errors={errors} className="mt-4" />
                     <div className="grid md:grid-cols-2 gap-4">
