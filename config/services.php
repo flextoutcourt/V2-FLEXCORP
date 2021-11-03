@@ -35,17 +35,17 @@ return [
     'google' => [
         'client_id' => env('FLEX_GOOGLE_CLIENT_ID'),
         'client_secret' => env('FLEX_GOOGLE_CLIENT_SECRET'),
-        'redirect' => env('FLEX_GOOGLE_REDIRECT_URI'),
+        'redirect' => env('APP_URL').'/'.env('FLEX_GOOGLE_REDIRECT_URI'),
     ],
     'facebook' => [
         'client_id' => env('FLEX_FACEBOOK_CLIENT_ID'),
         'client_secret' => env('FLEX_FACEBOOK_CLIENT_SECRET'),
-        'redirect' => env('FLEX_FACEBOOK_REDIRECT_URI')
+        'redirect' => env('APP_URL').'/'.env('FLEX_FACEBOOK_REDIRECT_URI')
     ],
     'github' => [
         'client_id' => env('FLEX_GITHUB_CLIENT_ID'),
         'client_secret' => env('FLEX_GITHUB_CLIENT_SECRET'),
-        'redirect' => env('FLEX_GITHUB_REDIRECT_URI'),
+        'redirect' => env('APP_URL').'/'.env('FLEX_GITHUB_REDIRECT_URI'),
     ],
 
 ];

@@ -72,7 +72,7 @@ export default function Authenticated({ auth, header, children, title }) {
                                                 {
                                                     auth?.user?.avatar
                                                     ?
-                                                        <img src={auth?.user?.avatar} alt={auth?.user?.name} className="w-8 h-8 rounded-md shadow-md"/>
+                                                        <img src={auth?.user?.avatar} alt={auth?.user?.name} className="w-8 h-8 object-cover rounded-md shadow-md"/>
                                                     :
                                                         auth?.user?.name
                                                 }

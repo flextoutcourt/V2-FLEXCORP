@@ -88,7 +88,7 @@ class UserController extends Controller
             if($request->file('illustration')->isValid()){
                 $filePath = time().'.'.$request->file('illustration')->extension();
                 $img = Image::make($request->file('illustration')->path());
-                $img->resize(1920, 1080, function($const){
+                $img->fit(600, 600, function($const){
                     $const->aspectRatio();
                 })->save('users/'.$filePath);
                 $path = $request->file('illustration')->move('users', $filePath);

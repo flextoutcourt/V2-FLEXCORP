@@ -6,6 +6,7 @@ import ResponsiveNavLink from '../Components/ResponsiveNavLink';
 import { InertiaLink } from '@inertiajs/inertia-react';
 import Footer from './Footer';
 import HeroBanner from '@/Components/Home/HeroBanner';
+import { useCookies } from 'react-cookie';
 
 
 const navigation = [
@@ -26,13 +27,20 @@ const navigation = [
     'link': 'tchat'
   }
 ]
+
+
+
+
 const profile = ['Your Profile', 'Settings', 'Sign out']
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
+    return classes.filter(Boolean).join(' ')
 }
 
 export default function Guest({children, header, errors}) {
+    
+    const [cookies, setCookie] = useCookies(['langage', 'fr']);
+
 
   const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 

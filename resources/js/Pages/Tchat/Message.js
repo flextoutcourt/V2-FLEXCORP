@@ -38,84 +38,33 @@ export default function Message ({message, auth}){
     
     const OpenLightBox = (e) => {
         e.preventDefault();
-        setOpen(true);
-        setContent('html');
+        console.log(e);
         // return Modal(JSON.parse(message.medias)[e.target.dataset.item]);
     }
 
-
-    
-    const Modal = (item) => {
-        <>
-            <button onClick={() => setOpen(true)} className="bg-indigo-500 py-2 px-4 rounded-md text-white"></button>
-            <Transition.Root show={open} as={Fragment}>
-                <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" initialFocus={cancelButtonRef} onClose={setOpen}>
-                    <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                    <Transition.Child
-                        as={Fragment}
-                        enter="ease-out duration-300"
-                        enterFrom="opacity-0"
-                        enterTo="opacity-100"
-                        leave="ease-in duration-200"
-                        leaveFrom="opacity-100"
-                        leaveTo="opacity-0"
-                    >
-                        <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-                    </Transition.Child>
-
-                    {/* This element is to trick the browser into centering the modal contents. */}
-                    <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
-                        &#8203;
-                    </span>
-                    <Transition.Child
-                        as={Fragment}
-                        enter="ease-out duration-300"
-                        enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                        enterTo="opacity-100 translate-y-0 sm:scale-100"
-                        leave="ease-in duration-200"
-                        leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-                        leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                    >
-                        <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                        <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                            <div className="sm:flex sm:items-start">
-                            <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10">
-                                <i className="fas fa-plus text-indigo-500"></i>
-                            </div>
-                            <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                {content}
-                            </div>
-                            </div>
-                        </div>
-                        <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                            <button
-                            type="button"
-                            className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
-                            onClick={() => setOpen(false)}
-                            >
-                            Annuler
-                            </button>
-                        </div>
-                        </div>
-                    </Transition.Child>
-                    </div>
-                </Dialog>
-            </Transition.Root>
-        </>
-    }
-
     return (
+        
         (message.user
         ?
             (auth.user.id === message.user_id 
             ?
-                <div className="bg-gray-800 rounded-xl rounded-br-none self-end max-w-2xl text-gray-100 p-4 my-2 message-gradient" id={message.id}>
+                <div className="bg-gray-800 rounded-xl rounded-br-none self-end md:max-w-2xl md:w-auto w-full text-gray-100 p-4 my-2 message-gradient" id={message.id}>
                     <div className="flex justify-end items-center w-full">
                         <h3 className="text-xl mr-2">{auth.user.name}</h3>
-                        <img src={auth?.user?.avatar != null ? '' + auth?.user?.avatar : '/users/default.svg'} alt={auth.user.name} className="h-12 w-12 object-cover rounded-md shadow-xl" />
+                        {
+                            auth?.user?.avatar
+                            ?
+                            <div className="h-8 w-8 object-cover rounded-md shadow-lg" style={{backgroundImage: `url(${auth?.user?.avatar})`, backgroundSize: 'cover', backgroundPosition: 'center center'}}>
+
+                            </div>
+                            :
+                            <div className="h-8 w-8 object-cover rounded-md shadow-lg" style={{backgroundImage: `url(/users/default.svg)`, backgroundSize: 'cover', backgroundPosition: 'center center'}}>
+
+                            </div>
+                        }
                     </div>
                     <p className="my-2">
-                        {parse(message.texte)}
+                            {parse(message.texte)}
                     </p>
                     {
                         message.code.length > 0
@@ -162,7 +111,7 @@ export default function Message ({message, auth}){
                                         item.type == 'img'
                                         ?
                                             <button onClick={OpenLightBox} key={key}>
-                                                <div data-item={key} className="rounded-lg w-48 h-48" style={{backgroundImage: `url(${item.content})`, backgroundPosition: 'center center', backgroundSize: 'cover'}}></div>
+                                                <img data-item={key} src={item.content} alt="" className="rounded-lg w-full h-24 object-cover md:w-full md:h-full" />
                                             </button>
                                         :
                                             <video key={key} src={item.content} controls className="rounded-lg" poster={item.thumb ?? null} preload='none'></video>
@@ -175,12 +124,15 @@ export default function Message ({message, auth}){
                     }
                 </div>
             :
-                <div className="bg-gray-800 rounded-xl rounded-bl-none self-start max-w-2xl text-gray-100 p-4 my-2 message-gradient" id={message.id}>
-                    <div className="flex justify-start items-center">
-                        <img src={message?.user[0]?.avatar != null ? '' + message?.user[0]?.avatar : '/users/default.svg'} alt={message?.user[0]?.name ?? message?.user?.name} className="h-12 w-12 object-cover rounded-md shadow-xl" />
+                <div className="bg-gray-200 rounded-xl rounded-bl-none self-start md:max-w-2xl w-full text-gray-900 p-4 my-2 message-gradient" id={message.id}>
+                    <div className="flex justify-start items-center text-gray-900">
+
+                        <div className="h-8 w-8 object-cover rounded-md shadow-lg" style={{backgroundImage: message?.user[0]?.avatar != null ? `url(${message?.user[0]?.avatar})` : 'url(/users/default.svg)', backgroundSize: 'cover', backgroundPosition: 'center center'}}>
+
+                        </div>
                         <h3 className="text-xl ml-2">{message.user[0].name ?? message.user.name}</h3>
                     </div>
-                    <p className="my-2">
+                    <p className="my-2 text-gray-900">
                         {parse(message.texte)}
                     </p>
                     {
@@ -228,7 +180,7 @@ export default function Message ({message, auth}){
                                         item.type == 'img'
                                         ?
                                             <button onClick={OpenLightBox} key={key}>
-                                                <div data-item={key} className="rounded-lg w-48 h-48" style={{backgroundImage: `url(${item.content})`, backgroundPosition: 'center center', backgroundSize: 'cover'}}></div>
+                                                <img data-item={key} src={item.content} alt="" className="rounded-lg w-full h-24 object-cover md:w-full md:h-full" />
                                             </button>
                                         :
                                             <video key={key} src={item.content} controls className="rounded-lg" poster={item.thumb ?? null} preload='none'></video>
@@ -244,10 +196,12 @@ export default function Message ({message, auth}){
         :
             (message.auth.id === auth.user.id)
             ?  
-                <div className="bg-gray-800 rounded-xl rounded-br-none self-end max-w-2xl text-gray-100 p-4 my-2 message-gradient" id={message.id}>
+                <div className="bg-gray-800 rounded-xl rounded-br-none self-end md:max-w-2xl text-gray-100 p-4 my-2 message-gradient" id={message.id}>
                     <div className="flex justify-end items-center">
                         <h3 className="text-xl mr-2">{message.auth.name}</h3>
-                        <img src={message?.auth?.avatar != null ? "" + message?.auth?.avatar : '/users/default.svg'} alt={message?.auth?.name} className="h-12 w-12 object-cover rounded-md shadow-xl" />
+                        <div className="h-8 w-8 object-cover rounded-md shadow-xl" style={{backgroundImage: message?.auth?.avatar != null ? `url(${message?.auth?.avatar}` : 'url(/users/default.svg)', backgroundSize: 'cover', backgroundPosition: 'center center' }}>
+
+                        </div>
                     </div>
                     <p className="my-2">
                         {parse(message.texte)}
@@ -297,7 +251,7 @@ export default function Message ({message, auth}){
                                         item.type == 'img'
                                         ?
                                             <button onClick={OpenLightBox} key={key}>
-                                                <div data-item={key} className="rounded-lg w-48 h-48" style={{backgroundImage: `url(${item.content})`, backgroundPosition: 'center center', backgroundSize: 'cover'}}></div>
+                                                <img data-item={key} src={item.content} alt="" className="rounded-lg w-full h-24 object-cover md:w-full md:h-full" />
                                             </button>
                                         :
                                             <video key={key} src={item.content} controls className="rounded-lg" poster={item.thumb ?? null} preload='none'></video>
@@ -310,12 +264,14 @@ export default function Message ({message, auth}){
                     }
                 </div>
             :
-                <div className="bg-gray-800 rounded-xl rounded-bl-none self-start max-w-2xl text-gray-100 p-4 my-2 message-gradient" id={message.id}>
-                    <div className="flex justify-start items-center">
-                        <img src={message?.auth?.avatar != null ? "" + message?.auth?.avatar : '/users/default.svg'} alt={message?.auth?.name} className="h-12 w-12 object-cover rounded-md shadow-xl" />
+                <div className="bg-gray-100 rounded-xl rounded-bl-none self-start max-w-2xl text-gray-900 p-4 my-2 message-gradient" id={message.id}>
+                    <div className="flex justify-start items-center text-gray-900">
+                        <div className="h-8 w-8 object-cover rounded-md shadow-lg" style={{backgroundImage: message?.auth?.avatar != null ? `url(${message?.auth?.avatar})` : 'url(/users/default.svg)', backgroundSize: 'cover', backgroundPosition: 'center center'}}>
+
+                        </div>
                         <h3 className="text-xl ml-2">{message.auth.name}</h3>
                     </div>
-                    <p className="my-2">
+                    <p className="my-2 text-gray-900">
                         {parse(message.texte)}
                     </p>
                     {
@@ -331,10 +287,10 @@ export default function Message ({message, auth}){
                         ?
                             <div className="w-full">
                                 <article className=" mx-auto bg-transparent group relative rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transform duration-200 md:max-w-lg max-w-sm">
-                                    <div className="relative w-full h-80 md:h-64 lg:h-44 bg-white p-2">
+                                    <div className="relative w-full max-h-80 md:h-64 lg:h-44 bg-white p-2">
                                         <img src={message.link_preview.images[0]}
                                             alt={message.link_preview.description}
-                                            className="w-full h-full object-center object-cover"/>
+                                            className="w-full h-full object-cover"/>
                                     </div>
                                     <div className="px-3 py-4 border border-indigo-500 border-t-0 rounded-lg rounded-t-none">
                                         <h3 className="text-sm text-white pb-2">
@@ -363,7 +319,7 @@ export default function Message ({message, auth}){
                                         item.type == 'img'
                                         ?
                                             <button onClick={OpenLightBox} key={key}>
-                                                <div data-item={key} className="rounded-lg w-48 h-48" style={{backgroundImage: `url(${item.content})`, backgroundPosition: 'center center', backgroundSize: 'cover'}}></div>
+                                                <img data-item={key} src={item.content} alt="" className="rounded-lg w-full h-24 object-cover md:w-full md:h-full" />
                                             </button>
                                         :
                                             <video key={key} src={item.content} controls className="rounded-lg" poster={item.thumb ?? null} preload='none'></video>
