@@ -48,7 +48,7 @@ export default function Message ({message, auth}){
         ?
             (auth.user.id === message.user_id 
             ?
-                <div className="bg-gray-800 rounded-xl rounded-br-none self-end md:max-w-2xl md:w-auto w-full text-gray-100 p-4 my-2 message-gradient" id={message.id}>
+                <div className="bg-gray-800 rounded-xl rounded-br-none self-end md:max-w-xl md:w-auto w-full text-gray-100 p-4 my-2 message-gradient" id={message.id}>
                     <div className="flex justify-end items-center w-full">
                         <h3 className="text-xl mr-2">{auth.user.name}</h3>
                         {
@@ -124,7 +124,7 @@ export default function Message ({message, auth}){
                     }
                 </div>
             :
-                <div className="bg-gray-200 rounded-xl rounded-bl-none self-start md:max-w-2xl w-full text-gray-900 p-4 my-2 message-gradient" id={message.id}>
+                <div className="bg-gray-200 rounded-xl rounded-bl-none self-start md:max-w-xl w-full text-gray-900 p-4 my-2 message-gradient" id={message.id}>
                     <div className="flex justify-start items-center text-gray-900">
 
                         <div className="h-8 w-8 object-cover rounded-md shadow-lg" style={{backgroundImage: message?.user[0]?.avatar != null ? `url(${message?.user[0]?.avatar})` : 'url(/users/default.svg)', backgroundSize: 'cover', backgroundPosition: 'center center'}}>
@@ -196,7 +196,7 @@ export default function Message ({message, auth}){
         :
             (message.auth.id === auth.user.id)
             ?  
-                <div className="bg-gray-800 rounded-xl rounded-br-none self-end md:max-w-2xl text-gray-100 p-4 my-2 message-gradient" id={message.id}>
+                <div className="bg-gray-800 rounded-xl rounded-br-none self-end md:max-w-xl text-gray-100 p-4 my-2 message-gradient" id={message.id}>
                     <div className="flex justify-end items-center">
                         <h3 className="text-xl mr-2">{message.auth.name}</h3>
                         <div className="h-8 w-8 object-cover rounded-md shadow-xl" style={{backgroundImage: message?.auth?.avatar != null ? `url(${message?.auth?.avatar}` : 'url(/users/default.svg)', backgroundSize: 'cover', backgroundPosition: 'center center' }}>
