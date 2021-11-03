@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PresenceEvent;
 use App\Events\Tchat as EventsTchat;
 use App\Models\Media;
 use App\Models\Message;
