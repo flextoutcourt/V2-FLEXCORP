@@ -3,7 +3,6 @@ import Pusher from "pusher-js";
 import axios from "axios";
 import Authenticated from "@/Layouts/Authenticated";
 import Message from '../Tchat/Message';
-import Echo from "laravel-echo";
 import { getLinkPreview, getPreviewFromContent } from "link-preview-js";
 import { toast } from 'react-toastify';
 import Textarea from 'react-expanding-textarea'
@@ -12,9 +11,10 @@ import { backgroundPosition } from "tailwindcss/defaultTheme";
 import { v4 as uuidv4 } from 'uuid';
 import Games from "./Games/Games";
 import { SRLWrapper } from "simple-react-lightbox";
+import Echo from "laravel-echo";
 
 
-function App({auth, errors}) {
+function Main({auth, errors}) {
 
     const pusher_key = '4c81c662885079cc5c1e';
     
@@ -31,12 +31,13 @@ function App({auth, errors}) {
     const [mentionsMenu, setMentionsMenu] = useState(false);
     const [mentions, setMentions] = useState([]);
     const [userPresence, updateUserPresence] = useState([]);
+    const [socketId, setsocketId] = useState(null)
     
     const [files, setFiles] = useState([]);
     const [filesD, setFilesD] = useState([]);
 
     const pusher = new Pusher('4c81c662885079cc5c1e', {
-        cluster: 'eu' 
+        cluster: 'eu',
     });
     
     useEffect(() => {
@@ -45,34 +46,54 @@ function App({auth, errors}) {
         })
         _get_users().then(val => setUsers(val));
         // _get_users().then(val => setMentions(val));
-        _get_user_presence_array().then(val => updateUserPresence(val));
+        // _get_user_presence_array().then(val => updateUserPresence(val));
 
         document.querySelector('#form').addEventListener('keydown', e => {
             handleCtrlKey(e)
         })
 
-        let fd = new FormData();
-        axios.post(route('api.add_presence', fd))
-
+        
         const channel = pusher.subscribe('chat');
         channel.bind('message', (data) => {
-            console.log(data);
             setoldMessages(oldMessages => [data, ...oldMessages]);
         });
-    
+        
+        
         Pusher.logToConsole = true;
-        const presence = pusher.subscribe('presence');
-        presence.bind('user', data => {
-            if(data.remove != 0){
-                updateUserPresence(userPresence => userPresence.filter(item => item.id !== data.auth.id));
-            }else{
-                updateUserPresence(userPresence => [...userPresence, data.auth]);
-            }
-        })
+        
+        const presenceChannel = pusher.subscribe(`presence-channel`, data => {
+            presenceChannel.authorize(data.auth);
+        });
+        
+        presenceChannel.bind('pusher:subscription_succeeded', members => {
+            updateUserPresence([]);
+            members.each(user => {
+                axios.get(route('api.user.get', user))
+                .then((data) => {
+                    updateUserPresence(userPresence => [...userPresence, data.data]);
+                })
+            });
+        });
+
+        presenceChannel.bind('pusher:member_added', data => {
+            console.log(data);
+            axios.get(route('api.user.get', data))
+            .then((data) => {
+                updateUserPresence(userPresence => [...userPresence, data.data]);
+            })
+        });
+        presenceChannel.bind('pusher:member_removed', data => {
+            axios.get(route('api.user.get', data))
+            .then((data) => {
+                updateUserPresence(userPresence => userPresence.filter(u => u.id !== data.data.id));
+            })
+        });
 
         return () => {
-            //executé lors du component will unmount
-            axios.post(route('api.remove_presence', fd))
+            axios.post(route('api.remove_presence'));
+            presenceChannel.unsubscribe(`presence-channel`, data => {
+                updateUserPresence(userPresence => userPresence.filter(u => u.id !== data.auth.id));
+            });
         }
         
     }, []);
@@ -500,4 +521,4 @@ function App({auth, errors}) {
     );
 }
 
-export default App;
+export default Main;

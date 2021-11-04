@@ -36,6 +36,7 @@ Route::post('/ck_upload', [CKEditorController::class, 'upload_file'])->name('api
 Route::post('/autosave', [CKEditorController::class, 'autosave'])->name('api.ckautosave');
 
 Route::get('/users/get', [UserController::class, "get"])->name('api.get_users');
+Route::get('/user/get', [UserController::class, 'get_one'])->name('api.user.get');
 
 Route::get('/user/get_drafts/{user_id}', [DraftsController::class, 'get'])->name('api.get_drafts');
 

@@ -23,7 +23,7 @@ class PresenceEvent implements ShouldBroadcastNow
      *
      * @return void
      */
-    public function __construct(User $auth, int $remove)
+    public function __construct(User $auth, bool $remove)
     {
         $this->auth = $auth;
         $this->remove = $remove;
@@ -36,11 +36,11 @@ class PresenceEvent implements ShouldBroadcastNow
      */
     public function broadcastOn()
     {
-        return ['presence'];
+        return new PresenceChannel('presence-channel');
     }
 
     public function broadcastAs()
     {
-        return 'user';
+        return 'auth';
     }
 }

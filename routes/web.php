@@ -6,6 +6,7 @@ use App\Http\Controllers\Ascenseur301Controller;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\PusherController;
 use App\Http\Controllers\RealisationController;
 use App\Http\Controllers\TchatController;
 use App\Http\Controllers\UserController;
@@ -49,6 +50,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/notify/users/{type}', function ($type) {
         return Notification::sendNow(User::all(), new MessageSent($type));
     })->name('notify.user');
+
+    Route::post('/pusher/auth', [PusherController::class, 'auth']);
     Route::get('/presence/get', [PresenceController::class, 'get_current'])->name('get_current_presence');
     Route::post('/presence/add', [PresenceController::class, 'add_presence'])->name('api.add_presence');
     Route::post('/presence/remove', [PresenceController::class, 'remove_presence'])->name('api.remove_presence');

@@ -19,29 +19,29 @@ class PresenceController extends Controller
 
     public function get_current()
     {
-        $presence = Presence::all();
-        $u = [];
-        foreach($presence as $p){
-            $u[] = User::where('id', $p->user_id)->first();
-        }
-        return array_unique($u);
+        // $presence = Presence::all();
+        // $u = [];
+        // foreach($presence as $p){
+        //     $u[] = User::where('id', $p->user_id)->first();
+        // }
+        // return array_unique($u);
     }
 
     public function remove_presence()
     {
-        $presence = Presence::where('user_id', Auth::user()->id)->first();
-        $presence->delete();
+        // $presence = Presence::where('user_id', Auth::user()->id)->first();
+        // $presence->delete();
 
-        event(new PresenceEvent(Auth::user(), 1));
-        return Auth::user();
+        event(new PresenceEvent(Auth::user(), true));
+        // return Auth::user();
     }
     
     public function add_presence()
     {
-        $presence = new Presence(['user_id' => Auth::user()->id]);
-        $presence->save();
+        // $presence = new Presence(['user_id' => Auth::user()->id]);
+        // $presence->save();
 
-        event(new PresenceEvent(Auth::user(), 0));
-        return Auth::user();
+        event(new PresenceEvent(Auth::user(), false));
+        // return Auth::user();
     }
 }

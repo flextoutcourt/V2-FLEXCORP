@@ -2,6 +2,7 @@
 
 use App\Models\Conversation;
 use App\Models\Message;
+use App\Models\Presence;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -22,4 +23,8 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 Broadcast::channel('messages.{id}', function($user, $id){
     $con = Conversation::findOrFail($id);
     return true;
+});
+
+Broadcast::channel('presence-channel', function ($user, $roomId) {
+    dd('test');
 });

@@ -19,6 +19,11 @@ class UserController extends Controller
         return User::take($limit)->skip($offset)->get();
     }
 
+    public function get_one(Request $request)
+    {
+        return User::find($request->id);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -72,7 +77,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
         return Inertia::render('Auth/Edit');
     }
