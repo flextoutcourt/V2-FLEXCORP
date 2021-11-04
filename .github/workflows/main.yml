@@ -14,3 +14,5 @@ jobs:
         server: ftp.quentinleclerc.fr
         username: u692451191.u692451191_flexou
         password: ${{ secrets.FTP_PASSWORD }}
+    - name: Composer update
+      run: composer update
