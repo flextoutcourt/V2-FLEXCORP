@@ -481,11 +481,15 @@ function App({auth, errors}) {
                             </form>
                         </SRLWrapper>
                 </div>
-                <div className="w-full bg-red-500 col-span-1 p-1 flex flex-col gap-2">
+                <div className="w-full bg-gray-800-500 col-span-1 p-1 flex flex-col gap-2 rounded-md shadow-lg">
+                    <h3 className="text-lg text-white">Utilisateur connectés</h3>
                     {
                         userPresence.map((item, key) => (
                             <div className="flex justify-start items-center gap-2" key={key}>
-                                <img src={item.avatar ? item.avatar : '/users/default.svg'} alt={item.name} className="h-12 w-12 rounded-md shadow-xl" />
+                                <div className="relative">
+                                    <img src={item.avatar ? item.avatar : '/users/default.svg'} alt={item.name} className="h-12 w-12 rounded-md shadow-xl" />
+                                    <span className="bg-green-500 h-2 w-2 rounded-full shadow-lg absolute -bottom-1 -right-1"></span>
+                                </div>
                                 <p>{item.name}</p>
                             </div>
                         ))
