@@ -15,7 +15,10 @@ class Ascenseur301Controller extends Controller
      */
     public function verify_card(array $cards = []):void
     {
+        // echo self::generate_for_user();
+
         echo $this->generate(9999);
+
         // foreach($cards as $key => $item){
         //     echo $item.' est '. ($this->verify($item) ? 'valide' : 'invalide');
         //     echo '<br/>';
@@ -65,19 +68,53 @@ class Ascenseur301Controller extends Controller
      */
     public function generate(int $max = 9999):void
     {
-        $lastCardEntered = Cards::orderBy('number', 'desc')->first()->number;
-        $lastCardEntered = (int) str_replace(5355, '', $lastCardEntered);
+        $lastCardEntered = Cards::orderBy('number', 'desc')->first() ? Cards::orderBy('number', 'desc')->first()->i : 0;
         $start = 5355;
         
         for($i = $lastCardEntered; $i <= ($lastCardEntered + $max); $i++){
             $numero = $start.str_pad($i, 12, '0', STR_PAD_LEFT);
             if($this->verify($numero)){
-                $card = Cards::firstOrCreate(['number' => $numero]);
+                $card = Cards::firstOrCreate(['number' => $numero, 'i' => $i]);
                 $card->number = $numero;
                 $card->i = $i;
                 $card->save();
-                echo $card.'<br />';
+                echo $card->number.'<br />';
             }
         }
+    }
+
+    /**
+     * Genère une carte aléatoire
+     *
+     * @return string $card
+     */
+    public static function generate_for_user():string
+    {
+        $starters = ["5355", "4979", "4973", "0667", "3765", "4519"];
+        $s = array_rand($starters);
+        $start = $starters[$s];
+        $card = (new self)->generate_random($start);
+        $card = preg_replace('/(?<=\d)(?=(\d{4})+$)/', ' ', $start."".$card);
+        return $card;
+        
+    }
+
+    /**
+     * Genere une carte aléatoire selon le choix de type de carte
+     *
+     * @param string $start ['mastercard', 'visa', 'custom'] etc...
+     * @return string card number
+     */
+    public function generate_random(string $start):string
+    {
+        $card = "";
+        $iterator = $start[0] == "3" ? $iterator = 11 : $iterator = 12;
+        do{
+            $card = "";
+            for($i = 0; $i < $iterator; $i++){
+                $card .= "".(string) rand(0, 9)."";
+            }
+        }while(!(new self)->verify($start.$card));
+        return $card;
     }
 }

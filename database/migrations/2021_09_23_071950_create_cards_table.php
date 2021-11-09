@@ -16,7 +16,7 @@ class CreateCardsTable extends Migration
         Schema::create('cards', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('number');
-            $table->bigInteger('i');
+            $table->bigInteger('i')->default(0);
             $table->timestamps();
         });
     }
