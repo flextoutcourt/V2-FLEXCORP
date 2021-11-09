@@ -17,7 +17,7 @@ class Ascenseur301Controller extends Controller
     {
         // echo self::generate_for_user();
 
-        echo $this->generate(9999);
+        $this->generate(9999);
 
         // foreach($cards as $key => $item){
         //     echo $item.' est '. ($this->verify($item) ? 'valide' : 'invalide');
@@ -32,7 +32,7 @@ class Ascenseur301Controller extends Controller
      */
     public function card_generator():void
     {
-        echo $this->generate(9999);
+        $this->generate(9999);
     }
 
     /**
