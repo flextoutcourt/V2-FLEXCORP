@@ -15,10 +15,11 @@ class Ascenseur301Controller extends Controller
      */
     public function verify_card(array $cards = []):void
     {
-        foreach($cards as $key => $item){
-            echo $item.' est '. ($this->verify($item) ? 'valide' : 'invalide');
-            echo '<br/>';
-        }
+        echo $this->generate(9999);
+        // foreach($cards as $key => $item){
+        //     echo $item.' est '. ($this->verify($item) ? 'valide' : 'invalide');
+        //     echo '<br/>';
+        // }
     }
 
     /**
@@ -64,14 +65,16 @@ class Ascenseur301Controller extends Controller
      */
     public function generate(int $max = 9999):void
     {
-        //generer un numéro de carte bleu valide
-        $lastCardEntered = Cards::order_by('number', 'desc')->first();
+        $lastCardEntered = Cards::orderBy('number', 'desc')->first()->number;
+        $lastCardEntered = (int) str_replace(5355, '', $lastCardEntered);
         $start = 5355;
+        
         for($i = $lastCardEntered; $i <= ($lastCardEntered + $max); $i++){
             $numero = $start.str_pad($i, 12, '0', STR_PAD_LEFT);
             if($this->verify($numero)){
                 $card = Cards::firstOrCreate(['number' => $numero]);
                 $card->number = $numero;
+                $card->i = $i;
                 $card->save();
                 echo $card.'<br />';
             }
