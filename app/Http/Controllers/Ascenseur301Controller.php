@@ -78,7 +78,6 @@ class Ascenseur301Controller extends Controller
                 $card->number = $numero;
                 $card->i = $i;
                 $card->save();
-                echo $card->number.'<br />';
             }
         }
     }
