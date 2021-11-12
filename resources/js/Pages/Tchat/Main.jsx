@@ -11,7 +11,8 @@ import { backgroundPosition } from "tailwindcss/defaultTheme";
 import { v4 as uuidv4 } from 'uuid';
 import Games from "./Games/Games";
 import { SRLWrapper } from "simple-react-lightbox";
-import Echo from "laravel-echo";
+
+import * as PusherPushNotifications from '@pusher/push-notifications-web';
 
 
 function Main({auth, errors}) {
@@ -36,17 +37,31 @@ function Main({auth, errors}) {
     const [files, setFiles] = useState([]);
     const [filesD, setFilesD] = useState([]);
 
-    const pusher = new Pusher('4c81c662885079cc5c1e', {
+    const pusher = new Pusher(pusher_key, {
         cluster: 'eu',
     });
     
     useEffect(() => {
+
+        const beamsClient = new PusherPushNotifications.Client({
+            instanceId: "f7c763bd-95ba-4bf8-882c-82ba622f3a74",
+        });
+          
+        beamsClient
+            .start()
+            .then((beamsClient) => beamsClient.getDeviceId())
+            .then((deviceId) =>
+              console.log("Successfully registered with Beams. Device ID:", deviceId)
+            )
+            .then(() => beamsClient.addDeviceInterest("hello"))
+            .then(() => beamsClient.getDeviceInterests())
+            .then((interests) => console.log("Current interests:", interests))
+            .catch(console.error);
+            
         _get_messages(0).then(val => {
             setoldMessages(val)
         })
         _get_users().then(val => setUsers(val));
-        // _get_users().then(val => setMentions(val));
-        // _get_user_presence_array().then(val => updateUserPresence(val));
 
         document.querySelector('#form').addEventListener('keydown', e => {
             handleCtrlKey(e)
@@ -56,11 +71,8 @@ function Main({auth, errors}) {
         const channel = pusher.subscribe('chat');
         channel.bind('message', (data) => {
             setoldMessages(oldMessages => [data, ...oldMessages]);
-        });
-        
-        
-        Pusher.logToConsole = true;
-        
+        })
+
         const presenceChannel = pusher.subscribe(`presence-channel`, data => {
             presenceChannel.authorize(data.auth);
         });
@@ -89,13 +101,6 @@ function Main({auth, errors}) {
             })
         });
 
-        return () => {
-            axios.post(route('api.remove_presence'));
-            presenceChannel.unsubscribe(`presence-channel`, data => {
-                updateUserPresence(userPresence => userPresence.filter(u => u.id !== data.auth.id));
-            });
-        }
-        
     }, []);
     
 
@@ -502,16 +507,16 @@ function Main({auth, errors}) {
                             </form>
                         </SRLWrapper>
                 </div>
-                <div className="w-full bg-gray-800-500 col-span-1 p-1 flex flex-col gap-2 rounded-md shadow-lg">
+                <div className="w-full bg-gray-800-500 col-span-1 p-1 flex flex-col gap-2 rounded-md shadow-lg sticky top-0">
                     <h3 className="text-lg text-white">Utilisateur connectés</h3>
                     {
                         userPresence.map((item, key) => (
                             <div className="flex justify-start items-center gap-2" key={key}>
                                 <div className="relative">
-                                    <img src={item.avatar ? item.avatar : '/users/default.svg'} alt={item.name} className="h-12 w-12 rounded-md shadow-xl" />
+                                    <img src={item.avatar ? item.avatar : '/users/default.svg'} alt={item.name} className="h-12 w-12 rounded-md shadow-xl object-cover" />
                                     <span className="bg-green-500 h-2 w-2 rounded-full shadow-lg absolute -bottom-1 -right-1"></span>
                                 </div>
-                                <p>{item.name}</p>
+                                <p className="text-white">{item.name}</p>
                             </div>
                         ))
                     }

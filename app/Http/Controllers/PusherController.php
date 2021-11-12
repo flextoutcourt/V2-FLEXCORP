@@ -15,4 +15,9 @@ class PusherController extends Controller
         $channel_name = $request->channel_name;
         return $pusher->socketAuth($channel_name, $socket_id, json_encode(['user_id' => Auth::user()->id, Auth::user()->id => Auth::user()]));
     }
+
+    public function publishToInterest(Request $request)
+    {
+        dd($request);
+    }
 }

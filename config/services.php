@@ -47,5 +47,10 @@ return [
         'client_secret' => env('FLEX_GITHUB_CLIENT_SECRET'),
         'redirect' => env('APP_URL').'/'.env('FLEX_GITHUB_REDIRECT_URI'),
     ],
+    'pusher' => [
+        'beams_instance_id' => env('FLEX_PUSHER_INSTANCE_ID'),
+        'beams_secret_key' => env('FLEX_PUSHER_SECRET_KEY'),
+    ],
+    
 
 ];

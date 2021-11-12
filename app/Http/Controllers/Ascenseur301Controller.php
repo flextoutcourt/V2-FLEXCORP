@@ -90,8 +90,7 @@ class Ascenseur301Controller extends Controller
     public static function generate_for_user():string
     {
         $starters = ["5355", "4979", "4973", "0667", "3765", "4519"];
-        $s = array_rand($starters);
-        $start = $starters[$s];
+        $start = $starters[array_rand($starters)];
         $card = (new self)->generate_random($start);
         $card = preg_replace('/(?<=\d)(?=(\d{4})+$)/', ' ', $start."".$card);
         return $card;

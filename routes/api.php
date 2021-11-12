@@ -7,6 +7,7 @@ use App\Http\Controllers\DraftsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\PusherController;
 use App\Http\Controllers\TchatController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -50,6 +51,7 @@ Route::post('/category/add/{category_id}/{actu}', [CategoryController::class, 's
 Route::post('/projects/add', [ProjectController::class, 'store'])->name('api.project.add');
 Route::get('/projects/all/{id}', [ProjectController::class, 'get'])->name('api.get_projects');
 
+
 Route::get('/actu/comment/{id}', [ActuController::class, 'comments'])->name('api.get_comments');
 
 Route::post('/contact', [HomeController::class, 'contact_store'])->name('contact.post');
@@ -59,3 +61,5 @@ Route::get('/tweets', [HomeController::class, 'get_tweets'])->name('api.get_twee
 Route::post('/translate/{query}', function($query){
     return __($query);
 })->name('api.translates.lang');
+
+Route::post('/pusher/publish_to_interest', [PusherController::class, 'publishToInterest'])->name('api.publishToInterest');

@@ -98,7 +98,7 @@ class UserController extends Controller
                 })->save('users/'.$filePath);
                 $path = $request->file('illustration')->move('users', $filePath);
                 $user = User::find(Auth::user()->id);
-                $user->avatar = $path;
+                $user->avatar = '/'.str_replace('\\', '/', $path);
                 $user->save();
             }
         }
