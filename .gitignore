@@ -1,7 +1,8 @@
 /node_modules
 /public/hot
 /public/storage
-/public/tchat
+/public/tchat/pictures/*
+/public/users/*
 /storage/*.key
 /vendor
 .env
