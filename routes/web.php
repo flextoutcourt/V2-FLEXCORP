@@ -85,9 +85,9 @@ Route::post('/mes-projects/update/{actu}-{slug?}', [ActuController::class, "udpa
 Route::get('/mes-realisations', [RealisationController::class, "index"])->name('realisations');
 Route::get('/mes-realisations/{realisation}-{slug?}', [RealisationController::class, 'show'])->name('realisation.show');
 
-Route::post('/mes-realisations/add', [RealisationsController::class, 'store'])->name('realisations.store');
-Route::get('/mes-realisations/edit/{realisation}', [RealisationsController::class, 'edit'])->name('realisation.edit');
-Route::post('/mes-realisations/update', [RealisationsController::class, 'update'])->name('realisation.udpate');
+Route::post('/mes-realisations/add', [RealisationController::class, 'store'])->name('realisations.store');
+Route::get('/mes-realisations/edit/{realisation}', [RealisationController::class, 'edit'])->name('realisation.edit');
+Route::post('/mes-realisations/update', [RealisationController::class, 'update'])->name('realisation.udpate');
 
 /** FIN REALISATIONS */
 
@@ -109,10 +109,6 @@ Route::prefix('admin')->middleware(['admin'])->group(function () {
 });
 
 Route::get('/verify-card', [Ascenseur301Controller::class, 'verify_card'])->name('ascenseur.verify_card');
-
-Route::middleware(['cors'])->group(function () {
-    Route::post('/hogehoge', 'Controller@hogehoge');
-});
 
 Route::get('/offline', function () {
     return 'test';

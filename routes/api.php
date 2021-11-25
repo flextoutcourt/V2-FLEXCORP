@@ -2,14 +2,13 @@
 
 use App\Http\Controllers\ActuController;
 use App\Http\Controllers\Api\Zikmu\AuthController;
+use App\Http\Controllers\Api\Zikmu\LyricsController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CKEditorController;
 use App\Http\Controllers\DraftsController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PusherController;
-use App\Http\Controllers\TchatController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -84,4 +83,4 @@ Route::prefix('zikmu')->middleware(['auth:sanctum'])->group(function () {
     Route::post("/logout",[AuthController::class,'logout']);
 });
 
-Route::prefix('zikmu')->post('/oauth/token', [AuthController::class, "token"]);
+Route::post('/zikmu/oauth/token', [AuthController::class, "token"]);

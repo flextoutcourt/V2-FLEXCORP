@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\Zikmu;
 
-use App\Http\Controllers;
+use App\Http\Controllers\Controller;
 use App\Models\Api\Zikmu\Lyrics;
 use Illuminate\Http\Request;
 
