@@ -2,6 +2,8 @@
 /public/hot
 /public/storage
 /public/tchat/pictures/*
+/public/tchat/thumbs/*
+/public/tchat/videos/*
 /public/users/*
 /storage/*.key
 /vendor
