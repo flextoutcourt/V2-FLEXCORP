@@ -41,6 +41,7 @@
         "tailwindcss": "^2.2.15"
     },
     "dependencies": {
+        "@ashthornton/asscroll": "^2.0.2",
         "@ckeditor/ckeditor5-autosave": "^29.2.0",
         "@ckeditor/ckeditor5-build-classic": "^29.2.0",
         "@ckeditor/ckeditor5-code-block": "^29.2.0",
@@ -63,6 +64,7 @@
         "react-bubble-ui": "^1.1.1",
         "react-cookie": "^4.1.1",
         "react-expanding-textarea": "^2.3.2",
+        "react-gsap": "^3.2.1",
         "react-i18next": "^11.13.0",
         "react-isotope": "^1.0.7",
         "react-mentions": "^4.3.0",

@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CKEditorController;
 use App\Http\Controllers\DraftsController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LyricsController;
 use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PusherController;
@@ -63,3 +64,22 @@ Route::post('/translate/{query}', function($query){
 })->name('api.translates.lang');
 
 Route::post('/pusher/publish_to_interest', [PusherController::class, 'publishToInterest'])->name('api.publishToInterest');
+
+
+Route::prefix('zikmu')->middleware(['auth:sanctum'])->group(function () {
+    Route::prefix('lyrics')->group(function(){
+        Route::get('/', [LyricsController::class, 'show']);
+        Route::post('/', [LyricsController::class, 'store']);
+        Route::put('/', [LyricsController::class, "update"]);
+        Route::delete('/', [LyricsController::class, "delete"]);
+    });
+
+    Route::prefix('users')->group(function(){
+        Route::get('/', [UserController::class, "show"]);
+        Route::post('/', [UserController::class, 'store']);
+        Route::put('/', [UserController::class, 'update']);
+        Route::delete('/', [UserController::class, 'destroy']);
+    });
+});
+
+Route::prefix('zikmu')->post('/oauth/token', [AuthController::class, "token"]);
