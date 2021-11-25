@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActuController;
+use App\Http\Controllers\Api\Zikmu\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CKEditorController;
 use App\Http\Controllers\DraftsController;
@@ -80,6 +81,8 @@ Route::prefix('zikmu')->middleware(['auth:sanctum'])->group(function () {
         Route::put('/', [UserController::class, 'update']);
         Route::delete('/', [UserController::class, 'destroy']);
     });
+
+    Route::post("/logout",[AuthController::class,'logout']);
 });
 
 Route::prefix('zikmu')->post('/oauth/token', [AuthController::class, "token"]);
