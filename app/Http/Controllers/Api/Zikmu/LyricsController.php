@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\Zikmu;
 
+use App\Http\Controllers;
 use App\Models\Api\Zikmu\Lyrics;
 use Illuminate\Http\Request;
 

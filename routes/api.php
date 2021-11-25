@@ -6,7 +6,6 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CKEditorController;
 use App\Http\Controllers\DraftsController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\LyricsController;
 use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PusherController;
