@@ -43,7 +43,7 @@ function Main({auth, errors}) {
     
     useEffect(() => {
 
-        const beamsClient = new PusherPushNotifications.Client({
+        /*const beamsClient = new PusherPushNotifications.Client({
             instanceId: "f7c763bd-95ba-4bf8-882c-82ba622f3a74",
         });
           
@@ -56,7 +56,7 @@ function Main({auth, errors}) {
             .then(() => beamsClient.addDeviceInterest("hello"))
             .then(() => beamsClient.getDeviceInterests())
             .then((interests) => console.log("Current interests:", interests))
-            .catch(console.error);
+            .catch(console.error);*/
             
         _get_messages(0).then(val => {
             setoldMessages(val)
